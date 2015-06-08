@@ -9,3 +9,8 @@ xcuserdata/
 .*dSYM
 
 
+#Eclipse
+*.metadata
+
+
+
