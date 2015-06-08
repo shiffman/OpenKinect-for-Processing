@@ -5,7 +5,6 @@
 *.mode2v3
 *.xcworkspace
 buid/Java/lib/JNILibfreenect2.build
-xcuserdata/
 .*dSYM
 
 
@@ -18,3 +17,5 @@ build/.metadata
 
 
 
+
+*.xcuserstate
