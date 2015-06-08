@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring accessors="true" comment="Delete element from project &apos;openKinectv2&apos;&#x0A;- Original project: &apos;openKinectv2&apos;&#x0A;- Original element: &apos;openKinectv2/src/lib&apos;" description="Delete element" element1="/src&lt;lib" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1433737611729" subPackages="false" version="1.0"/>
-</session>

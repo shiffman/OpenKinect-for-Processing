@@ -1,8 +1,9 @@
 package openKinectv2;
 
-public class HelloJNI {
+public class Device {
+	
     static {
-        System.loadLibrary("libJNILibfreenect2");
+        System.loadLibrary("JNILibfreenect2");
     }
     
     public static void print() {
@@ -13,8 +14,8 @@ public class HelloJNI {
     public native static void nativePrint();
 
     public static void main(String args[]) {
-       // HelloJNI.nativePrint();
-        HelloJNI hellojni = new HelloJNI();
-       // System.out.println(hellojni.stringFromJNI());
+    	Device.nativePrint();
+    	Device hellojni = new Device();
+        System.out.println(hellojni.stringFromJNI());
     }
 }
