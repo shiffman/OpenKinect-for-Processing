@@ -178,7 +178,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
-				SYMROOT = ../output;
+				SYMROOT = ../../openKinectv2/lib;
 				USER_HEADER_SEARCH_PATHS = ../src;
 			};
 			name = Debug;
@@ -200,6 +200,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -223,7 +224,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
-				SYMROOT = ../output;
+				SYMROOT = ../../openKinectv2/lib;
 				USER_HEADER_SEARCH_PATHS = ../src;
 			};
 			name = Release;

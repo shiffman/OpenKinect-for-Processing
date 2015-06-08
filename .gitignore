@@ -4,7 +4,8 @@
 *.xcuserstate
 *.mode2v3
 *.xcworkspace
-buid/C++/output/JNILibfreenect2.build
+buid/Java/lib/JNILibfreenect2.build
 xcuserdata/
+.*dSYM
 
 
