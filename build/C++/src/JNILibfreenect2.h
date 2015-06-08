@@ -10,6 +10,10 @@
 #ifndef JNILibfreenect2_
 #define JNILibfreenect2_
 
+
+
+
+
 /* The classes below are exported */
 #pragma GCC visibility push(default)
 

@@ -10,6 +10,11 @@
 /* The classes below are not exported */
 #pragma GCC visibility push(hidden)
 
+
+
+#include "ofProtonect.h"
+
+
 class JNILibfreenect2Priv
 {
 	public:
