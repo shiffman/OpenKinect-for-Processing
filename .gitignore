@@ -11,6 +11,10 @@ xcuserdata/
 
 #Eclipse
 *.metadata
+build/.*metadata
+
+#processing
+
 
 
 
