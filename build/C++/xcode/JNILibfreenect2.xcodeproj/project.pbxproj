@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E287FE001B289501005F5D56 /* JNILibfreenect2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FDFF1B289501005F5D56 /* JNILibfreenect2.cpp */; };
 		E2EC00B61B254B5E002AD63A /* JNILibfreenect2.cp in Sources */ = {isa = PBXBuildFile; fileRef = E2EC00B31B254B5E002AD63A /* JNILibfreenect2.cp */; };
 		E2EC00B71B254B5E002AD63A /* JNILibfreenect2.h in Headers */ = {isa = PBXBuildFile; fileRef = E2EC00B41B254B5E002AD63A /* JNILibfreenect2.h */; };
-		E2EC00B81B254B5E002AD63A /* JNILibfreenect2Priv.h in Headers */ = {isa = PBXBuildFile; fileRef = E2EC00B51B254B5E002AD63A /* JNILibfreenect2Priv.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,10 +63,10 @@
 		E20616B51B256A650074422C /* tinythread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tinythread.cpp; sourceTree = "<group>"; };
 		E20616B61B256A650074422C /* tinythread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tinythread.h; sourceTree = "<group>"; };
 		E20616B71B256A650074422C /* transfer_pool.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = transfer_pool.cpp; sourceTree = "<group>"; };
+		E287FDFF1B289501005F5D56 /* JNILibfreenect2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JNILibfreenect2.cpp; path = ../src/JNILibfreenect2.cpp; sourceTree = "<group>"; };
 		E2EC00881B254489002AD63A /* libJNILibfreenect2.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libJNILibfreenect2.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2EC00B31B254B5E002AD63A /* JNILibfreenect2.cp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JNILibfreenect2.cp; path = ../src/JNILibfreenect2.cp; sourceTree = "<group>"; };
 		E2EC00B41B254B5E002AD63A /* JNILibfreenect2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JNILibfreenect2.h; path = ../src/JNILibfreenect2.h; sourceTree = "<group>"; };
-		E2EC00B51B254B5E002AD63A /* JNILibfreenect2Priv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JNILibfreenect2Priv.h; path = ../src/JNILibfreenect2Priv.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -282,7 +282,7 @@
 			children = (
 				E2EC00B31B254B5E002AD63A /* JNILibfreenect2.cp */,
 				E2EC00B41B254B5E002AD63A /* JNILibfreenect2.h */,
-				E2EC00B51B254B5E002AD63A /* JNILibfreenect2Priv.h */,
+				E287FDFF1B289501005F5D56 /* JNILibfreenect2.cpp */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -294,7 +294,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2EC00B81B254B5E002AD63A /* JNILibfreenect2Priv.h in Headers */,
 				E2EC00B71B254B5E002AD63A /* JNILibfreenect2.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,6 +354,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E287FE001B289501005F5D56 /* JNILibfreenect2.cpp in Sources */,
 				E2EC00B61B254B5E002AD63A /* JNILibfreenect2.cp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -17,11 +17,19 @@
 /* The classes below are exported */
 #pragma GCC visibility push(default)
 
-class JNILibfreenect2
-{
-	public:
-		void HelloWorld(const char *);
-};
+#include <iostream>
 
+namespace  LibFreenect2{
+    
+    class Device
+    {
+    public:
+        Device();
+        void stop();
+        void HelloWorld(const char *);
+    private:
+    };
+
+}
 #pragma GCC visibility pop
 #endif

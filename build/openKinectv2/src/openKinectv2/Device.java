@@ -1,5 +1,8 @@
 package openKinectv2;
 
+import processing.core.PApplet;
+import processing.core.PVector;
+
 public class Device {
 	
     static {
@@ -9,6 +12,9 @@ public class Device {
     public static void print() {
         System.out.println("java print");
     }
+    
+    private PApplet parent;
+	private long ptr;
     
     public native String stringFromJNI();
     public native static void nativePrint();
