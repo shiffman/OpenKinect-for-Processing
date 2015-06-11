@@ -1,11 +1,4 @@
-//
-//  ofProtonect.cpp
-//
-//  Created by Theodore Watson on 6/27/14.
-//
-//
-
-#include "ofProtonect.h"
+#include "Protonect.h"
 
 
 /*
@@ -689,14 +682,14 @@ void sigint_handler(int s)
 //-------------------
 //-------------------
 
-// ------ ofProtonect
+// ------ Protonect
 
 //-------------------
 //-------------------
 //-------------------
 //-------------------
 
-ofProtonect::ofProtonect(){
+Protonect::Protonect(){
     frame_listener = NULL;
     depth_iso_transfersPtr = NULL;
     rgb_bulk_transfersPtr = NULL;
@@ -710,10 +703,10 @@ ofProtonect::ofProtonect(){
     rgb_processor = NULL;
     bOpened = false;
     
-    ofAddListener(ofEvents().exit, this, &ofProtonect::exit);
+    //ofAddListener(ofEvents().exit, this, &Protonect::exit);
 }
 
-int ofProtonect::openKinect(std::string binpath){
+int Protonect::openKinect(std::string binpath){
   if( bOpened ){
     closeKinect();
   }
@@ -747,11 +740,11 @@ int ofProtonect::openKinect(std::string binpath){
     while(tryCount > 0 && handle == NULL){
                 handle = libusb_open_device_with_vid_pid(NULL, vid, pid[i]);
         tryCount--;
-        ofSleepMillis(100);
+        usleep(100);
         
         if( handle ){
           libusb_reset_device(handle);
-          ofSleepMillis(100);
+          usleep(100);
                   handle = libusb_open_device_with_vid_pid(NULL, vid, pid[i]);
                 }
             }
@@ -762,7 +755,7 @@ int ofProtonect::openKinect(std::string binpath){
   }
   
     if( handle == NULL ){
-        perr("ofProtonect::openKinect  Failed. - handle is NULL\n");
+        perr("Protonect::openKinect  Failed. - handle is NULL\n");
         return -1;
     }
 
@@ -880,11 +873,12 @@ int ofProtonect::openKinect(std::string binpath){
     return 0;
 }
 
-void ofProtonect::exit(ofEventArgs & args){
+void Protonect::exit(){
     closeKinect();
 }
 
-void ofProtonect::updateKinect(ofPixels & rgbPixels, ofFloatPixels & depthPixels){
+/*
+void Protonect::updateKinect(ofPixels & rgbPixels, ofFloatPixels & depthPixels){
     if( bOpened ){
         
         ofLogVerbose() << " updateKinect " << endl;
@@ -903,9 +897,9 @@ void ofProtonect::updateKinect(ofPixels & rgbPixels, ofFloatPixels & depthPixels
         frame_listener->release(frames);
   }
 }
-
+*/
 //TODO: get the deletion shutdown of objects ordered right
-int ofProtonect::closeKinect(){
+int Protonect::closeKinect(){
 
  if( bOpened ){
 

@@ -19,3 +19,34 @@ build/.metadata
 
 
 *.xcuserstate
+
+build/openKinectv2/bin/java.policy.applet
+
+*.lock
+*.build
+
+*.fdt
+
+*.fnm
+
+*.frq
+
+build/.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/segments_2
+
+*.gen
+
+*.tis
+
+*.tii
+
+*.tis
+
+*.prx
+
+*.tii
+
+build/.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/segments_1
+
+build/openKinectv2/src/examples/data/.gitkeep
+
+*.fdt

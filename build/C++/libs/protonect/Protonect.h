@@ -1,11 +1,4 @@
-//
-//  ofProtonect.h
-//
-//  Created by Theodore Watson on 6/27/14.
-//
-//
-
-#include "ofMain.h"
+#pragma once
 
 #include <libfreenect2/tables.h>
 #include <libfreenect2/usb/event_loop.h>
@@ -14,22 +7,20 @@
 #include <libfreenect2/rgb_packet_processor.h>
 #include <libfreenect2/depth_packet_stream_parser.h>
 #include <libfreenect2/frame_listener.h>
-#include "ofRGBPacketProcessor.h"
+#include "RGBPacketProcessor.h"
 
-#include "ofAppGLFWWindow.h"
-#include "ofAppRunner.h"
 
-class ofProtonect{
+class Protonect{
 
     public:
     
-        ofProtonect();
+        Protonect();
     
         int openKinect(std::string dataPath);
-        void updateKinect(ofPixels & rgbPixels, ofFloatPixels & depthPixels);
+        //void updateKinect(ofPixels & rgbPixels, ofFloatPixels & depthPixels);
         int closeKinect();
     
-        void exit(ofEventArgs & args);
+        void exit();
   
     protected:
         bool bOpened;
@@ -42,7 +33,7 @@ class ofProtonect{
         libfreenect2::usb::EventLoop usb_loop;
         libusb_device *dev;
 
-        libfreenect2::ofRGBPacketProcessor  * rgb_processor;
+        libfreenect2::RGBPacketProcessor  * rgb_processor;
 
         libfreenect2::usb::BulkTransferPool * rgb_bulk_transfers;
         libfreenect2::RgbPacketStreamParser * rgb_packet_stream_parser;

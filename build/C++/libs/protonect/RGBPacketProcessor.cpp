@@ -1,28 +1,22 @@
-//
-//  ofRGBPacketProcessor.cpp
-//
-//  Created by Theodore Watson on 6/23/14.
-//
-//
-
-#include "ofRGBPacketProcessor.h"
+#include "RGBPacketProcessor.h"
 
 namespace libfreenect2
 {
 
-ofRGBPacketProcessor::ofRGBPacketProcessor(){
+RGBPacketProcessor::RGBPacketProcessor(){
     newFrame();
 }
 
-ofRGBPacketProcessor::~ofRGBPacketProcessor(){
+RGBPacketProcessor::~RGBPacketProcessor(){
 
 }
 
-void ofRGBPacketProcessor::newFrame(){
+void RGBPacketProcessor::newFrame(){
     frame = new Frame(1920, 1080, 3);
 }
 
-void ofRGBPacketProcessor::process(const libfreenect2::RgbPacket &packet){
+void RGBPacketProcessor::process(const libfreenect2::RgbPacket &packet){
+    /*
     ofBuffer tmp;
     tmp.set( ( char * )packet.jpeg_buffer, (unsigned int)packet.jpeg_buffer_length);
     
@@ -34,7 +28,7 @@ void ofRGBPacketProcessor::process(const libfreenect2::RgbPacket &packet){
         newFrame();
       }
     }
-
+    */
 }
 
 };

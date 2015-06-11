@@ -7,17 +7,10 @@
  *
  */
 
-#ifndef JNILibfreenect2_
-#define JNILibfreenect2_
-
-
-
-
-
-/* The classes below are exported */
-#pragma GCC visibility push(default)
+#pragma once
 
 #include <iostream>
+#include "Protonect.h"
 
 namespace  LibFreenect2{
     
@@ -25,11 +18,14 @@ namespace  LibFreenect2{
     {
     public:
         Device();
+        void open();
         void stop();
+        void setValue(int val){v = val;}
         void HelloWorld(const char *);
     private:
+        int v;
+         Protonect  * protonect;
     };
 
 }
-#pragma GCC visibility pop
-#endif
+

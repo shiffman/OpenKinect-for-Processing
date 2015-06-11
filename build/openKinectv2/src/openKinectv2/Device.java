@@ -16,21 +16,26 @@ public class Device {
     
     public Device(PApplet _p) {
 		parent = _p;
+		System.out.println("new divce");
 		
     }
     
-    void initDevice(){
-    	
-    }
-    void stopDevice(){
+    void openDevice(){
+    	openJNI();
     	
     }
     
+    void stopDevice(){
+    	stopJNI();
+    }
+    
+   
     
     //JNI Functions
     public native String stringFromJNI();
     public native static void nativePrint();
-
+    public native static void openJNI();
+    public native static void stopJNI();
     
     
 }
