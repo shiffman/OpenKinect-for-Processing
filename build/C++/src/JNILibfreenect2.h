@@ -7,12 +7,16 @@
  *
  */
 
-#pragma once
+#ifndef JNI_LIB_FREENECT2_H_
+#define JNI_LIB_FREENECT2_H_
 
 #include <iostream>
 #include "Protonect.h"
 
-namespace  LibFreenect2{
+/* The classes below are exported */
+#pragma GCC visibility push(default)
+
+namespace  openKinect2{
     
     class Device
     {
@@ -24,8 +28,11 @@ namespace  LibFreenect2{
         void HelloWorld(const char *);
     private:
         int v;
-         Protonect  * protonect;
+        nect::Protonect  * protonect;
     };
 
 }
+#pragma GCC visibility pop
+#endif
+
 

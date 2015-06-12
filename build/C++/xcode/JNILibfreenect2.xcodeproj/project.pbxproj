@@ -7,23 +7,21 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E287FF261B295992005F5D56 /* usb-1.0.0-superspeed.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E287FEED1B295992005F5D56 /* usb-1.0.0-superspeed.a */; };
 		E287FF431B295C08005F5D56 /* openKinectv2_Device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2EC00B31B254B5E002AD63A /* openKinectv2_Device.cpp */; };
 		E287FF441B295C18005F5D56 /* JNILibfreenect2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FDFF1B289501005F5D56 /* JNILibfreenect2.cpp */; };
-		E287FF461B2960B6005F5D56 /* frame_listener.h in Headers */ = {isa = PBXBuildFile; fileRef = E287FEF51B295992005F5D56 /* frame_listener.h */; };
-		E287FF471B29614C005F5D56 /* frame_listener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF081B295992005F5D56 /* frame_listener.cpp */; };
-		E287FF481B29635F005F5D56 /* Protonect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FEFE1B295992005F5D56 /* Protonect.cpp */; };
-		E287FF491B296365005F5D56 /* transfer_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF161B295992005F5D56 /* transfer_pool.cpp */; };
-		E287FF4A1B296369005F5D56 /* tinythread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF141B295992005F5D56 /* tinythread.cpp */; };
-		E287FF4B1B29638E005F5D56 /* RGBPacketProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF001B295992005F5D56 /* RGBPacketProcessor.cpp */; };
-		E287FF4C1B296396005F5D56 /* cpu_depth_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF031B295992005F5D56 /* cpu_depth_packet_processor.cpp */; };
-		E287FF4D1B296396005F5D56 /* depth_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF041B295992005F5D56 /* depth_packet_processor.cpp */; };
-		E287FF4E1B296396005F5D56 /* depth_packet_stream_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF051B295992005F5D56 /* depth_packet_stream_parser.cpp */; };
-		E287FF4F1B296396005F5D56 /* double_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF061B295992005F5D56 /* double_buffer.cpp */; };
-		E287FF501B296396005F5D56 /* event_loop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF071B295992005F5D56 /* event_loop.cpp */; };
-		E287FF511B296396005F5D56 /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF091B295992005F5D56 /* resource.cpp */; };
-		E287FF521B296396005F5D56 /* rgb_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF0A1B295992005F5D56 /* rgb_packet_processor.cpp */; };
-		E287FF531B296396005F5D56 /* rgb_packet_stream_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF0B1B295992005F5D56 /* rgb_packet_stream_parser.cpp */; };
+		E2DD97C11B2AA71C00D05839 /* frame_listener.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF081B295992005F5D56 /* frame_listener.cpp */; };
+		E2DD97C21B2AA72E00D05839 /* event_loop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF071B295992005F5D56 /* event_loop.cpp */; };
+		E2DD97C31B2AA74200D05839 /* transfer_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF161B295992005F5D56 /* transfer_pool.cpp */; };
+		E2DD97C41B2AA74800D05839 /* tinythread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF141B295992005F5D56 /* tinythread.cpp */; };
+		E2DD97C51B2AA74D00D05839 /* rgb_packet_stream_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF0B1B295992005F5D56 /* rgb_packet_stream_parser.cpp */; };
+		E2DD97C61B2AA75300D05839 /* cpu_depth_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF031B295992005F5D56 /* cpu_depth_packet_processor.cpp */; };
+		E2DD97C71B2AA75300D05839 /* depth_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF041B295992005F5D56 /* depth_packet_processor.cpp */; };
+		E2DD97C81B2AA75300D05839 /* depth_packet_stream_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF051B295992005F5D56 /* depth_packet_stream_parser.cpp */; };
+		E2DD97C91B2AA75300D05839 /* double_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF061B295992005F5D56 /* double_buffer.cpp */; };
+		E2DD97CA1B2AA75300D05839 /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF091B295992005F5D56 /* resource.cpp */; };
+		E2DD97CB1B2AA75300D05839 /* rgb_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF0A1B295992005F5D56 /* rgb_packet_processor.cpp */; };
+		E2DD97CC1B2AA75F00D05839 /* Protonect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FEFE1B295992005F5D56 /* Protonect.cpp */; };
+		E2DD97E71B2AB5EE00D05839 /* usb-1.0.0-superspeed.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E287FEED1B295992005F5D56 /* usb-1.0.0-superspeed.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,8 +57,6 @@
 		E287FEFD1B295992005F5D56 /* transfer_pool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = transfer_pool.h; sourceTree = "<group>"; };
 		E287FEFE1B295992005F5D56 /* Protonect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Protonect.cpp; sourceTree = "<group>"; };
 		E287FEFF1B295992005F5D56 /* Protonect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Protonect.h; sourceTree = "<group>"; };
-		E287FF001B295992005F5D56 /* RGBPacketProcessor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RGBPacketProcessor.cpp; sourceTree = "<group>"; };
-		E287FF011B295992005F5D56 /* RGBPacketProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RGBPacketProcessor.h; sourceTree = "<group>"; };
 		E287FF031B295992005F5D56 /* cpu_depth_packet_processor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cpu_depth_packet_processor.cpp; sourceTree = "<group>"; };
 		E287FF041B295992005F5D56 /* depth_packet_processor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = depth_packet_processor.cpp; sourceTree = "<group>"; };
 		E287FF051B295992005F5D56 /* depth_packet_stream_parser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = depth_packet_stream_parser.cpp; sourceTree = "<group>"; };
@@ -89,7 +85,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E287FF261B295992005F5D56 /* usb-1.0.0-superspeed.a in Frameworks */,
+				E2DD97E71B2AB5EE00D05839 /* usb-1.0.0-superspeed.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,8 +187,6 @@
 				E287FEEF1B295992005F5D56 /* include */,
 				E287FEFE1B295992005F5D56 /* Protonect.cpp */,
 				E287FEFF1B295992005F5D56 /* Protonect.h */,
-				E287FF001B295992005F5D56 /* RGBPacketProcessor.cpp */,
-				E287FF011B295992005F5D56 /* RGBPacketProcessor.h */,
 				E287FF021B295992005F5D56 /* src */,
 			);
 			path = protonect;
@@ -309,7 +303,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E287FF461B2960B6005F5D56 /* frame_listener.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,19 +362,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E287FF4C1B296396005F5D56 /* cpu_depth_packet_processor.cpp in Sources */,
-				E287FF4D1B296396005F5D56 /* depth_packet_processor.cpp in Sources */,
-				E287FF4E1B296396005F5D56 /* depth_packet_stream_parser.cpp in Sources */,
-				E287FF4F1B296396005F5D56 /* double_buffer.cpp in Sources */,
-				E287FF501B296396005F5D56 /* event_loop.cpp in Sources */,
-				E287FF511B296396005F5D56 /* resource.cpp in Sources */,
-				E287FF521B296396005F5D56 /* rgb_packet_processor.cpp in Sources */,
-				E287FF531B296396005F5D56 /* rgb_packet_stream_parser.cpp in Sources */,
-				E287FF4B1B29638E005F5D56 /* RGBPacketProcessor.cpp in Sources */,
-				E287FF4A1B296369005F5D56 /* tinythread.cpp in Sources */,
-				E287FF491B296365005F5D56 /* transfer_pool.cpp in Sources */,
-				E287FF481B29635F005F5D56 /* Protonect.cpp in Sources */,
-				E287FF471B29614C005F5D56 /* frame_listener.cpp in Sources */,
+				E2DD97CC1B2AA75F00D05839 /* Protonect.cpp in Sources */,
+				E2DD97C61B2AA75300D05839 /* cpu_depth_packet_processor.cpp in Sources */,
+				E2DD97C71B2AA75300D05839 /* depth_packet_processor.cpp in Sources */,
+				E2DD97C81B2AA75300D05839 /* depth_packet_stream_parser.cpp in Sources */,
+				E2DD97C91B2AA75300D05839 /* double_buffer.cpp in Sources */,
+				E2DD97CA1B2AA75300D05839 /* resource.cpp in Sources */,
+				E2DD97CB1B2AA75300D05839 /* rgb_packet_processor.cpp in Sources */,
+				E2DD97C51B2AA74D00D05839 /* rgb_packet_stream_parser.cpp in Sources */,
+				E2DD97C41B2AA74800D05839 /* tinythread.cpp in Sources */,
+				E2DD97C31B2AA74200D05839 /* transfer_pool.cpp in Sources */,
+				E2DD97C21B2AA72E00D05839 /* event_loop.cpp in Sources */,
+				E2DD97C11B2AA71C00D05839 /* frame_listener.cpp in Sources */,
 				E287FF441B295C18005F5D56 /* JNILibfreenect2.cpp in Sources */,
 				E287FF431B295C08005F5D56 /* openKinectv2_Device.cpp in Sources */,
 			);
@@ -393,9 +385,9 @@
 		E2EC00911B254489002AD63A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -411,7 +403,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -430,31 +422,12 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/System/Library/Frameworks/JavaVM.framework/Headers,
-					../src,
-					/usr/local/include,
-					../libs/libfreenect2,
-					../libs/libfreenect2/include,
-					../libs/libusb,
-					../libs/libusb/include,
-					../libs/libusb/include/libusb,
-					../libs/libusb/include/libusb/os,
-					".//libs/libusb/lib",
-					../libs/libusb/lib/osx,
-					../libs/protonect,
-					../libs/protonect/include,
-					../libs/protonect/include/libfreenect2,
-					../libs/protonect/include/libfreenect2/usb,
-					../libs/protonect/src,
-					../libs/protonect/src/shader,
-					../libs/protonect/src/tinythread,
-					../libs,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_SEARCH_PATHS = (
 					/System/Library/Frameworks/JavaVM.framework/Libraries,
 					../libs/libusb/lib/osx,
 					../libs/libusb/lib/osx/,
-					/usr/local/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -485,9 +458,9 @@
 		E2EC00921B254489002AD63A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -504,7 +477,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -516,31 +489,12 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/System/Library/Frameworks/JavaVM.framework/Headers,
-					../src,
-					/usr/local/include,
-					../libs/libfreenect2,
-					../libs/libfreenect2/include,
-					../libs/libusb,
-					../libs/libusb/include,
-					../libs/libusb/include/libusb,
-					../libs/libusb/include/libusb/os,
-					".//libs/libusb/lib",
-					../libs/libusb/lib/osx,
-					../libs/protonect,
-					../libs/protonect/include,
-					../libs/protonect/include/libfreenect2,
-					../libs/protonect/include/libfreenect2/usb,
-					../libs/protonect/src,
-					../libs/protonect/src/shader,
-					../libs/protonect/src/tinythread,
-					../libs,
 				);
 				INSTALL_PATH = "";
 				LIBRARY_SEARCH_PATHS = (
 					/System/Library/Frameworks/JavaVM.framework/Libraries,
 					../libs/libusb/lib/osx,
 					../libs/libusb/lib/osx/,
-					/usr/local/lib,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -570,17 +524,41 @@
 		E2EC00941B254489002AD63A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/System/Library/Frameworks/JavaVM.framework/Headers,
+					/usr/local/include,
+					../libs/libusb/include/libusb,
+					../libs/libusb/include/libusb/os,
+					../libs/libusb/include,
+					../libs/protonect/include,
+					../libs/libfreenect2/include,
+					../libs/,
+					../libs/protonect/src/tinythread,
+					../libs/protonect/include/libfreenect2/usb,
+					../libs/protonect/include/libfreenecr2,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/tom/Documents/Programming/libfreenect,
-					v2,
-					"Processing/libfreenect2-for-processing/build/C++/libs/libusb/lib/osx",
+					/usr/local/lib,
+					../libs/libusb/lib/osx,
+					../libs/libusb/lib/osx/,
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D__MACOSX_CORE__",
+					"-lpthread",
+					"-mtune=native",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -589,17 +567,41 @@
 		E2EC00951B254489002AD63A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "compiler-default";
+				CLANG_CXX_LIBRARY = "libstdc++";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_ENABLE_CPP_EXCEPTIONS = YES;
 				GCC_ENABLE_CPP_RTTI = YES;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/System/Library/Frameworks/JavaVM.framework/Headers,
+					/usr/local/include,
+					../libs/libusb/include/libusb,
+					../libs/libusb/include/libusb/os,
+					../libs/libusb/include,
+					../libs/protonect/include,
+					../libs/libfreenect2/include,
+					../libs/,
+					../libs/protonect/src/tinythread,
+					../libs/protonect/include/libfreenect2/usb,
+					../libs/protonect/include/libfreenecr2,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/tom/Documents/Programming/libfreenect,
-					v2,
-					"Processing/libfreenect2-for-processing/build/C++/libs/libusb/lib/osx",
+					/usr/local/lib,
+					../libs/libusb/lib/osx,
+					../libs/libusb/lib/osx/,
+				);
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-D__MACOSX_CORE__",
+					"-lpthread",
+					"-mtune=native",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

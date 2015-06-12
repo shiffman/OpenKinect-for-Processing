@@ -1,6 +1,3 @@
-#include "Protonect.h"
-
-
 /*
  * This file is part of the OpenKinect Project. http://www.openkinect.org
  *
@@ -27,6 +24,8 @@
  * either License.
  */
 
+#include "Protonect.h"
+
 
 #include <sstream>
 #include <iostream>
@@ -39,6 +38,9 @@
 #include <stdio.h>
 
 #include <opencv2/opencv.hpp>
+
+namespace  nect {
+
 
 static uint32_t cmd_seq = 0;
 
@@ -700,10 +702,10 @@ Protonect::Protonect(){
     depth_processor = NULL;
     depth_iso_transfers = NULL;
     depth_packet_stream_parser = NULL;
-    rgb_processor = NULL;
+  //  rgb_processor = NULL;
     bOpened = false;
     
-    //ofAddListener(ofEvents().exit, this, &Protonect::exit);
+  //  ofAddListener(ofEvents().exit, this, &Protonect::exit);
 }
 
 int Protonect::openKinect(std::string binpath){
@@ -821,13 +823,13 @@ int Protonect::openKinect(std::string binpath){
   
   //INITIALIZE OBJECTS
   
-  frame_listener = new libfreenect2::FrameListener(libfreenect2::Frame::Color | libfreenect2::Frame::Ir | libfreenect2::Frame::Depth);
+ // frame_listener = new libfreenect2::FrameListener(libfreenect2::Frame::Color | libfreenect2::Frame::Ir | libfreenect2::Frame::Depth);
   rgb_bulk_transfers = new libfreenect2::usb::BulkTransferPool(handle, 0x83);
   
-  rgb_processor = new libfreenect2::ofRGBPacketProcessor();
-  rgb_packet_stream_parser = new libfreenect2::RgbPacketStreamParser(rgb_processor);
+  //rgb_processor = new libfreenect2::ofRGBPacketProcessor();
+ // rgb_packet_stream_parser = new libfreenect2::RgbPacketStreamParser(rgb_processor);
 
-  rgb_processor->setFrameListener(frame_listener);
+ // rgb_processor->setFrameListener(frame_listener);
 
   rgb_bulk_transfers->allocate(50, 0x4000);
   rgb_bulk_transfers->setCallback(rgb_packet_stream_parser);
@@ -876,7 +878,7 @@ int Protonect::openKinect(std::string binpath){
 void Protonect::exit(){
     closeKinect();
 }
-
+    
 /*
 void Protonect::updateKinect(ofPixels & rgbPixels, ofFloatPixels & depthPixels){
     if( bOpened ){
@@ -897,7 +899,8 @@ void Protonect::updateKinect(ofPixels & rgbPixels, ofFloatPixels & depthPixels){
         frame_listener->release(frames);
   }
 }
-*/
+ */
+
 //TODO: get the deletion shutdown of objects ordered right
 int Protonect::closeKinect(){
 
@@ -958,10 +961,10 @@ int Protonect::closeKinect(){
         depth_processor = NULL;
     }
 
-    if(rgb_processor != NULL){
-        delete rgb_processor;
-        rgb_processor = NULL;
-    }
+   // if(rgb_processor != NULL){
+   //     delete rgb_processor;
+   //     rgb_processor = NULL;
+   // }
     
     if(rgb_packet_stream_parser != NULL){
         delete rgb_packet_stream_parser;
@@ -977,4 +980,5 @@ int Protonect::closeKinect(){
      
   }
   return 0;
+}
 }

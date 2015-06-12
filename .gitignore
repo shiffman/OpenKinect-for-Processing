@@ -50,3 +50,11 @@ build/.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/
 build/openKinectv2/src/examples/data/.gitkeep
 
 *.fdt
+
+*.lock
+
+*.lock
+
+*.xccheckout
+
+*.xcbkptlist

@@ -1,4 +1,9 @@
-#pragma once
+//
+//  Base on the of Protonect.h of Theodore Watson.
+//
+//
+#ifndef PROTONECT_H_
+#define PROTONECT_H_
 
 #include <libfreenect2/tables.h>
 #include <libfreenect2/usb/event_loop.h>
@@ -7,9 +12,8 @@
 #include <libfreenect2/rgb_packet_processor.h>
 #include <libfreenect2/depth_packet_stream_parser.h>
 #include <libfreenect2/frame_listener.h>
-#include "RGBPacketProcessor.h"
 
-
+namespace nect{
 class Protonect{
 
     public:
@@ -17,7 +21,6 @@ class Protonect{
         Protonect();
     
         int openKinect(std::string dataPath);
-        //void updateKinect(ofPixels & rgbPixels, ofFloatPixels & depthPixels);
         int closeKinect();
     
         void exit();
@@ -33,7 +36,6 @@ class Protonect{
         libfreenect2::usb::EventLoop usb_loop;
         libusb_device *dev;
 
-        libfreenect2::RGBPacketProcessor  * rgb_processor;
 
         libfreenect2::usb::BulkTransferPool * rgb_bulk_transfers;
         libfreenect2::RgbPacketStreamParser * rgb_packet_stream_parser;
@@ -54,3 +56,5 @@ class Protonect{
       { "Unknown", "1.5 Mbit/s (USB LowSpeed)", "12 Mbit/s (USB FullSpeed)", "480 Mbit/s (USB HighSpeed)", "5000 Mbit/s (USB SuperSpeed)" };
 
 };
+}
+#endif

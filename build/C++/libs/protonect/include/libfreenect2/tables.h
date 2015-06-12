@@ -24,10 +24,10 @@
  * either License.
  */
 
-#include <stdint.h>
-
 #ifndef _TABLES_H_
 #define _TABLES_H_
+
+ #include <stdint.h>
 
 // "P0" coefficient tables, input to the deconvolution code
 struct __attribute__ ((__packed__)) p0tables {
