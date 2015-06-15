@@ -1,9 +1,7 @@
 #MAC OS X
 *.DS_Store
 *.build
-*.xcuserstate
 *.mode2v3
-*.xcworkspace
 buid/Java/lib/JNILibfreenect2.build
 .*dSYM
 
@@ -14,11 +12,6 @@ build/.metadata
 
 #processing
 
-
-
-
-
-*.xcuserstate
 
 build/openKinectv2/bin/java.policy.applet
 
