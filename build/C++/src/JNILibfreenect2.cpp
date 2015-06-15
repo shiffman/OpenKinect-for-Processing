@@ -13,7 +13,7 @@
 namespace openKinect2 {
     Device::Device()
     {
-        std::cout<<"init kinect 2 "<<v<<std::endl;
+        std::cout<<"init kinect 2.5 "<<v<<std::endl;
         
         protonect = new nect::Protonect();
         

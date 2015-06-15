@@ -22,6 +22,9 @@
 		E2DD97CB1B2AA75300D05839 /* rgb_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FF0A1B295992005F5D56 /* rgb_packet_processor.cpp */; };
 		E2DD97CC1B2AA75F00D05839 /* Protonect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FEFE1B295992005F5D56 /* Protonect.cpp */; };
 		E2DD97E71B2AB5EE00D05839 /* usb-1.0.0-superspeed.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E287FEED1B295992005F5D56 /* usb-1.0.0-superspeed.a */; };
+		E2F9E0E11B2F58E300CA125A /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F9E0E01B2F58E300CA125A /* CoreFoundation.framework */; };
+		E2F9E0E31B2F58EF00CA125A /* CoreMediaIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F9E0E21B2F58EF00CA125A /* CoreMediaIO.framework */; };
+		E2F9E0E71B2F59DF00CA125A /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F9E0E61B2F59DF00CA125A /* IOKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +81,10 @@
 		E2EC00881B254489002AD63A /* libJNILibfreenect2.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libJNILibfreenect2.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2EC00B31B254B5E002AD63A /* openKinectv2_Device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = openKinectv2_Device.cpp; path = ../src/openKinectv2_Device.cpp; sourceTree = "<group>"; };
 		E2EC00B41B254B5E002AD63A /* JNILibfreenect2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JNILibfreenect2.h; path = ../src/JNILibfreenect2.h; sourceTree = "<group>"; };
+		E2F9E0E01B2F58E300CA125A /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		E2F9E0E21B2F58EF00CA125A /* CoreMediaIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMediaIO.framework; path = System/Library/Frameworks/CoreMediaIO.framework; sourceTree = SDKROOT; };
+		E2F9E0E41B2F592400CA125A /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
+		E2F9E0E61B2F59DF00CA125A /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +92,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2F9E0E71B2F59DF00CA125A /* IOKit.framework in Frameworks */,
+				E2F9E0E31B2F58EF00CA125A /* CoreMediaIO.framework in Frameworks */,
+				E2F9E0E11B2F58E300CA125A /* CoreFoundation.framework in Frameworks */,
 				E2DD97E71B2AB5EE00D05839 /* usb-1.0.0-superspeed.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -271,6 +281,10 @@
 		E2EC007F1B254489002AD63A = {
 			isa = PBXGroup;
 			children = (
+				E2F9E0E61B2F59DF00CA125A /* IOKit.framework */,
+				E2F9E0E41B2F592400CA125A /* ApplicationServices.framework */,
+				E2F9E0E21B2F58EF00CA125A /* CoreMediaIO.framework */,
+				E2F9E0E01B2F58E300CA125A /* CoreFoundation.framework */,
 				E287FED51B295992005F5D56 /* libs */,
 				E2EC00B21B254B52002AD63A /* src */,
 				E2EC00891B254489002AD63A /* Products */,
@@ -427,6 +441,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					/System/Library/Frameworks/JavaVM.framework/Libraries,
 					../libs/libusb/lib/osx,
+					../libs,
+					../libs/libusb,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -493,6 +509,8 @@
 				LIBRARY_SEARCH_PATHS = (
 					/System/Library/Frameworks/JavaVM.framework/Libraries,
 					../libs/libusb/lib/osx,
+					../libs,
+					../libs/libusb,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -538,6 +556,7 @@
 					/usr/local/include,
 					../libs/libusb/include/libusb,
 					../libs/libusb/include/libusb/os,
+					../libs/libusb,
 					../libs/libusb/include,
 					../libs/protonect/include,
 					../libs/libfreenect2/include,
@@ -557,6 +576,24 @@
 					"-D__MACOSX_CORE__",
 					"-lpthread",
 					"-mtune=native",
+				);
+				OTHER_LDFLAGS = (
+					"../libs/libusb/lib/osx/usb-1.0.0-superspeed.a",
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_ts",
+					"-lopencv_video",
+					"-lopencv_videostab",
+					"-lobjc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -581,6 +618,7 @@
 					/usr/local/include,
 					../libs/libusb/include/libusb,
 					../libs/libusb/include/libusb/os,
+					../libs/libusb,
 					../libs/libusb/include,
 					../libs/protonect/include,
 					../libs/libfreenect2/include,
@@ -600,6 +638,24 @@
 					"-D__MACOSX_CORE__",
 					"-lpthread",
 					"-mtune=native",
+				);
+				OTHER_LDFLAGS = (
+					"../libs/libusb/lib/osx/usb-1.0.0-superspeed.a",
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_ts",
+					"-lopencv_video",
+					"-lopencv_videostab",
+					"-lobjc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
