@@ -427,7 +427,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					/System/Library/Frameworks/JavaVM.framework/Libraries,
 					../libs/libusb/lib/osx,
-					../libs/libusb/lib/osx/,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -494,7 +493,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					/System/Library/Frameworks/JavaVM.framework/Libraries,
 					../libs/libusb/lib/osx,
-					../libs/libusb/lib/osx/,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
