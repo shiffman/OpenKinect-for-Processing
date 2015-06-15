@@ -1,21 +1,30 @@
 #MAC OS X
+
 *.DS_Store
+
 *.build
+
 *.mode2v3
+
 buid/Java/lib/JNILibfreenect2.build
+
 .*dSYM
 
 
 #Eclipse
+
 *.metadata
+
 build/.metadata
 
-#processing
-
+build/.recommenders
 
 build/openKinectv2/bin/java.policy.applet
 
+#processing
+
 *.lock
+
 *.build
 
 *.fdt
@@ -23,8 +32,6 @@ build/openKinectv2/bin/java.policy.applet
 *.fnm
 
 *.frq
-
-build/.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/segments_2
 
 *.gen
 
@@ -38,16 +45,9 @@ build/.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/
 
 *.tii
 
-build/.recommenders/index/http___download_eclipse_org_recommenders_models_luna_/segments_1
-
-build/openKinectv2/src/examples/data/.gitkeep
-
 *.fdt
 
 *.lock
 
 *.lock
 
-*.xccheckout
-
-*.xcbkptlist

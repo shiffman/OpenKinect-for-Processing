@@ -16,7 +16,7 @@ public class Device {
     
     public Device(PApplet _p) {
 		parent = _p;
-		System.out.println("new divce");
+		System.out.println("Starting Device");
 		
     }
     
