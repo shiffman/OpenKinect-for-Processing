@@ -569,7 +569,6 @@
 					"$(inherited)",
 					/usr/local/lib,
 					../libs/libusb/lib/osx,
-					../libs/libusb/lib/osx/,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -631,7 +630,6 @@
 					"$(inherited)",
 					/usr/local/lib,
 					../libs/libusb/lib/osx,
-					../libs/libusb/lib/osx/,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",

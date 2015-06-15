@@ -8,7 +8,8 @@
 
 buid/Java/lib/JNILibfreenect2.build
 
-.*dSYM
+*.dSYM
+*.dylib.dSYM
 
 
 #Eclipse
@@ -51,3 +52,5 @@ build/openKinectv2/bin/java.policy.applet
 
 *.lock
 
+
+build/openKinectv2/lib/libJNILibfreenect2.dylib.dSYM/Contents/Resources/DWARF/libJNILibfreenect2.dylib
