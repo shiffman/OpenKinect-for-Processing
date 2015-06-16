@@ -96,7 +96,7 @@ namespace  nect {
        
         
         libfreenect2::SyncMultiFrameListener listener(libfreenect2::Frame::Color | libfreenect2::Frame::Ir | libfreenect2::Frame::Depth);
-        libfreenect2::FrameMap frames;
+        
         libfreenect2::Frame undistorted(512, 424, 4), registered(512, 424, 4);
         
         dev->setColorFrameListener(&listener);

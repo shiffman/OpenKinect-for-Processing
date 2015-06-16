@@ -11,7 +11,18 @@
 #define JNI_LIB_FREENECT2_H_
 
 #include <iostream>
-#include "Protonect.h"
+#include <thread>
+#include <mutex>
+
+#include <iostream>
+#include <signal.h>
+
+#include <libfreenect2/libfreenect2.hpp>
+#include <libfreenect2/frame_listener_impl.h>
+#include <libfreenect2/threading.h>
+#include <libfreenect2/registration.h>
+#include <libfreenect2/packet_pipeline.h>
+
 
 /* The classes below are exported */
 #pragma GCC visibility push(default)
@@ -22,13 +33,34 @@ namespace  openKinect2{
     {
     public:
         Device();
-        void open();
+        
+        void open(int mode = 1);
+        
         void stop();
-        void setValue(int val){v = val;}
-        void HelloWorld(const char *);
+        
+        void sigint_handler(int s);
+        
+        
     private:
-        int v;
-        nect::Protonect  * protonect;
+        void    updateKinect();
+        
+        int     openKinect(int mode = 1);
+        
+        void    closeKinect();
+        
+    private:
+        
+        std::thread         mKinectThread;
+        
+        bool                initialized_device;
+    
+        
+        libfreenect2::Freenect2                  freenect2;
+        libfreenect2::SyncMultiFrameListener *   listener = 0;
+        libfreenect2::Freenect2Device *          dev = 0;
+        libfreenect2::PacketPipeline  *          pipeline = 0;
+        libfreenect2::Registration    *          registration = 0;
+        
     };
 
 }

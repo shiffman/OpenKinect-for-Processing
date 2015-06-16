@@ -7,9 +7,8 @@ JNIEXPORT void JNICALL Java_openKinectv2_Device_openJNI(JNIEnv* env, jobject obj
     
     openKinect2::Device * kinect = new openKinect2::Device();
     
-    kinect->open();
+    kinect->open(3);
     
-   // jclass cls = env->GetObjectClass(obj);
     jclass cls = env->FindClass("openKinectv2/Device");
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
     env->SetLongField(obj, fid, (jlong)kinect);
