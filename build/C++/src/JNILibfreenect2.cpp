@@ -20,7 +20,7 @@ namespace openKinect2 {
     }
     void Device::open()
     {
-        bool retVal = protonect->openKinect("/Users/tom/Documents/Programming/openFrameworks/of_v0.8.4_osx_release/apps/myApps/KinectV2Test/bin/data");
+        int retVal = protonect->openKinect(1);
     }
     
     void Device::stop()

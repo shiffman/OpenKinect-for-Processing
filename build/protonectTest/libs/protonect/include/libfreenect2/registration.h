@@ -30,6 +30,7 @@
 #include <string>
 #include <libfreenect2/config.h>
 #include <libfreenect2/libfreenect2.hpp>
+#include <libfreenect2/frame_listener.hpp>
 
 namespace libfreenect2
 {
@@ -37,19 +38,29 @@ namespace libfreenect2
 class LIBFREENECT2_API Registration
 {
 public:
-  Registration(Freenect2Device::IrCameraParams *depth_p, Freenect2Device::ColorCameraParams *rgb_p);
+  Registration(Freenect2Device::IrCameraParams depth_p, Freenect2Device::ColorCameraParams rgb_p);
 
-  void apply( int dx, int dy, float dz, float& cx, float &cy);
+  // undistort/register a single depth data point
+  void apply(int dx, int dy, float dz, float& cx, float &cy) const;
+
+  // undistort/register a whole image
+  void apply(const Frame* rgb, const Frame* depth, Frame* undistorted, Frame* registered, const bool enable_filter = true) const;
 
 private:
-  void undistort_depth(int dx, int dy, float& mx, float& my);
-  void depth_to_color(float mx, float my, float& rx, float& ry);
+  void distort(int mx, int my, float& dx, float& dy) const;
+  void depth_to_color(float mx, float my, float& rx, float& ry) const;
 
   Freenect2Device::IrCameraParams depth;
   Freenect2Device::ColorCameraParams color;
 
-  float undistort_map[512][424][2];
-  float depth_to_color_map[512][424][2];
+  int distort_map[512 * 424];
+  float depth_to_color_map_x[512 * 424];
+  float depth_to_color_map_y[512 * 424];
+  int depth_to_color_map_yi[512 * 424];
+
+  const int filter_width_half;
+  const int filter_height_half;
+  const float filter_tolerance;
 };
 
 } /* namespace libfreenect2 */

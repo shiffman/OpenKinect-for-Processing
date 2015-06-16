@@ -27,9 +27,11 @@
 #ifndef TRANSFER_POOL_H_
 #define TRANSFER_POOL_H_
 
+#include <vector>
 #include <libusb.h>
 
-#include <deque>
+#include <libfreenect2/data_callback.h>
+#include <libfreenect2/threading.h>
 
 namespace libfreenect2
 {
@@ -40,11 +42,6 @@ namespace usb
 class TransferPool
 {
 public:
-  struct DataReceivedCallback
-  {
-    virtual void onDataReceived(unsigned char *buffer, size_t n) = 0;
-  };
-
   TransferPool(libusb_device_handle *device_handle, unsigned char device_endpoint);
   virtual ~TransferPool();
 
@@ -58,8 +55,28 @@ public:
 
   void cancel();
 
-  void setCallback(DataReceivedCallback *callback);
+  void setCallback(DataCallback *callback);
 protected:
+  libfreenect2::mutex stopped_mutex;
+  struct Transfer
+  {
+    libusb_transfer *transfer;
+    TransferPool *pool;
+    bool stopped;
+    Transfer(libusb_transfer *transfer, TransferPool *pool):
+      transfer(transfer), pool(pool), stopped(true) {}
+    void setStopped(bool value)
+    {
+      libfreenect2::lock_guard guard(pool->stopped_mutex);
+      stopped = value;
+    }
+    bool getStopped()
+    {
+      libfreenect2::lock_guard guard(pool->stopped_mutex);
+      return stopped;
+    }
+  };
+
   void allocateTransfers(size_t num_transfers, size_t transfer_size);
 
   virtual libusb_transfer *allocateTransfer() = 0;
@@ -67,14 +84,14 @@ protected:
 
   virtual void processTransfer(libusb_transfer *transfer) = 0;
 
-  DataReceivedCallback *callback_;
+  DataCallback *callback_;
 private:
-  typedef std::deque<libusb_transfer *> TransferQueue;
+  typedef std::vector<Transfer> TransferQueue;
 
   libusb_device_handle *device_handle_;
   unsigned char device_endpoint_;
 
-  TransferQueue idle_transfers_, pending_transfers_;
+  TransferQueue transfers_;
   unsigned char *buffer_;
   size_t buffer_size_;
 
@@ -82,7 +99,7 @@ private:
 
   static void onTransferCompleteStatic(libusb_transfer *transfer);
 
-  void onTransferComplete(libusb_transfer *transfer);
+  void onTransferComplete(Transfer *transfer);
 };
 
 class BulkTransferPool : public TransferPool

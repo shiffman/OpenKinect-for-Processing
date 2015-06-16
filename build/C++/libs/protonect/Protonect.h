@@ -5,13 +5,16 @@
 #ifndef PROTONECT_H_
 #define PROTONECT_H_
 
-#include <libfreenect2/tables.h>
-#include <libfreenect2/usb/event_loop.h>
-#include <libfreenect2/usb/transfer_pool.h>
-#include <libfreenect2/rgb_packet_stream_parser.h>
-#include <libfreenect2/rgb_packet_processor.h>
-#include <libfreenect2/depth_packet_stream_parser.h>
-#include <libfreenect2/frame_listener.h>
+#include <iostream>
+#include <signal.h>
+
+#include <libfreenect2/libfreenect2.hpp>
+#include <libfreenect2/frame_listener_impl.h>
+#include <libfreenect2/threading.h>
+#include <libfreenect2/registration.h>
+#include <libfreenect2/packet_pipeline.h>
+
+
 
 namespace nect{
 class Protonect{
@@ -20,40 +23,17 @@ class Protonect{
     
         Protonect();
     
-        int openKinect(std::string dataPath);
-        int closeKinect();
+        int openKinect(int mode);
     
-        void exit();
+        void closeKinect();
   
     protected:
-        bool bOpened;
+        bool protonect_shutdown;
     
-        libfreenect2::FrameMap frames;
-        libfreenect2::FrameListener * frame_listener;
-        libfreenect2::usb::IsoTransferPool * depth_iso_transfersPtr = NULL;
-        libfreenect2::usb::BulkTransferPool * rgb_bulk_transfersPtr = NULL;
-        libusb_device_handle *handle;
-        libfreenect2::usb::EventLoop usb_loop;
-        libusb_device *dev;
-
-
-        libfreenect2::usb::BulkTransferPool * rgb_bulk_transfers;
-        libfreenect2::RgbPacketStreamParser * rgb_packet_stream_parser;
-
-//        libfreenect2::usb::BulkTransferPool rgb_bulk_transfers(handle, 0x83);
-//        libfreenect2::RgbPacketStreamParser rgb_packet_stream_parser(&rgb_processor);
-
-        libfreenect2::CpuDepthPacketProcessor * depth_processor;
-        libfreenect2::usb::IsoTransferPool  * depth_iso_transfers;
-
-//        libfreenect2::usb::IsoTransferPool depth_iso_transfers(handle, 0x84);
-        libfreenect2::DepthPacketStreamParser * depth_packet_stream_parser;
-
-        bool should_resubmit = true;
-        uint32_t num_iso_requests_outstanding = 0;
-
-    const char* speed_name[5] =
-      { "Unknown", "1.5 Mbit/s (USB LowSpeed)", "12 Mbit/s (USB FullSpeed)", "480 Mbit/s (USB HighSpeed)", "5000 Mbit/s (USB SuperSpeed)" };
+        libfreenect2::Freenect2  freenect2;
+        libfreenect2::Freenect2Device *dev = 0;
+        libfreenect2::PacketPipeline *pipeline = 0;
+        libfreenect2::Registration* registration = 0;
 
 };
 }

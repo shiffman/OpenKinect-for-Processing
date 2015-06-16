@@ -24,43 +24,35 @@
  * either License.
  */
 
-#include "depth_packet_processor.h"
-#include "tables.h"
+#include <libfreenect2/depth_packet_processor.h>
+#include <libfreenect2/resource.h>
+#include <libfreenect2/protocol/response.h>
 
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <fstream>
 
-//#include "ofImage.h"
-//ofFloatImage pixDepth;
+#include <limits>
+
+#if defined(WIN32)
+#define _USE_MATH_DEFINES
+#include <math.h>
+#endif
 
 namespace libfreenect2
 {
 
-template<typename T>
-cv::Mat loadTableFromFile(const std::string& filename)
+bool loadBufferFromFile2(const std::string& filename, unsigned char *buffer, size_t n)
 {
-  std::ifstream file(filename.c_str());
+  bool success = true;
+  std::ifstream in(filename.c_str());
 
-  size_t h =  424, w = 512;
-  size_t n = w * h * sizeof(T);
+  in.read(reinterpret_cast<char*>(buffer), n);
+  success = in.gcount() == n;
 
-  cv::Mat r(h, w, cv::DataType<T>::type), r_final;
+  in.close();
 
-  file.read(reinterpret_cast<char*>(r.data), n);
-
-  if(file.gcount() != n)
-  {
-    std::cerr << "file '" << filename << "' too short!" << std::endl;
-    return cv::Mat();
-  }
-
-  file.close();
-
-  cv::flip(r, r_final, 0);
-  //r = r_final;
-
-  return r_final;
+  return success;
 }
 
 inline int bfi(int width, int offset, int src2, int src3)
@@ -74,19 +66,7 @@ class CpuDepthPacketProcessorImpl
 public:
   cv::Mat p0_table0, p0_table1, p0_table2, x_table, z_table;
 
-  float phase_in_rad0, phase_in_rad1, phase_in_rad2;
-  float ab_multiplier, ab_multiplier_per_frq0, ab_multiplier_per_frq1, ab_multiplier_per_frq2;
-  float phase_offset;
-  float unambigious_dist;
-  float ab_output_multiplier;
-  float individual_ab_threshold, ab_threshold, ab_confidence_slope, ab_confidence_offset;
-  float min_dealias_confidence, max_dealias_confidence;
   int16_t lut11to16[2048];
-
-  float joint_bilateral_ab_threshold;
-  float joint_bilateral_exp;
-
-  float gaussian_kernel[9];
 
   float trig_table0[512*424][6];
   float trig_table1[512*424][6];
@@ -97,42 +77,15 @@ public:
 
   double timing_current_start;
 
-  bool enable_bilateral_filter;
+  bool enable_bilateral_filter, enable_edge_filter;
+  DepthPacketProcessor::Parameters params;
 
   Frame *ir_frame, *depth_frame;
 
+  bool flip_ptables;
+
   CpuDepthPacketProcessorImpl()
   {
-    phase_in_rad0 = 0.0f;
-    phase_in_rad1 = 2.094395f;
-    phase_in_rad2 = 4.18879f;
-    ab_multiplier = 0.6666667f;
-    ab_multiplier_per_frq0 = 1.322581f;
-    ab_multiplier_per_frq1 = 1.0f;
-    ab_multiplier_per_frq2 = 1.612903f;
-    phase_offset = 0.0f;
-    unambigious_dist = 2083.333f;
-    ab_output_multiplier = 16.0f;
-
-    joint_bilateral_ab_threshold = 3.0f;
-    joint_bilateral_exp = 5.0f;
-    gaussian_kernel[0] = 0.1069973f;
-    gaussian_kernel[1] = 0.1131098f;
-    gaussian_kernel[2] = 0.1069973f;
-    gaussian_kernel[3] = 0.1131098f;
-    gaussian_kernel[4] = 0.1195715f;
-    gaussian_kernel[5] = 0.1131098f;
-    gaussian_kernel[6] = 0.1069973f;
-    gaussian_kernel[7] = 0.1131098f;
-    gaussian_kernel[8] = 0.1069973f;
-
-    individual_ab_threshold = 3.0f;
-    ab_threshold = 10.0f;
-    ab_confidence_slope = -0.5330578f;
-    ab_confidence_offset = 0.7694894f;
-    min_dealias_confidence = 0.3490659f;
-    max_dealias_confidence = 0.6108653f;
-
     newIrFrame();
     newDepthFrame();
 
@@ -140,7 +93,10 @@ public:
     timing_acc_n = 0.0;
     timing_current_start = 0.0;
 
-    enable_bilateral_filter = false;
+    enable_bilateral_filter = true;
+    enable_edge_filter = true;
+
+    flip_ptables = true;
   }
 
   void startTiming()
@@ -165,6 +121,7 @@ public:
   void newIrFrame()
   {
     ir_frame = new Frame(512, 424, 4);
+    //ir_frame = new Frame(512, 424, 12);
   }
 
   void newDepthFrame()
@@ -237,16 +194,13 @@ public:
 
   void fill_trig_tables(cv::Mat& p0table, float trig_table[512*424][6])
   {
-  
-    uint16_t * carr = p0table.ptr<uint16_t>();
-  
     for (int i = 0; i < 512*424; i++)
     {
-      float p0 = -((float)carr[i]) * 0.000031 * M_PI;
+      float p0 = -((float)p0table.at<uint16_t>(i)) * 0.000031 * M_PI;
 
-      float tmp0 = p0 + phase_in_rad0;
-      float tmp1 = p0 + phase_in_rad1;
-      float tmp2 = p0 + phase_in_rad2;
+      float tmp0 = p0 + params.phase_in_rad[0];
+      float tmp1 = p0 + params.phase_in_rad[1];
+      float tmp2 = p0 + params.phase_in_rad[2];
 
       trig_table[i][0] = std::cos(tmp0);
       trig_table[i][1] = std::cos(tmp1);
@@ -273,6 +227,7 @@ public:
     bool cond0 = 0 < zmultiplier;
     bool cond1 = (m[0] == 32767 || m[1] == 32767 || m[2] == 32767) && cond0;
 
+    // formula given in Patent US 8,587,771 B2
     float tmp3 = cos_tmp0 * m[0] + cos_tmp1 * m[1] + cos_tmp2 * m[2];
     float tmp4 = sin_negtmp0 * m[0] + sin_negtmp1 * m[1] + sin_negtmp2 * m[2];
 
@@ -282,7 +237,7 @@ public:
         tmp3 *= abMultiplierPerFrq;
         tmp4 *= abMultiplierPerFrq;
     }
-    float tmp5 = std::sqrt(tmp3 * tmp3 + tmp4 * tmp4) * ab_multiplier;
+    float tmp5 = std::sqrt(tmp3 * tmp3 + tmp4 * tmp4) * params.ab_multiplier;
 
     // invalid pixel because zmultiplier < 0 ??
     tmp3 = cond0 ? tmp3 : 0;
@@ -294,9 +249,9 @@ public:
     tmp4 = !cond1 ? tmp4 : 0;
     tmp5 = !cond1 ? tmp5 : 65535.0; // some kind of norm calculated from tmp3 and tmp4
 
-    m_out[0] = tmp3;
-    m_out[1] = tmp4;
-    m_out[2] = tmp5;
+    m_out[0] = tmp3; // ir image a
+    m_out[1] = tmp4; // ir image b
+    m_out[2] = tmp5; // ir amplitude
   }
 
   void transformMeasurements(float* m)
@@ -305,10 +260,10 @@ public:
     tmp0 = tmp0 < 0 ? tmp0 + M_PI * 2.0f : tmp0;
     tmp0 = (tmp0 != tmp0) ? 0 : tmp0;
 
-    float tmp1 = std::sqrt(m[0] * m[0] + m[1] * m[1]) * ab_multiplier;
+    float tmp1 = std::sqrt(m[0] * m[0] + m[1] * m[1]) * params.ab_multiplier;
 
-    m[0] = tmp0; // depth ?
-    m[1] = tmp1; // ir ?
+    m[0] = tmp0; // phase
+    m[1] = tmp1; // ir amplitude - (possibly bilateral filtered)
   }
 
   void processPixelStage1(int x, int y, unsigned char* data, float *m0_out, float *m1_out, float *m2_out)
@@ -325,14 +280,15 @@ public:
     m2_raw[1] = decodePixelMeasurement(data, 7, x, y);
     m2_raw[2] = decodePixelMeasurement(data, 8, x, y);
 
-    processMeasurementTriple(trig_table0, ab_multiplier_per_frq0, x, y, m0_raw, m0_out);
-    processMeasurementTriple(trig_table1, ab_multiplier_per_frq1, x, y, m1_raw, m1_out);
-    processMeasurementTriple(trig_table2, ab_multiplier_per_frq2, x, y, m2_raw, m2_out);
+    processMeasurementTriple(trig_table0, params.ab_multiplier_per_frq[0], x, y, m0_raw, m0_out);
+    processMeasurementTriple(trig_table1, params.ab_multiplier_per_frq[1], x, y, m1_raw, m1_out);
+    processMeasurementTriple(trig_table2, params.ab_multiplier_per_frq[2], x, y, m2_raw, m2_out);
   }
 
-  void filterPixelStage1(int x, int y, const cv::Mat& m, float* m_out)
+  void filterPixelStage1(int x, int y, const cv::Mat& m, float* m_out, bool& bilateral_max_edge_test)
   {
     const float *m_ptr = m.ptr<float>(y, x);
+    bilateral_max_edge_test = true;
 
     if(x < 1 || y < 1 || x > 510 || y > 422)
     {
@@ -360,8 +316,8 @@ public:
         float weight_acc = 0.0f;
         float weighted_m_acc[2] = {0.0f, 0.0f};
 
-        float threshold = (joint_bilateral_ab_threshold * joint_bilateral_ab_threshold) / (ab_multiplier * ab_multiplier);
-        float joint_bilateral_exp = this->joint_bilateral_exp;
+        float threshold = (params.joint_bilateral_ab_threshold * params.joint_bilateral_ab_threshold) / (params.ab_multiplier * params.ab_multiplier);
+        float joint_bilateral_exp = params.joint_bilateral_exp;
 
         if(norm2 < threshold)
         {
@@ -369,16 +325,18 @@ public:
           joint_bilateral_exp = 0.0f;
         }
 
+        float dist_acc = 0.0f;
+
         for(int yi = -1; yi < 2; ++yi)
         {
           for(int xi = -1; xi < 2; ++xi, ++j)
           {
             if(yi == 0 && xi == 0)
             {
-              weight_acc += gaussian_kernel[j];
+              weight_acc += params.gaussian_kernel[j];
 
-              weighted_m_acc[0] += gaussian_kernel[j] * m_ptr[0];
-              weighted_m_acc[1] += gaussian_kernel[j] * m_ptr[1];
+              weighted_m_acc[0] += params.gaussian_kernel[j] * m_ptr[0];
+              weighted_m_acc[1] += params.gaussian_kernel[j] * m_ptr[1];
               continue;
             }
 
@@ -395,7 +353,13 @@ public:
             dist += 1.0f;
             dist *= 0.5f;
 
-            float weight = other_norm2 < threshold ? 0.0f : (gaussian_kernel[j] * std::exp(-1.442695f * joint_bilateral_exp * dist));
+            float weight = 0.0f;
+
+            if(other_norm2 >= threshold)
+            {
+              weight = (params.gaussian_kernel[j] * std::exp(-1.442695f * joint_bilateral_exp * dist));
+              dist_acc += dist;
+            }
 
             weighted_m_acc[0] += weight * other_m_ptr[0];
             weighted_m_acc[1] += weight * other_m_ptr[1];
@@ -404,6 +368,8 @@ public:
           }
         }
 
+        bilateral_max_edge_test = bilateral_max_edge_test && dist_acc < params.joint_bilateral_max_edge;
+
         m_out[0] = 0.0f < weight_acc ? weighted_m_acc[0] / weight_acc : 0.0f;
         m_out[1] = 0.0f < weight_acc ? weighted_m_acc[1] / weight_acc : 0.0f;
         m_out[2] = m_ptr[2];
@@ -411,9 +377,8 @@ public:
     }
   }
 
-  void processPixelStage2(int x, int y, float *m0, float *m1, float *m2, float *ir_out, float *depth_out)
+  void processPixelStage2(int x, int y, float *m0, float *m1, float *m2, float *ir_out, float *depth_out, float *ir_sum_out)
   {
-
     //// 10th measurement
     //float m9 = 1; // decodePixelMeasurement(data, 9, x, y);
     //
@@ -426,6 +391,8 @@ public:
     transformMeasurements(m0);
     transformMeasurements(m1);
     transformMeasurements(m2);
+
+    float ir_sum = m0[1] + m1[1] + m2[1];
 
     float phase;
     // if(DISABLE_DISAMBIGUATION)
@@ -445,10 +412,9 @@ public:
     }
     else
     {
-      float ir_sum = m0[1] + m1[1] + m2[1];
       float ir_min = std::min(std::min(m0[1], m1[1]), m2[1]);
 
-      if (ir_min < individual_ab_threshold || ir_sum < ab_threshold)
+      if (ir_min < params.individual_ab_threshold || ir_sum < params.ab_threshold)
       {
         phase = 0;
       }
@@ -499,7 +465,7 @@ public:
         float mask = t9 >= 0.0f ? 1.0f : 0.0f;
         t10 *= mask;
 
-        bool slope_positive = 0 < ab_confidence_slope;
+        bool slope_positive = 0 < params.ab_confidence_slope;
 
         float ir_min_ = std::min(std::min(m0[1], m1[1]), m2[1]);
         float ir_max_ = std::max(std::max(m0[1], m1[1]), m2[1]);
@@ -507,16 +473,16 @@ public:
         float ir_x = slope_positive ? ir_min_ : ir_max_;
 
         ir_x = std::log(ir_x);
-        ir_x = (ir_x * ab_confidence_slope * 0.301030f + ab_confidence_offset) * 3.321928f;
+        ir_x = (ir_x * params.ab_confidence_slope * 0.301030f + params.ab_confidence_offset) * 3.321928f;
         ir_x = std::exp(ir_x);
-        ir_x = std::min(max_dealias_confidence, std::max(min_dealias_confidence, ir_x));
+        ir_x = std::min(params.max_dealias_confidence, std::max(params.min_dealias_confidence, ir_x));
         ir_x *= ir_x;
 
         float mask2 = ir_x >= norm ? 1.0f : 0.0f;
 
         float t11 = t10 * mask2;
 
-        float mask3 = max_dealias_confidence * max_dealias_confidence >= norm ? 1.0f : 0.0f;
+        float mask3 = params.max_dealias_confidence * params.max_dealias_confidence >= norm ? 1.0f : 0.0f;
         t10 *= mask3;
         phase = true/*(modeMask & 2) != 0*/ ? t11 : t10;
       }
@@ -526,10 +492,10 @@ public:
     float zmultiplier = z_table.at<float>(y, x);
     float xmultiplier = x_table.at<float>(y, x);
 
-    phase = 0 < phase ? phase + phase_offset : phase;
+    phase = 0 < phase ? phase + params.phase_offset : phase;
 
     float depth_linear = zmultiplier * phase;
-    float max_depth = phase * unambigious_dist * 2;
+    float max_depth = phase * params.unambigious_dist * 2;
 
     bool cond1 = /*(modeMask & 32) != 0*/ true && 0 < depth_linear && 0 < max_depth;
 
@@ -540,22 +506,100 @@ public:
     depth_fit = depth_fit < 0 ? 0 : depth_fit;
     float depth = cond1 ? depth_fit : depth_linear; // r1.y -> later r2.z
 
-    // TODO: edge aware bilateral filter
-
-    if (x >= 0 && y >= 0 && x < 512 && y < 424)
-    {
-        // output depth
-        // output (tmp2 + tmp3 + tmp4) * 0.3333333
-
-        // output m1[2]
-    }
-
     // depth
     *depth_out = depth;
+    if(ir_sum_out != 0)
+    {
+      *ir_sum_out = ir_sum;
+    }
+
     // ir
     //*ir_out = std::min((m1[2]) * ab_output_multiplier, 65535.0f);
     // ir avg
-    *ir_out = std::min((m0[2] + m1[2] + m2[2]) * 0.3333333f * ab_output_multiplier, 65535.0f);
+    *ir_out = std::min((m0[2] + m1[2] + m2[2]) * 0.3333333f * params.ab_output_multiplier, 65535.0f);
+    //ir_out[0] = std::min(m0[2] * ab_output_multiplier, 65535.0f);
+    //ir_out[1] = std::min(m1[2] * ab_output_multiplier, 65535.0f);
+    //ir_out[2] = std::min(m2[2] * ab_output_multiplier, 65535.0f);
+  }
+
+  void filterPixelStage2(int x, int y, cv::Mat &m, bool max_edge_test_ok, float *depth_out)
+  {
+    cv::Vec3f &depth_and_ir_sum = m.at<cv::Vec3f>(y, x);
+    float &raw_depth = depth_and_ir_sum.val[0], &ir_sum = depth_and_ir_sum.val[2];
+
+    if(raw_depth >= params.min_depth && raw_depth <= params.max_depth)
+    {
+      if(x < 1 || y < 1 || x > 510 || y > 422)
+      {
+        *depth_out = raw_depth;
+      }
+      else
+      {
+        float ir_sum_acc = ir_sum, squared_ir_sum_acc = ir_sum * ir_sum, min_depth = raw_depth, max_depth = raw_depth;
+
+        for(int yi = -1; yi < 2; ++yi)
+        {
+          for(int xi = -1; xi < 2; ++xi)
+          {
+            if(yi == 0 && xi == 0) continue;
+
+            cv::Vec3f &other = m.at<cv::Vec3f>(y + yi, x + xi);
+
+            ir_sum_acc += other.val[2];
+            squared_ir_sum_acc += other.val[2] * other.val[2];
+
+            if(0.0f < other.val[1])
+            {
+              min_depth = std::min(min_depth, other.val[1]);
+              max_depth = std::max(max_depth, other.val[1]);
+            }
+          }
+        }
+
+        float tmp0 = std::sqrt(squared_ir_sum_acc * 9.0f - ir_sum_acc * ir_sum_acc) / 9.0f;
+        float edge_avg = std::max(ir_sum_acc / 9.0f, params.edge_ab_avg_min_value);
+        tmp0 /= edge_avg;
+
+        float abs_min_diff = std::abs(raw_depth - min_depth);
+        float abs_max_diff = std::abs(raw_depth - max_depth);
+
+        float avg_diff = (abs_min_diff + abs_max_diff) * 0.5f;
+        float max_abs_diff = std::max(abs_min_diff, abs_max_diff);
+
+        bool cond0 =
+            0.0f < raw_depth &&
+            tmp0 >= params.edge_ab_std_dev_threshold &&
+            params.edge_close_delta_threshold < abs_min_diff &&
+            params.edge_far_delta_threshold < abs_max_diff &&
+            params.edge_max_delta_threshold < max_abs_diff &&
+            params.edge_avg_delta_threshold < avg_diff;
+
+        *depth_out = cond0 ? 0.0f : raw_depth;
+
+        if(!cond0)
+        {
+          if(max_edge_test_ok)
+          {
+            //float tmp1 = 1500.0f > raw_depth ? 30.0f : 0.02f * raw_depth;
+            float edge_count = 0.0f;
+
+            *depth_out = edge_count > params.max_edge_count ? 0.0f : raw_depth;
+          }
+          else
+          {
+            *depth_out = !max_edge_test_ok ? 0.0f : raw_depth;
+            *depth_out = true ? *depth_out : raw_depth;
+          }
+        }
+      }
+    }
+    else
+    {
+      *depth_out = 0.0f;
+    }
+
+    // override raw depth
+    depth_and_ir_sum.val[0] = depth_and_ir_sum.val[1];
   }
 };
 
@@ -569,52 +613,128 @@ CpuDepthPacketProcessor::~CpuDepthPacketProcessor()
   delete impl_;
 }
 
+void CpuDepthPacketProcessor::setConfiguration(const libfreenect2::DepthPacketProcessor::Config &config)
+{
+  DepthPacketProcessor::setConfiguration(config);
+  
+  impl_->params.min_depth = config.MinDepth * 1000.0f;
+  impl_->params.max_depth = config.MaxDepth * 1000.0f;
+  impl_->enable_bilateral_filter = config.EnableBilateralFilter;
+  impl_->enable_edge_filter = config.EnableEdgeAwareFilter;
+}
+
 void CpuDepthPacketProcessor::loadP0TablesFromCommandResponse(unsigned char* buffer, size_t buffer_length)
 {
   // TODO: check known header fields (headersize, tablesize)
-  p0tables* p0table = (p0tables*)buffer;
+  libfreenect2::protocol::P0TablesResponse* p0table = (libfreenect2::protocol::P0TablesResponse*)buffer;
 
-  if(buffer_length < sizeof(p0tables))
+  if(buffer_length < sizeof(libfreenect2::protocol::P0TablesResponse))
   {
     std::cerr << "[CpuDepthPacketProcessor::loadP0TablesFromCommandResponse] P0Table response too short!" << std::endl;
     return;
   }
 
-  //cv::Mat(424, 512, CV_16UC1, p0table->p0table0).copyTo(impl_->p0_table0);
-  //cv::Mat(424, 512, CV_16UC1, p0table->p0table1).copyTo(impl_->p0_table1);
-  //cv::Mat(424, 512, CV_16UC1, p0table->p0table2).copyTo(impl_->p0_table2);
-  cv::flip(cv::Mat(424, 512, CV_16UC1, p0table->p0table0), impl_->p0_table0, 0);
-  cv::flip(cv::Mat(424, 512, CV_16UC1, p0table->p0table1), impl_->p0_table1, 0);
-  cv::flip(cv::Mat(424, 512, CV_16UC1, p0table->p0table2), impl_->p0_table2, 0);
+  if(impl_->flip_ptables)
+  {
+    cv::flip(cv::Mat(424, 512, CV_16UC1, p0table->p0table0), impl_->p0_table0, 0);
+    cv::flip(cv::Mat(424, 512, CV_16UC1, p0table->p0table1), impl_->p0_table1, 0);
+    cv::flip(cv::Mat(424, 512, CV_16UC1, p0table->p0table2), impl_->p0_table2, 0);
 
-  impl_->fill_trig_tables(impl_->p0_table0, impl_->trig_table0);
-  impl_->fill_trig_tables(impl_->p0_table1, impl_->trig_table1);
-  impl_->fill_trig_tables(impl_->p0_table2, impl_->trig_table2);
+    impl_->fill_trig_tables(impl_->p0_table0, impl_->trig_table0);
+    impl_->fill_trig_tables(impl_->p0_table1, impl_->trig_table1);
+    impl_->fill_trig_tables(impl_->p0_table2, impl_->trig_table2);
+  }
+  else
+  {
+    cv::Mat(424, 512, CV_16UC1, p0table->p0table0).copyTo(impl_->p0_table0);
+    cv::Mat(424, 512, CV_16UC1, p0table->p0table1).copyTo(impl_->p0_table1);
+    cv::Mat(424, 512, CV_16UC1, p0table->p0table2).copyTo(impl_->p0_table2);
+  }
+}
+void CpuDepthPacketProcessor::loadP0TablesFromFiles(const char* p0_filename, const char* p1_filename, const char* p2_filename)
+{
+  cv::Mat p0_table0(424, 512, CV_16UC1);
+  if(!loadBufferFromFile2(p0_filename, p0_table0.data, p0_table0.total() * p0_table0.elemSize()))
+  {
+    std::cerr << "[CpuDepthPacketProcessor::loadP0TablesFromFiles] Loading p0table 0 from '" << p0_filename << "' failed!" << std::endl;
+  }
+
+  cv::Mat p0_table1(424, 512, CV_16UC1);
+  if(!loadBufferFromFile2(p1_filename, p0_table1.data, p0_table1.total() * p0_table1.elemSize()))
+  {
+    std::cerr << "[CpuDepthPacketProcessor::loadP0TablesFromFiles] Loading p0table 1 from '" << p1_filename << "' failed!" << std::endl;
+  }
+
+  cv::Mat p0_table2(424, 512, CV_16UC1);
+  if(!loadBufferFromFile2(p2_filename, p0_table2.data, p0_table2.total() * p0_table2.elemSize()))
+  {
+    std::cerr << "[CpuDepthPacketProcessor::loadP0TablesFromFiles] Loading p0table 2 from '" << p2_filename << "' failed!" << std::endl;
+  }
+
+  if(impl_->flip_ptables)
+  {
+    cv::flip(p0_table0, impl_->p0_table0, 0);
+    cv::flip(p0_table1, impl_->p0_table1, 0);
+    cv::flip(p0_table2, impl_->p0_table2, 0);
+
+    impl_->fill_trig_tables(impl_->p0_table0, impl_->trig_table0);
+    impl_->fill_trig_tables(impl_->p0_table1, impl_->trig_table1);
+    impl_->fill_trig_tables(impl_->p0_table2, impl_->trig_table2);
+  }
+  else
+  {
+    impl_->fill_trig_tables(p0_table0, impl_->trig_table0);
+    impl_->fill_trig_tables(p0_table1, impl_->trig_table1);
+    impl_->fill_trig_tables(p0_table2, impl_->trig_table2);
+  }
 }
 
 void CpuDepthPacketProcessor::loadXTableFromFile(const char* filename)
 {
-  impl_->x_table = loadTableFromFile<float>(filename);
+  impl_->x_table.create(424, 512, CV_32FC1);
+  const unsigned char *data;
+  size_t length;
+
+  if(loadResource("xTable.bin", &data, &length))
+  {
+    std::copy(data, data + length, impl_->x_table.data);
+  }
+  else
+  {
+    std::cerr << "[CpuDepthPacketProcessor::loadXTableFromFile] Loading xtable from resource 'xTable.bin' failed!" << std::endl;
+  }
 }
 
 void CpuDepthPacketProcessor::loadZTableFromFile(const char* filename)
 {
-  impl_->z_table = loadTableFromFile<float>(filename);
+  impl_->z_table.create(424, 512, CV_32FC1);
+
+  const unsigned char *data;
+  size_t length;
+
+  if(loadResource("zTable.bin", &data, &length))
+  {
+    std::copy(data, data + length, impl_->z_table.data);
+  }
+  else
+  {
+    std::cerr << "[CpuDepthPacketProcessor::loadZTableFromFile] Loading ztable from resource 'zTable.bin' failed!" << std::endl;
+  }
 }
 
 void CpuDepthPacketProcessor::load11To16LutFromFile(const char* filename)
 {
-  size_t n = 2048 * sizeof(int16_t);
+  const unsigned char *data;
+  size_t length;
 
-  std::ifstream file(filename);
-  file.read(reinterpret_cast<char *>(impl_->lut11to16), n);
-
-  if(file.gcount() != n)
+  if(loadResource("11to16.bin", &data, &length))
   {
-    std::cerr << "file '" << filename << "' too short!" << std::endl;
+    std::copy(data, data + length, reinterpret_cast<unsigned char*>(impl_->lut11to16));
   }
-
-  file.close();
+  else
+  {
+    std::cerr << "[CpuDepthPacketProcessor::load11To16LutFromFile] Loading 11to16 lut from resource '11to16.bin' failed!" << std::endl;
+  }
 }
 
 void CpuDepthPacketProcessor::process(const DepthPacket &packet)
@@ -623,7 +743,12 @@ void CpuDepthPacketProcessor::process(const DepthPacket &packet)
 
   impl_->startTiming();
 
-  cv::Mat m = cv::Mat::zeros(424, 512, CV_32FC(9)), m_filtered = cv::Mat::zeros(424, 512, CV_32FC(9));
+  impl_->ir_frame->timestamp = packet.timestamp;
+  impl_->depth_frame->timestamp = packet.timestamp;
+  impl_->ir_frame->sequence = packet.sequence;
+  impl_->depth_frame->sequence = packet.sequence;
+
+  cv::Mat m = cv::Mat::zeros(424, 512, CV_32FC(9)), m_filtered = cv::Mat::zeros(424, 512, CV_32FC(9)), m_max_edge_test = cv::Mat::ones(424, 512, CV_8UC1);
 
   float *m_ptr = m.ptr<float>();
 
@@ -637,10 +762,14 @@ void CpuDepthPacketProcessor::process(const DepthPacket &packet)
   if(impl_->enable_bilateral_filter)
   {
     float *m_filtered_ptr = m_filtered.ptr<float>();
+    unsigned char *m_max_edge_test_ptr = m_max_edge_test.ptr<unsigned char>();
+
     for(int y = 0; y < 424; ++y)
-      for(int x = 0; x < 512; ++x, m_filtered_ptr += 9)
+      for(int x = 0; x < 512; ++x, m_filtered_ptr += 9, ++m_max_edge_test_ptr)
       {
-        impl_->filterPixelStage1(x, y, m, m_filtered_ptr);
+        bool max_edge_test_val = true;
+        impl_->filterPixelStage1(x, y, m, m_filtered_ptr, max_edge_test_val);
+        *m_max_edge_test_ptr = max_edge_test_val ? 1 : 0;
       }
 
     m_ptr = m_filtered.ptr<float>();
@@ -652,25 +781,47 @@ void CpuDepthPacketProcessor::process(const DepthPacket &packet)
 
   cv::Mat out_ir(424, 512, CV_32FC1, impl_->ir_frame->data), out_depth(424, 512, CV_32FC1, impl_->depth_frame->data);
 
-  for(int y = 0; y < 424; ++y)
-    for(int x = 0; x < 512; ++x, m_ptr += 9)
-    {
-      impl_->processPixelStage2(x, y, m_ptr + 0, m_ptr + 3, m_ptr + 6, out_ir.ptr<float>(423 - y, x), out_depth.ptr<float>(423 - y, x));
-    }
+  if(impl_->enable_edge_filter)
+  {
+    cv::Mat depth_ir_sum(424, 512, CV_32FC3);
+    cv::Vec3f *depth_ir_sum_ptr = depth_ir_sum.ptr<cv::Vec3f>();
+    unsigned char *m_max_edge_test_ptr = m_max_edge_test.ptr<unsigned char>();
 
-  if(listener_->addNewFrame(Frame::Ir, impl_->ir_frame))
+    for(int y = 0; y < 424; ++y)
+      for(int x = 0; x < 512; ++x, m_ptr += 9, ++m_max_edge_test_ptr, ++depth_ir_sum_ptr)
+      {
+        float raw_depth, ir_sum;
+
+        impl_->processPixelStage2(x, y, m_ptr + 0, m_ptr + 3, m_ptr + 6, out_ir.ptr<float>(423 - y, x), &raw_depth, &ir_sum);
+
+        depth_ir_sum_ptr->val[0] = raw_depth;
+        depth_ir_sum_ptr->val[1] = *m_max_edge_test_ptr == 1 ? raw_depth : 0;
+        depth_ir_sum_ptr->val[2] = ir_sum;
+      }
+
+    m_max_edge_test_ptr = m_max_edge_test.ptr<unsigned char>();
+
+    for(int y = 0; y < 424; ++y)
+      for(int x = 0; x < 512; ++x, ++m_max_edge_test_ptr)
+      {
+        impl_->filterPixelStage2(x, y, depth_ir_sum, *m_max_edge_test_ptr == 1, out_depth.ptr<float>(423 - y, x));
+      }
+  }
+  else
+  {
+    for(int y = 0; y < 424; ++y)
+      for(int x = 0; x < 512; ++x, m_ptr += 9)
+      {
+        impl_->processPixelStage2(x, y, m_ptr + 0, m_ptr + 3, m_ptr + 6, out_ir.ptr<float>(423 - y, x), out_depth.ptr<float>(423 - y, x), 0);
+      }
+  }
+
+  if(listener_->onNewFrame(Frame::Ir, impl_->ir_frame))
   {
     impl_->newIrFrame();
   }
-    
-//    if( impl_->depth_frame != NULL ){
-//        std::cout << " depth pixels copied over " << std::endl;
-////        pixDepth.setUseTexture(false);
-////        pixDepth.setFromPixels(((float *)impl_->depth_frame->data), impl_->depth_frame->width, impl_->depth_frame->height, OF_IMAGE_GRAYSCALE);
-//        //pixDepth.saveImage("depth.png");
-//    }
 
-  if(listener_->addNewFrame(Frame::Depth, impl_->depth_frame))
+  if(listener_->onNewFrame(Frame::Depth, impl_->depth_frame))
   {
     impl_->newDepthFrame();
   }

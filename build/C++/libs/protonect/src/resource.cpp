@@ -26,6 +26,12 @@
 
 #include <libfreenect2/resource.h>
 
+
+
+#include <string>
+#include <cstring>
+#include <iostream>
+
 namespace libfreenect2
 {
 
@@ -36,8 +42,10 @@ struct ResourceDescriptor
   size_t length;
 };
 
+#define RESOURCES_INC
+    
 #ifdef RESOURCES_INC
-#include "resources.inc"
+#include "resources.inc.h"
 #else
 ResourceDescriptor resource_descriptors[] = {};
 #endif
@@ -45,7 +53,8 @@ ResourceDescriptor resource_descriptors[] = {};
 bool loadResource(const std::string &name, unsigned char const**data, size_t *length)
 {
   bool result = false;
-  for(int i = 0; i < sizeof(resource_descriptors); ++i)
+
+  for(int i = 0; i < resource_descriptors_length; ++i)
   {
     if(name.compare(resource_descriptors[i].filename) == 0)
     {
@@ -56,6 +65,27 @@ bool loadResource(const std::string &name, unsigned char const**data, size_t *le
     }
   }
   return result;
+}
+
+bool loadBufferFromResources(const std::string &filename, unsigned char *buffer, const size_t n)
+{
+  size_t length = 0;
+  const unsigned char *data = NULL;
+
+  if(!loadResource(filename, &data, &length))
+  {
+    std::cerr << "loadBufferFromResources: failed to load resource: " << filename << std::endl;
+    return false;
+  }
+
+  if(length != n)
+  {
+    std::cerr << "loadBufferFromResources: wrong size of resource: " << filename << std::endl;
+    return false;
+  }
+
+  memcpy(buffer, data, length);
+  return true;
 }
 
 } /* namespace libfreenect2 */
