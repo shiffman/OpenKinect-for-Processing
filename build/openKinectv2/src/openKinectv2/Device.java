@@ -6,6 +6,7 @@ import processing.core.PVector;
 public class Device {
 	
     static {
+    	System.loadLibrary("turbojpeg");
         System.loadLibrary("JNILibfreenect2");
     }
     
