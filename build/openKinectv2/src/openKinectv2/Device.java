@@ -2,6 +2,7 @@ package openKinectv2;
 
 import processing.core.PApplet;
 import processing.core.PVector;
+import processing.core.PImage;
 
 public class Device {
 	
@@ -13,12 +14,15 @@ public class Device {
     
     private PApplet parent;
 	private long ptr;
+	
+	PImage depthImg;
 
     
     public Device(PApplet _p) {
 		parent = _p;
 		System.out.println("Starting Device");
 		
+		depthImg = parent.createImage(512, 424, PImage.ALPHA);
     }
     
     void openDevice(){
@@ -30,13 +34,27 @@ public class Device {
     	stopJNI();
     }
     
+    /**
+     * Process Depth Image
+     * @return
+     */
+    PImage getDepthImage(){
+    	int[] depthMaskData = jniGetDepthData();
+    	PApplet.arrayCopy(depthMaskData, 0, depthImg.pixels, 0, depthImg.width * depthImg.height);
+    	depthImg.updatePixels();
+		
+		return depthImg;
+    }
+    
+    
+    
    
     
     //JNI Functions
-    public native String stringFromJNI();
-    public native static void nativePrint();
     public native static void openJNI();
     public native static void stopJNI();
+    
+    public native int[] jniGetDepthData();
     
     
 }

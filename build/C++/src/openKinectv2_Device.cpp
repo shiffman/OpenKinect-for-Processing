@@ -24,22 +24,6 @@ JNIEXPORT void JNICALL Java_openKinectv2_Device_stopJNI(JNIEnv* env, jobject obj
     env->DeleteLocalRef(cls);
 }
 
-/*non-static method*/
-JNIEXPORT jstring JNICALL Java_openKinectv2_Device_stringFromJNI(JNIEnv* env, jobject obj)
-{
-    printf("native method called");
-    
-    return env->NewStringUTF("I'm JNI");
-}
-
-/*static method*/
-JNIEXPORT void JNICALL Java_openKinectv2_Device_nativePrint(JNIEnv* env, jobject obj)
-{
-    jclass cls = (jclass)obj;
-    jmethodID methodID = env->GetStaticMethodID(cls, "print", "()V");
-    env->CallStaticVoidMethod(cls, methodID);
-}
-
 
 JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetDepthData(JNIEnv * env, jobject obj)
 {
