@@ -27,6 +27,8 @@
 /* The classes below are exported */
 #pragma GCC visibility push(default)
 
+#define FRAME_SIZE_DEPTH    217088
+
 namespace  openKinect2{
     
     class Device
@@ -41,12 +43,21 @@ namespace  openKinect2{
         void sigint_handler(int s);
         
         
+        uint32_t *	JNI_GetDepth();
+        
+        
     private:
         void    updateKinect();
+        
+        void    setupDepth();
         
         int     openKinect(int mode = 1);
         
         void    closeKinect();
+        
+        
+        //help functions
+       int colorByte2Int(int gray);
         
     private:
         
@@ -60,6 +71,10 @@ namespace  openKinect2{
         libfreenect2::Freenect2Device *          dev = 0;
         libfreenect2::PacketPipeline  *          pipeline = 0;
         libfreenect2::Registration    *          registration = 0;
+        
+        uint32_t *	 depthData = 0;
+        
+        
         
     };
 

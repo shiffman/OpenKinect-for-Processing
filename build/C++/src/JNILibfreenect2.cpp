@@ -78,9 +78,14 @@ namespace openKinect2 {
         
         libfreenect2::Frame undistorted(512, 424, 4), registered(512, 424, 4);
         
+
+        
         dev->setColorFrameListener(listener);
         dev->setIrAndDepthFrameListener(listener);
         dev->start();
+        
+        std::cout <<"setup depth"<<std::endl;
+        setupDepth();
         
         std::cout << "device serial: " << dev->getSerialNumber() << std::endl;
         std::cout << "device firmware: " << dev->getFirmwareVersion() << std::endl;
@@ -93,6 +98,11 @@ namespace openKinect2 {
             return -1;
         
         return 1;
+    }
+    
+    void Device::setupDepth()
+    {
+        depthData         = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
     }
     
     void Device::closeKinect()
@@ -123,9 +133,20 @@ namespace openKinect2 {
         while(initialized_device){
             listener->waitForNewFrame(frames);
             
-            libfreenect2::Frame *rgb   = frames[libfreenect2::Frame::Color];
-            libfreenect2::Frame *ir    = frames[libfreenect2::Frame::Ir];
-            libfreenect2::Frame *depth = frames[libfreenect2::Frame::Depth];
+            libfreenect2::Frame * rgb   = frames[libfreenect2::Frame::Color];
+            libfreenect2::Frame * ir    = frames[libfreenect2::Frame::Ir];
+            libfreenect2::Frame * depth = frames[libfreenect2::Frame::Depth];
+            
+           // depthData[depthIndex] = colorByte2Int((uint32_t)intensity);
+            
+           
+            
+            
+            //depth -> 32 bit floating point signed depth in one channel
+            // 32FC1
+            //cv::imshow("depth", cv::Mat(depth->height, depth->width, CV_32FC1, depth->data) / 4500.0f);
+            //copy frame data the the depthData
+             memcpy(depth->data, depthData, FRAME_SIZE_DEPTH * sizeof(uint32_t));
             
             
            // registration->apply(rgb,depth, &undistorted, &registered);
@@ -137,10 +158,23 @@ namespace openKinect2 {
         }
     }
     
+    
+    
     void Device::stop()
     {
        // protonect->closeKinect();
         std::cout<<"stopging kinect v2 "<<std::endl;
         
+    }
+    
+    int Device::colorByte2Int(int gray){
+        gray = gray & 0xffff;
+        return 0xff000000 | (gray << 16) | (gray << 8) | gray;
+    }
+    
+    
+    uint32_t * Device::JNI_GetDepth()
+    {
+        return depthData;
     }
 }

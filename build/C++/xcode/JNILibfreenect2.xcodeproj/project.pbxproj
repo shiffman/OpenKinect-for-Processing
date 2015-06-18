@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E2785DB01B334B23007E4654 /* turbojpeg.h in Headers */ = {isa = PBXBuildFile; fileRef = E2785DAC1B334B23007E4654 /* turbojpeg.h */; };
+		E2785DB11B334B23007E4654 /* libturbojpeg.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E2785DAF1B334B23007E4654 /* libturbojpeg.dylib */; };
 		E287FF431B295C08005F5D56 /* openKinectv2_Device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2EC00B31B254B5E002AD63A /* openKinectv2_Device.cpp */; };
 		E287FF441B295C18005F5D56 /* JNILibfreenect2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FDFF1B289501005F5D56 /* JNILibfreenect2.cpp */; };
 		E2BC4C9B1B2FCC4400E95658 /* resources.inc.h in Headers */ = {isa = PBXBuildFile; fileRef = E2BC4C9A1B2FCC4400E95658 /* resources.inc.h */; };
 		E2BC4C9C1B2FD23B00E95658 /* turbo_jpeg_rgb_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A56E1B2FBE4C00CC239C /* turbo_jpeg_rgb_packet_processor.cpp */; };
-		E2BC4CA41B2FD5BC00E95658 /* turbojpeg.h in Headers */ = {isa = PBXBuildFile; fileRef = E2BC4CA01B2FD53C00E95658 /* turbojpeg.h */; };
 		E2BC4CA61B2FD62500E95658 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BC4CA51B2FD62500E95658 /* GLKit.framework */; };
 		E2BC4CC91B2FDB5B00E95658 /* transfer_pool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A56D1B2FBE4C00CC239C /* transfer_pool.cpp */; };
 		E2BC4CCA1B2FDB6000E95658 /* usb_control.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A56F1B2FBE4C00CC239C /* usb_control.cpp */; };
@@ -45,11 +46,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E2785DAC1B334B23007E4654 /* turbojpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = turbojpeg.h; sourceTree = "<group>"; };
+		E2785DAF1B334B23007E4654 /* libturbojpeg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libturbojpeg.dylib; sourceTree = "<group>"; };
 		E287FDFF1B289501005F5D56 /* JNILibfreenect2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JNILibfreenect2.cpp; path = ../src/JNILibfreenect2.cpp; sourceTree = "<group>"; };
 		E287FE011B292206005F5D56 /* openKinectv2_Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = openKinectv2_Device.h; path = ../src/openKinectv2_Device.h; sourceTree = "<group>"; };
 		E2BC4C9A1B2FCC4400E95658 /* resources.inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resources.inc.h; sourceTree = "<group>"; };
-		E2BC4CA01B2FD53C00E95658 /* turbojpeg.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = turbojpeg.h; sourceTree = "<group>"; };
-		E2BC4CA31B2FD53C00E95658 /* libturbojpeg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libturbojpeg.dylib; sourceTree = "<group>"; };
 		E2BC4CA51B2FD62500E95658 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		E2BC4CCC1B2FDD0D00E95658 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E2BC4CCE1B2FDD2500E95658 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -142,6 +143,7 @@
 			files = (
 				E2BC4CCF1B2FDD2500E95658 /* CoreVideo.framework in Frameworks */,
 				E2BC4CCD1B2FDD0D00E95658 /* Cocoa.framework in Frameworks */,
+				E2785DB11B334B23007E4654 /* libturbojpeg.dylib in Frameworks */,
 				E2BC4CA61B2FD62500E95658 /* GLKit.framework in Frameworks */,
 				E2F1A5921B2FC2E000CC239C /* OpenGL.framework in Frameworks */,
 				E2F1A57B1B2FBE9600CC239C /* OpenCL.framework in Frameworks */,
@@ -154,35 +156,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E2BC4C9E1B2FD53C00E95658 /* libTurboJpeg */ = {
+		E2785DAA1B334B23007E4654 /* libTurboJpeg */ = {
 			isa = PBXGroup;
 			children = (
-				E2BC4C9F1B2FD53C00E95658 /* include */,
-				E2BC4CA11B2FD53C00E95658 /* lib */,
+				E2785DAB1B334B23007E4654 /* include */,
+				E2785DAD1B334B23007E4654 /* lib */,
 			);
-			path = libTurboJpeg;
+			name = libTurboJpeg;
+			path = ../libs/libTurboJpeg;
 			sourceTree = "<group>";
 		};
-		E2BC4C9F1B2FD53C00E95658 /* include */ = {
+		E2785DAB1B334B23007E4654 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				E2BC4CA01B2FD53C00E95658 /* turbojpeg.h */,
+				E2785DAC1B334B23007E4654 /* turbojpeg.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
 		};
-		E2BC4CA11B2FD53C00E95658 /* lib */ = {
+		E2785DAD1B334B23007E4654 /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				E2BC4CA21B2FD53C00E95658 /* osx */,
+				E2785DAE1B334B23007E4654 /* osx */,
 			);
 			path = lib;
 			sourceTree = "<group>";
 		};
-		E2BC4CA21B2FD53C00E95658 /* osx */ = {
+		E2785DAE1B334B23007E4654 /* osx */ = {
 			isa = PBXGroup;
 			children = (
-				E2BC4CA31B2FD53C00E95658 /* libturbojpeg.dylib */,
+				E2785DAF1B334B23007E4654 /* libturbojpeg.dylib */,
 			);
 			path = osx;
 			sourceTree = "<group>";
@@ -235,7 +238,7 @@
 		E2F1A5161B2FBDC500CC239C /* libs */ = {
 			isa = PBXGroup;
 			children = (
-				E2BC4C9E1B2FD53C00E95658 /* libTurboJpeg */,
+				E2785DAA1B334B23007E4654 /* libTurboJpeg */,
 				E2F1A5171B2FBE4C00CC239C /* libfreenect2 */,
 				E2F1A51A1B2FBE4C00CC239C /* libusb */,
 				E2F1A52F1B2FBE4C00CC239C /* protonect */,
@@ -459,7 +462,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2BC4CA41B2FD5BC00E95658 /* turbojpeg.h in Headers */,
+				E2785DB01B334B23007E4654 /* turbojpeg.h in Headers */,
 				E2BC4C9B1B2FCC4400E95658 /* resources.inc.h in Headers */,
 				E2F1A5901B2FC28100CC239C /* Protonect.h in Headers */,
 			);
@@ -724,11 +727,13 @@
 					../libs/protonect/include/libfreenect2/usb,
 					../libs/protonect/include/libfreenecr2,
 					../libs/protonect/include/OpenCL,
+					../libs/libTurboJpeg/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/lib,
 					../libs/libusb/lib/osx,
+					../libs/libTurboJpeg/lib/osx,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -738,6 +743,9 @@
 				);
 				OTHER_LDFLAGS = (
 					"../libs/libusb/lib/osx/usb-1.0.0-superspeed.a",
+					"-lobjc",
+					../libs/libTurboJpeg/lib/osx/libturbojpeg.dylib,
+					"-lglfw",
 					"-lopencv_calib3d",
 					"-lopencv_core",
 					"-lopencv_features2d",
@@ -751,10 +759,6 @@
 					"-lopencv_superres",
 					"-lopencv_ts",
 					"-lopencv_video",
-					"-lopencv_videostab",
-					"-lobjc",
-					../libs/libTurboJpeg/lib/osx/libturbojpeg.dylib,
-					"-lglfw",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
@@ -789,11 +793,13 @@
 					../libs/protonect/include/libfreenect2/usb,
 					../libs/protonect/include/libfreenecr2,
 					../libs/protonect/include/OpenCL,
+					../libs/libTurboJpeg/include,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					/usr/local/lib,
 					../libs/libusb/lib/osx,
+					../libs/libTurboJpeg/lib/osx,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -803,6 +809,9 @@
 				);
 				OTHER_LDFLAGS = (
 					"../libs/libusb/lib/osx/usb-1.0.0-superspeed.a",
+					"-lobjc",
+					../libs/libTurboJpeg/lib/osx/libturbojpeg.dylib,
+					"-lglfw",
 					"-lopencv_calib3d",
 					"-lopencv_core",
 					"-lopencv_features2d",
@@ -816,10 +825,6 @@
 					"-lopencv_superres",
 					"-lopencv_ts",
 					"-lopencv_video",
-					"-lopencv_videostab",
-					"-lobjc",
-					../libs/libTurboJpeg/lib/osx/libturbojpeg.dylib,
-					"-lglfw",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
