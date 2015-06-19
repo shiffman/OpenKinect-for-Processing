@@ -16,7 +16,9 @@ public class DepthTest extends PApplet{
 	
 	
 	public void draw(){
-		
+		background(0);
+		PImage depth = openKinect2.getDepthImage();
+		image(depth, 0, 0);
 	}
 	
 }

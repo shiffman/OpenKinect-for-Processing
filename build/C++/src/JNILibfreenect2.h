@@ -42,8 +42,11 @@ namespace  openKinect2{
         
         void sigint_handler(int s);
         
+        std::string getVersion();
+        
         
         uint32_t *	JNI_GetDepth();
+        bool        isDepthReady();
         
         
     private:
@@ -56,6 +59,7 @@ namespace  openKinect2{
         void    closeKinect();
         
         
+        
         //help functions
        int colorByte2Int(int gray);
         
@@ -65,17 +69,16 @@ namespace  openKinect2{
         
         bool                initialized_device;
     
-        
         libfreenect2::Freenect2                  freenect2;
         libfreenect2::SyncMultiFrameListener *   listener = 0;
         libfreenect2::Freenect2Device *          dev = 0;
         libfreenect2::PacketPipeline  *          pipeline = 0;
         libfreenect2::Registration    *          registration = 0;
         
-        uint32_t *	 depthData = 0;
+        uint32_t *	 depthData;
         
-        
-        
+        std::string version;
+    
     };
 
 }

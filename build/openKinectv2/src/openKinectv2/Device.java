@@ -11,18 +11,20 @@ public class Device {
         System.loadLibrary("JNILibfreenect2");
     }
     
-    
     private PApplet parent;
 	private long ptr;
 	
 	PImage depthImg;
-
     
     public Device(PApplet _p) {
 		parent = _p;
 		System.out.println("Starting Device");
 		
+		ptr = initJNI();
+		
 		depthImg = parent.createImage(512, 424, PImage.ALPHA);
+
+		//System.out.println(version());
     }
     
     void openDevice(){
@@ -38,23 +40,26 @@ public class Device {
      * Process Depth Image
      * @return
      */
-    PImage getDepthImage(){
+    public PImage getDepthImage(){
     	int[] depthMaskData = jniGetDepthData();
-    	PApplet.arrayCopy(depthMaskData, 0, depthImg.pixels, 0, depthImg.width * depthImg.height);
-    	depthImg.updatePixels();
+    	if(depthMaskData.length == depthImg.width * depthImg.height){
+    		PApplet.arrayCopy(depthMaskData, 0, depthImg.pixels, 0, depthImg.width * depthImg.height);
+    		depthImg.updatePixels();
+    	}
 		
 		return depthImg;
     }
     
-    
-    
-   
-    
     //JNI Functions
-    public native static void openJNI();
-    public native static void stopJNI();
+
+    private  native long initJNI();
     
-    public native int[] jniGetDepthData();
+    private  native  void openJNI();
+    private  native void stopJNI();
+    
+    private  native  String version();
+    
+    private  native int[] jniGetDepthData();
     
     
 }

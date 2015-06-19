@@ -19,8 +19,18 @@ namespace openKinect2 {
     
     Device::Device()
     {
-        std::cout<<" Hello openKinect2 "<<std::endl;
+        std::cout<<"Hello openKinect2 "<<std::endl;
+  
+        std::cout << "setup depth" << std::endl;
+        depthData = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
+        
+        version = "0.01";
 
+    }
+    
+    std::string Device::getVersion()
+    {
+        return version;
     }
     
     int Device::openKinect(int mode)
@@ -84,9 +94,6 @@ namespace openKinect2 {
         dev->setIrAndDepthFrameListener(listener);
         dev->start();
         
-        std::cout <<"setup depth"<<std::endl;
-        setupDepth();
-        
         std::cout << "device serial: " << dev->getSerialNumber() << std::endl;
         std::cout << "device firmware: " << dev->getFirmwareVersion() << std::endl;
         
@@ -100,10 +107,7 @@ namespace openKinect2 {
         return 1;
     }
     
-    void Device::setupDepth()
-    {
-        depthData         = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
-    }
+
     
     void Device::closeKinect()
     {
@@ -146,7 +150,8 @@ namespace openKinect2 {
             // 32FC1
             //cv::imshow("depth", cv::Mat(depth->height, depth->width, CV_32FC1, depth->data) / 4500.0f);
             //copy frame data the the depthData
-             memcpy(depth->data, depthData, FRAME_SIZE_DEPTH * sizeof(uint32_t));
+           // if(depth->data != NULL)
+           //     memcpy(depth->data, depthData, FRAME_SIZE_DEPTH * 4);
             
             
            // registration->apply(rgb,depth, &undistorted, &registered);
@@ -172,9 +177,14 @@ namespace openKinect2 {
         return 0xff000000 | (gray << 16) | (gray << 8) | gray;
     }
     
-    
+    //depth
     uint32_t * Device::JNI_GetDepth()
     {
         return depthData;
+    }
+    
+    bool Device::isDepthReady()
+    {
+        return  (depthData != NULL) ? true : false;
     }
 }
