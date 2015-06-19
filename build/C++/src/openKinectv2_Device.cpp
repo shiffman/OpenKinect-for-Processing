@@ -28,8 +28,12 @@ JNIEXPORT void JNICALL Java_openKinectv2_Device_stopJNI(JNIEnv* env, jobject obj
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
     openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
-    kinect->stop();
-    env->DeleteLocalRef(cls);
+    kinect->closeKinect();
+    
+    
+    env->DeleteLocalRef( cls );
+    env->SetLongField( obj, fid, -1 );
+    env->DeleteGlobalRef( obj );
 }
 
 JNIEXPORT jstring JNICALL Java_openKinectv2_Device_version(JNIEnv* env, jobject obj)

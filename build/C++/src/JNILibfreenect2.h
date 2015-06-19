@@ -36,11 +36,11 @@ namespace  openKinect2{
     public:
         Device();
         
-        void open(int mode = 1);
+        void    open(int mode = 1);
         
-        void stop();
+        void    closeKinect();
         
-        void sigint_handler(int s);
+        void    sigint_handler(int s);
         
         std::string getVersion();
         
@@ -56,7 +56,7 @@ namespace  openKinect2{
         
         int     openKinect(int mode = 1);
         
-        void    closeKinect();
+
         
         
         
@@ -67,6 +67,7 @@ namespace  openKinect2{
         
         std::thread         mKinectThread;
         
+        //initilized
         bool                initialized_device;
     
         libfreenect2::Freenect2                  freenect2;
@@ -78,6 +79,8 @@ namespace  openKinect2{
         uint32_t *	 depthData;
         
         std::string version;
+        
+        std::string mSerialKinect;
     
     };
 

@@ -51,13 +51,11 @@ public class Device {
     }
     
     //JNI Functions
-
     private  native long initJNI();
-    
-    private  native  void openJNI();
+    private  native void openJNI();
     private  native void stopJNI();
     
-    private  native  String version();
+    private  native String version();
     
     private  native int[] jniGetDepthData();
     

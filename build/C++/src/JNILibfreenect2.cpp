@@ -14,17 +14,18 @@ namespace openKinect2 {
     
     void Device::sigint_handler(int s)
     {
-        initialized_device = true;
+        //initialized_device = true;
     }
     
     Device::Device()
     {
         std::cout<<"Hello openKinect2 "<<std::endl;
-  
-        std::cout << "setup depth" << std::endl;
+        
+        initialized_device = false;
         depthData = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
         
         version = "0.01";
+        mSerialKinect = "";
 
     }
     
@@ -38,35 +39,48 @@ namespace openKinect2 {
         if(freenect2.enumerateDevices() == 0)
         {
             std::cout << "no device connected!" << std::endl;
+            initialized_device = false;
             return -1;
         }
         
         std::string serial = freenect2.getDefaultDeviceSerialNumber();
         
-        
         if(mode == 1)
         {
-            if(!pipeline)
+            if(!pipeline){
                 pipeline = new libfreenect2::CpuPacketPipeline();
+                initialized_device = true;
+            }else{
+                 initialized_device = false;
+                return -1;
+            }
         }
         else if(mode == 2)
         {
             
-            if(!pipeline)
+            if(!pipeline){
                 pipeline = new libfreenect2::OpenGLPacketPipeline();
-            else
+                 initialized_device = true;
+            }else{
+                 initialized_device = false;
                 return -1;
+            }
             //std::cout << "OpenGL pipeline is not supported!" << std::endl;
             
         }
         else if(mode == 3)
         {
             
-            if(!pipeline)
+            if(!pipeline){
                 pipeline = new libfreenect2::OpenCLPacketPipeline();
-            
+                 initialized_device = true;
+            }else{
+                initialized_device = false;
+                return -1;
+            }
             //std::cout << "OpenCL pipeline is not supported!" << std::endl;
         }else{
+            initialized_device = false;
             return -1;
         }
         
@@ -81,28 +95,33 @@ namespace openKinect2 {
             dev = freenect2.openDevice(serial);
         }
         
-        initialized_device = false;
+        if(initialized_device){
         
-       // signal(SIGINT, &Device::sigint_handler);
-        listener = new libfreenect2::SyncMultiFrameListener(libfreenect2::Frame::Color | libfreenect2::Frame::Ir | libfreenect2::Frame::Depth);
+            //signal(SIGINT, &Device::sigint_handler);
+            listener = new libfreenect2::SyncMultiFrameListener(libfreenect2::Frame::Color | libfreenect2::Frame::Ir | libfreenect2::Frame::Depth);
         
-        libfreenect2::Frame undistorted(512, 424, 4), registered(512, 424, 4);
+            libfreenect2::Frame undistorted(512, 424, 4), registered(512, 424, 4);
         
 
+            dev->setColorFrameListener(listener);
+            dev->setIrAndDepthFrameListener(listener);
+            dev->start();
         
-        dev->setColorFrameListener(listener);
-        dev->setIrAndDepthFrameListener(listener);
-        dev->start();
+            std::cout << "device serial: " << dev->getSerialNumber() << std::endl;
+            std::cout << "device firmware: " << dev->getFirmwareVersion() << std::endl;
+            
+            mSerialKinect = dev->getSerialNumber();
+            
+            registration = new libfreenect2::Registration(dev->getIrCameraParams(), dev->getColorCameraParams());
+        }
         
-        std::cout << "device serial: " << dev->getSerialNumber() << std::endl;
-        std::cout << "device firmware: " << dev->getFirmwareVersion() << std::endl;
-        
-        registration = new libfreenect2::Registration(dev->getIrCameraParams(), dev->getColorCameraParams());
-        
-        if(registration != NULL)
+        if(registration != NULL){
+            initialized_device = true;
             return 1;
-        else
+        }else{
+            initialized_device = false;
             return -1;
+        }
         
         return 1;
     }
@@ -111,11 +130,20 @@ namespace openKinect2 {
     
     void Device::closeKinect()
     {
-        dev->stop();
-        dev->close();
+        std::cout<<"closing Kinect v2 :"<<mSerialKinect<<std::endl;
+        if(initialized_device){
+            dev->stop();
+            dev->close();
         
-        if( registration != NULL)
-            delete registration;
+            if( registration != NULL){
+                std::cout<<"eror 4"<<std::endl;
+                delete registration;
+            }
+        }
+        
+        if(depthData != NULL){
+            delete depthData;
+        }
     }
     
     void Device::open(int mode)
@@ -161,15 +189,6 @@ namespace openKinect2 {
             
             listener->release(frames);
         }
-    }
-    
-    
-    
-    void Device::stop()
-    {
-       // protonect->closeKinect();
-        std::cout<<"stopging kinect v2 "<<std::endl;
-        
     }
     
     int Device::colorByte2Int(int gray){
