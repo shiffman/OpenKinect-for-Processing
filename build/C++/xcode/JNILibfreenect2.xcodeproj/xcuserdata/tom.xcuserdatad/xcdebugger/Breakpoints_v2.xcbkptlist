@@ -30,9 +30,7 @@
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "76"
-            endingLineNumber = "76"
-            landmarkName = "RgbPacketStreamParser::onDataReceived(unsigned char* buffer, size_t length)"
-            landmarkType = "5">
+            endingLineNumber = "76">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

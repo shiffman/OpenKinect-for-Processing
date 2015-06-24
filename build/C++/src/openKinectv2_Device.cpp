@@ -19,7 +19,8 @@ JNIEXPORT void JNICALL Java_openKinectv2_Device_openJNI(JNIEnv* env, jobject obj
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
     openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
-    kinect->open(0);
+    std::cout<<"opening kinect"<<std::endl;
+    kinect->open(3); //1
     env->DeleteLocalRef(cls);
 }
 
@@ -61,3 +62,81 @@ JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetDepthData(JNIEnv * en
 
     return buffer;
 }
+
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniChangeA(JNIEnv *env, jobject obj, jfloat value)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->valA = value;
+}
+
+
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniChangeR(JNIEnv *env, jobject obj, jfloat value)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->valR = value;
+}
+
+
+
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniChangeG(JNIEnv *env, jobject obj, jfloat value)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->valG = value;
+}
+
+
+
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniChangeB(JNIEnv *env, jobject obj, jfloat value)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->valB = value;
+}
+
+
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniDepth(JNIEnv *env, jobject obj, jboolean value)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->mapDepth = value;
+}
+
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniGamma
+(JNIEnv * env, jobject obj, jfloat Gamma)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->gamma = Gamma;
+}
+
+
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniMin
+(JNIEnv * env, jobject obj, jfloat min)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->min = min;
+}
+
+
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniMax
+(JNIEnv * env, jobject obj, jfloat max)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->max = max;
+}
+
+
+

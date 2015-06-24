@@ -155,7 +155,7 @@ void RgbPacketStreamParser::onDataReceived(unsigned char* buffer, size_t length)
       }
       else
       {
-        std::cerr << "[RgbPacketStreamParser::onDataReceived] skipping rgb packet!" << std::endl;
+        //std::cerr << "[RgbPacketStreamParser::onDataReceived] skipping rgb packet!" << std::endl;
       }
 
       // reset front buffer

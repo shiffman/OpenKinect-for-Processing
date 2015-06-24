@@ -13,6 +13,7 @@
 #include <iostream>
 #include <thread>
 #include <mutex>
+#include <cmath>
 
 #include <iostream>
 #include <signal.h>
@@ -28,6 +29,8 @@
 #pragma GCC visibility push(default)
 
 #define FRAME_SIZE_DEPTH    217088
+#define FLT_EPSILON         1.19209290e-07F
+
 
 namespace  openKinect2{
     
@@ -47,7 +50,19 @@ namespace  openKinect2{
         
         uint32_t *	JNI_GetDepth();
         bool        isDepthReady();
+    
         
+        
+        float valR;
+        float valG;
+        float valB;
+        float valA;
+        float gamma;
+        
+        float min;
+        float max;
+        
+              bool mapDepth;
         
     private:
         void    updateKinect();
@@ -56,14 +71,21 @@ namespace  openKinect2{
         
         int     openKinect(int mode = 1);
         
-
+        float   clamp(float value, float min, float max);
+        float   lmap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp);
+        
+        //float clamp(float val, float low1, float high1, float low2, float hgih2);
         
         
+  
         
         //help functions
        int colorByte2Int(int gray);
+       int colorByte2Int(int gray, int alpha);
+       uint32_t colorByte2Int(unsigned char  a, unsigned char  r,  unsigned char  g, unsigned char  b);
         
     private:
+        
         
         std::thread         mKinectThread;
         
@@ -81,6 +103,7 @@ namespace  openKinect2{
         std::string version;
         
         std::string mSerialKinect;
+        
     
     };
 

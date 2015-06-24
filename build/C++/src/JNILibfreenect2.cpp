@@ -14,7 +14,7 @@ namespace openKinect2 {
     
     void Device::sigint_handler(int s)
     {
-        //initialized_device = true;
+        initialized_device = true;
     }
     
     Device::Device()
@@ -26,6 +26,12 @@ namespace openKinect2 {
         
         version = "0.01";
         mSerialKinect = "";
+        
+        mapDepth = false;
+        gamma =1.0f;
+        
+        min = 0;
+        max = 4500;
 
     }
     
@@ -45,7 +51,7 @@ namespace openKinect2 {
         
         std::string serial = freenect2.getDefaultDeviceSerialNumber();
         
-        if(mode == 1)
+        if(mode == 1) //cpu
         {
             if(!pipeline){
                 pipeline = new libfreenect2::CpuPacketPipeline();
@@ -87,6 +93,7 @@ namespace openKinect2 {
         
         if(pipeline)
         {
+            initialized_device = true;
             dev = freenect2.openDevice(serial, pipeline);
         }
         else
@@ -153,6 +160,7 @@ namespace openKinect2 {
         if(retVal == 1){
              mKinectThread = std::thread(&Device::updateKinect, this);
             initialized_device = true;
+            std::cout<<"initilize depth thread"<<std::endl;
         }else{
             initialized_device = false;
         }
@@ -161,6 +169,11 @@ namespace openKinect2 {
     void Device::updateKinect()
     {
         libfreenect2::FrameMap frames;
+        
+        int couter = 0;
+        
+      
+
         
         while(initialized_device){
             listener->waitForNewFrame(frames);
@@ -171,15 +184,83 @@ namespace openKinect2 {
             
            // depthData[depthIndex] = colorByte2Int((uint32_t)intensity);
             
-           
             
+            int pDepthTmp = 0;
+            int pDepthEnd = (512 * 424);
+            int index = 0;
+            int indexDepth = 0;
+            
+            int maxa =0;
+            int mina = 10;
+            while(pDepthTmp < pDepthEnd){
+                int pixelA = depth->data[index++];//noisy
+                int pixelR = depth->data[index++];//noisy lines
+                int pixelG = depth->data[index++]; //great but with white lines
+                int pixelB = depth->data[index++]; // gray depth no scale
+                
+                //ABGR format
+                
+            
+                //gray strips just like the kinect v2 sdk
+               // float gray = (float)pixelB * 0.2126 * (float)pixelG * 0.2126 + (float)pixelR * 0.0722;
+               // depthData[pDepthTmp] = colorByte2Int((uint32_t)gray);
+                
+                int gray =  int(((pixelB) * valB)  +  ((pixelG) * valG)  +  ((pixelR)* valR) + ((pixelA) * valA));
+                
+                //uint32_t gray =  ((float)pixelB * valB)  +  ((float)pixelG * valG)  +  ((float)pixelR * valR) + ((float)pixelA * valA);
+                //float gray = pow(((float)pixelB * valB), gamma)  * pow(((float)pixelG * valG), gamma)  + pow(((float)pixelR * valR), gamma) + pow(((float)pixelA * valA), gamma);
+                
+            
+                //b =0;
+                //a = 0;
+                
+                //4500.0f
+                //2654.98, grayValue
+              
+                    
+                if(gray > maxa)
+                    maxa= gray;
+                if(gray < mina )
+                    mina = gray;
+                
+                
+                //if (map == 255)
+                 //   map = 0.0;
+        
+                //32 -> 500
+                if(mapDepth){
+                    
+                   // map  = lmap((float)pixelG, 0.0, 255, 0, 255, true);
+                 //   int map  = (int)lmap((float)pixelG, 0.0, 255, 255, 0, true);
+                    depthData[pDepthTmp] =  colorByte2Int(pixelG);
+                }else{
+                    // depthData[pDepthTmp] = gray;
+                   // int map  = (int)lmap((float)pixelG, 0.0, 255, 255, 0, true);
+                    depthData[pDepthTmp] = colorByte2Int(pixelG + min);
+                }
+            
+                
+                
+               // depthData[pDepthTmp] = colorByte2Int(pixelA + pixelR + pixelG);
+                pDepthTmp++;
+               // std::cout<<(float)pixelA * valA<<" "<<pixelA<<std::endl;
+               // std::cout<<gray<<" ";
+                //std::cout<<(int)pixelA<<" "<<(int)pixelR<<" "<<(int)pixelG<<" "<<(int)pixelB<<std::endl;
+            }
+            couter++;
+            //value -= 0.001;
+            //std::cout<<value<<std::endl;
+            if( couter % 90 == 0)
+                std::cout<<maxa<<", "<<mina<<std::endl;
+        
             
             //depth -> 32 bit floating point signed depth in one channel
             // 32FC1
             //cv::imshow("depth", cv::Mat(depth->height, depth->width, CV_32FC1, depth->data) / 4500.0f);
             //copy frame data the the depthData
            // if(depth->data != NULL)
-           //     memcpy(depth->data, depthData, FRAME_SIZE_DEPTH * 4);
+                //memcpy(depth->data, depthData, FRAME_SIZE_DEPTH * 4);
+           // std::cout<<"sending depth"<<std::endl;
             
             
            // registration->apply(rgb,depth, &undistorted, &registered);
@@ -191,9 +272,56 @@ namespace openKinect2 {
         }
     }
     
-    int Device::colorByte2Int(int gray){
+    float Device::clamp(float value, float min, float max) {
+        return value < min ? min : value > max ? max : value;
+    }
+    
+    float Device::lmap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp) {
+        
+        if (fabs(inputMin - inputMax) < FLT_EPSILON){
+            return outputMin;
+        } else {
+            float outVal = ((value - inputMin) / (inputMax - inputMin) * (outputMax - outputMin) + outputMin);
+            
+            if( clamp ){
+                if(outputMax < outputMin){
+                    if( outVal < outputMax )outVal = outputMax;
+                    else if( outVal > outputMin )outVal = outputMin;
+                }else{
+                    if( outVal > outputMax )outVal = outputMax;
+                    else if( outVal < outputMin )outVal = outputMin;
+                }
+            }
+            return outVal;
+        }
+    }
+
+    
+    int Device::colorByte2Int(int gray, int alpha)
+    {
+        gray = gray & 0xffff;
+        alpha = alpha & 0xffff;
+        return (alpha << 24) | (gray << 16) | (gray << 8) | gray;
+    }
+    
+    int Device::colorByte2Int(int gray)
+    {
         gray = gray & 0xffff;
         return 0xff000000 | (gray << 16) | (gray << 8) | gray;
+    }
+    
+    
+    uint32_t Device::colorByte2Int(unsigned char  a, unsigned char  r, unsigned char g, unsigned char  b)
+    {
+        //return a | ( int(r) << 8 ) | ( int(g) << 16 ) | ( int(b) << 24 );
+        //return (a << 24) | (r << 16) | (g << 8) | b;
+       // gray = gray & 0xffff;
+       // return 0xff000000 | (gray << 16) | (gray << 8) | gray;
+        
+       int  rb = r & 0xffff;
+       int  gb = g & 0xffff;
+       int  bb = b & 0xffff;
+        return 0xff000000 | (rb << 16) | (gb << 8) | bb;
     }
     
     //depth
