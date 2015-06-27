@@ -23,6 +23,9 @@ namespace openKinect2 {
         
         initialized_device = false;
         depthData = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
+        irData    = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
+        colorData = (uint32_t *)malloc(FRAME_SIZE_COLOR * sizeof(uint32_t));
+
         
         version = "0.01";
         mSerialKinect = "";
@@ -107,7 +110,7 @@ namespace openKinect2 {
             //signal(SIGINT, &Device::sigint_handler);
             listener = new libfreenect2::SyncMultiFrameListener(libfreenect2::Frame::Color | libfreenect2::Frame::Ir | libfreenect2::Frame::Depth);
         
-            libfreenect2::Frame undistorted(512, 424, 4), registered(512, 424, 4);
+            
         
 
             dev->setColorFrameListener(listener);
@@ -151,6 +154,14 @@ namespace openKinect2 {
         if(depthData != NULL){
             delete depthData;
         }
+        
+        if(irData != NULL){
+            delete  irData;
+        }
+        
+        if(colorData != NULL){
+            delete colorData;
+        }
     }
     
     void Device::open(int mode)
@@ -182,23 +193,52 @@ namespace openKinect2 {
             libfreenect2::Frame * ir    = frames[libfreenect2::Frame::Ir];
             libfreenect2::Frame * depth = frames[libfreenect2::Frame::Depth];
             
+            libfreenect2::Frame undistorted(512, 424, 4), registered(512, 424, 4);
+            
+            
+            registration->apply(rgb,depth,&undistorted,&registered);
+            
            // depthData[depthIndex] = colorByte2Int((uint32_t)intensity);
             
             
+            memccpy(rgb->data, colorData, 0, FRAME_SIZE_COLOR);
+            
+            
             int pDepthTmp = 0;
-            int pDepthEnd = (512 * 424);
-            int index = 0;
+            int pDepthEnd = (FRAME_SIZE_DEPTH);
+      
+            
             int indexDepth = 0;
+            
+            int indexIR = 0;
             
             int maxa =0;
             int mina = 10;
             while(pDepthTmp < pDepthEnd){
-                int pixelA = depth->data[index++];//noisy
-                int pixelR = depth->data[index++];//noisy lines
-                int pixelG = depth->data[index++]; //great but with white lines
-                int pixelB = depth->data[index++]; // gray depth no scale
+                int pixelA = depth->data[indexDepth++];//noisy
+                int pixelR = depth->data[indexDepth++];//noisy lines
+                int pixelG = depth->data[indexDepth++]; //great but with white lines
+                int pixelB = depth->data[indexDepth++]; // gray depth no scale
                 
-                //ABGR format
+                int pixelIrB = ir->data[indexIR++];//noise
+                int pixelIrG = ir->data[indexIR++];//noise
+                int pixelIrR = ir->data[indexIR++]; //gray with noise
+                int pixelIrA = ir->data[indexIR++]; // gray with no light
+                
+                //irData[pDepthTmp] =  colorByte2Int(pixelIrR*valB, pixelIrA*valA);
+                if(pixelIrR > 255)
+                    pixelIrR =255;
+                if(pixelIrR <= 0)
+                    pixelIrR =0;
+                
+                uint32_t val = colorByte2Int(pixelIrA, pixelIrR, pixelIrG, pixelIrB);
+                
+        
+               
+
+                
+                irData[pDepthTmp] =  val;//colorByte2Int(col
+            
                 
             
                 //gray strips just like the kinect v2 sdk
@@ -261,15 +301,34 @@ namespace openKinect2 {
            // if(depth->data != NULL)
                 //memcpy(depth->data, depthData, FRAME_SIZE_DEPTH * 4);
            // std::cout<<"sending depth"<<std::endl;
+            // registration->apply(rgb,depth, &undistorted, &registered);
+
+            
+          
+    
+            //Converts Color Format to RGB.
+            int pColorEnd = (FRAME_SIZE_COLOR);
             
             
-           // registration->apply(rgb,depth, &undistorted, &registered);
+            int indexColor = 0;
+            int pColorIndex = 0;
             
-            //int key = cv::waitKey(1);
-            //protonect_shutdown = protonect_shutdown || (key > 0 && ((key & 0xFF) == 27)); // shutdown on escape
+            while(pColorIndex < pColorEnd){
+                int pixelColB =  rgb->data[indexColor++];
+                int pixelColG =  rgb->data[indexColor++];
+                int pixelColR =  rgb->data[indexColor++];
+                int pixelColA =  rgb->data[indexColor++];
+                
+                //ABGR format
+                
+                colorData[pColorIndex] = colorByte2Int(pixelColR, pixelColG, pixelColB, pixelColA);
+                pColorIndex++;
+            }
             
+            //framw listener
             listener->release(frames);
         }
+        
     }
     
     float Device::clamp(float value, float min, float max) {
@@ -311,17 +370,14 @@ namespace openKinect2 {
     }
     
     
-    uint32_t Device::colorByte2Int(unsigned char  a, unsigned char  r, unsigned char g, unsigned char  b)
+    uint32_t Device::colorByte2Int(int r, int g, int b, int  a)
     {
         //return a | ( int(r) << 8 ) | ( int(g) << 16 ) | ( int(b) << 24 );
         //return (a << 24) | (r << 16) | (g << 8) | b;
        // gray = gray & 0xffff;
        // return 0xff000000 | (gray << 16) | (gray << 8) | gray;
         
-       int  rb = r & 0xffff;
-       int  gb = g & 0xffff;
-       int  bb = b & 0xffff;
-        return 0xff000000 | (rb << 16) | (gb << 8) | bb;
+        return a << 24 | (r << 16) | (g << 8) | b;
     }
     
     //depth
@@ -329,6 +385,17 @@ namespace openKinect2 {
     {
         return depthData;
     }
+    
+    uint32_t *  Device::JNI_GetColor()
+    {
+        return colorData;
+    }
+    
+    uint32_t *  Device::JNI_GetIr()
+    {
+        return irData;
+    }
+    
     
     bool Device::isDepthReady()
     {

@@ -17,6 +17,9 @@ public class Device {
 	private long ptr;
 	
 	PImage depthImg;
+	PImage irImg;
+	PImage colorImg;
+	
 	PShader shader;
 	
     public Device(PApplet _p) {
@@ -25,8 +28,9 @@ public class Device {
 		
 		ptr = initJNI();
 		
-		depthImg = parent.createImage(512, 424, PImage.RGB);
-
+		depthImg = parent.createImage(512, 424, PImage.ARGB);
+		irImg 	 = parent.createImage(512, 424, PImage.ALPHA);
+		colorImg = parent.createImage(1920, 1080, PImage.ARGB);
 		//System.out.println(version());
 		
 		shader = parent.loadShader(System.getProperty("user.dir")+"/data/color.glsl");
@@ -77,15 +81,48 @@ public class Device {
      * @return
      */
     public PImage getDepthImage(){
-    	int[] depthMaskData = jniGetDepthData();
+    	int[] depthRawData = jniGetDepthData();
     	//if(depthMaskData.length == depthImg.width * depthImg.height){
-    		PApplet.arrayCopy(depthMaskData, 0, depthImg.pixels, 0, depthImg.width * depthImg.height);
+    		PApplet.arrayCopy(depthRawData, 0, depthImg.pixels, 0, depthImg.width * depthImg.height);
     		depthImg.updatePixels();
     		//System.out.println("get depth");
     	//}
 		
 		return depthImg;
     }
+    
+    /**
+     * Process Infrared Image
+     * @return
+     */
+    public PImage getIrImage(){
+    	int[] irRawData = jniGetIrData();
+    	//if(depthMaskData.length == depthImg.width * depthImg.height){
+    		PApplet.arrayCopy(irRawData, 0, irImg.pixels, 0, irImg.width * irImg.height);
+    		irImg.updatePixels();
+    		//System.out.println("get depth");
+    	//}
+		
+		return irImg;
+    }
+    
+    
+    /**
+     *  Process Color Image
+     * @return
+     */
+    public PImage getColorImage(){
+    	int[] colorRawData = jniGetColorData();
+    	//if(depthMaskData.length == depthImg.width * depthImg.height){
+    		PApplet.arrayCopy(colorRawData, 0, colorImg.pixels, 0, colorImg.width * colorImg.height);
+    		colorImg.updatePixels();
+    		//System.out.println("get depth");
+    	//}
+		
+		return colorImg;
+    }
+    
+
     
     //JNI Functions
     private  native long initJNI();
@@ -105,6 +142,7 @@ public class Device {
     private  native String version();
     
     private  native int[] jniGetDepthData();
-    
+    private  native int[] jniGetIrData();
+    private  native int[] jniGetColorData();
     
 }

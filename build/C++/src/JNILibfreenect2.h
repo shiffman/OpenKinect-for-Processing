@@ -29,6 +29,7 @@
 #pragma GCC visibility push(default)
 
 #define FRAME_SIZE_DEPTH    217088
+#define FRAME_SIZE_COLOR    2073600
 #define FLT_EPSILON         1.19209290e-07F
 
 
@@ -49,6 +50,9 @@ namespace  openKinect2{
         
         
         uint32_t *	JNI_GetDepth();
+        uint32_t *  JNI_GetColor();
+        uint32_t *  JNI_GetIr();
+        
         bool        isDepthReady();
     
         
@@ -77,12 +81,17 @@ namespace  openKinect2{
         //float clamp(float val, float low1, float high1, float low2, float hgih2);
         
         
-  
+        static inline uint8_t u8fromfloat_trick(float x)
+        {
+            union { float f; uint32_t i; } u;
+            u.f = 32768.0f + x * (255.0f / 256.0f);
+            return (uint8_t)u.i;
+        }
         
         //help functions
        int colorByte2Int(int gray);
        int colorByte2Int(int gray, int alpha);
-       uint32_t colorByte2Int(unsigned char  a, unsigned char  r,  unsigned char  g, unsigned char  b);
+        uint32_t colorByte2Int(int r, int g, int b, int  a);
         
     private:
         
@@ -99,6 +108,11 @@ namespace  openKinect2{
         libfreenect2::Registration    *          registration = 0;
         
         uint32_t *	 depthData;
+        uint32_t *	 colorData;
+        uint32_t *	 irData;
+        uint32_t *   undisorted;
+        uint32_t *   registered;
+        
         
         std::string version;
         

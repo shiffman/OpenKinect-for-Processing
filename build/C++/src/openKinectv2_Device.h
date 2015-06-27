@@ -47,6 +47,22 @@ JNIEXPORT jstring JNICALL Java_openKinectv2_Device_version
 JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetDepthData
   (JNIEnv *, jobject);
     
+/*
+ * Class:     openKinectv2_Device
+ * Method:    jniGetDepthData
+ * Signature: ()[I
+ */
+JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetIrData
+(JNIEnv *, jobject);
+
+/*
+ * Class:     openKinectv2_Device
+ * Method:    jniGetDepthData
+ * Signature: ()[I
+ */
+JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetColorData
+(JNIEnv *, jobject);
+    
     
 JNIEXPORT void JNICALL Java_openKinectv2_Device_jniChangeA
     (JNIEnv *, jobject, jfloat value);
