@@ -110,8 +110,6 @@ namespace openKinect2 {
             //signal(SIGINT, &Device::sigint_handler);
             listener = new libfreenect2::SyncMultiFrameListener(libfreenect2::Frame::Color | libfreenect2::Frame::Ir | libfreenect2::Frame::Depth);
         
-            
-        
 
             dev->setColorFrameListener(listener);
             dev->setIrAndDepthFrameListener(listener);
@@ -181,11 +179,8 @@ namespace openKinect2 {
     {
         libfreenect2::FrameMap frames;
         
-        int couter = 0;
-        
-      
 
-        
+        //MAIN THREAD
         while(initialized_device){
             listener->waitForNewFrame(frames);
             
@@ -196,120 +191,53 @@ namespace openKinect2 {
             libfreenect2::Frame undistorted(512, 424, 4), registered(512, 424, 4);
             
             
+            //COLOR DEPTH MAPPING
             registration->apply(rgb,depth,&undistorted,&registered);
-            
-           // depthData[depthIndex] = colorByte2Int((uint32_t)intensity);
-            
-            
-            memccpy(rgb->data, colorData, 0, FRAME_SIZE_COLOR);
             
             
             int pDepthTmp = 0;
             int pDepthEnd = (FRAME_SIZE_DEPTH);
-      
-            
             int indexDepth = 0;
-            
             int indexIR = 0;
             
-            int maxa =0;
-            int mina = 10;
+            //DEPTH AND IR
             while(pDepthTmp < pDepthEnd){
-                int pixelA = depth->data[indexDepth++];//noisy
-                int pixelR = depth->data[indexDepth++];//noisy lines
-                int pixelG = depth->data[indexDepth++]; //great but with white lines
-                int pixelB = depth->data[indexDepth++]; // gray depth no scale
                 
+                //DEPTH
+                int pixelDepthA = depth->data[indexDepth++];//noisy
+                int pixelDepthR = depth->data[indexDepth++];//noisy lines
+                int pixelDepthG = depth->data[indexDepth++]; //great but with white lines
+                int pixelDepthB = depth->data[indexDepth++]; // gray depth no scale
+                
+                //IR
                 int pixelIrB = ir->data[indexIR++];//noise
                 int pixelIrG = ir->data[indexIR++];//noise
                 int pixelIrR = ir->data[indexIR++]; //gray with noise
                 int pixelIrA = ir->data[indexIR++]; // gray with no light
                 
-                //irData[pDepthTmp] =  colorByte2Int(pixelIrR*valB, pixelIrA*valA);
-                if(pixelIrR > 255)
-                    pixelIrR =255;
-                if(pixelIrR <= 0)
-                    pixelIrR =0;
-                
-                uint32_t val = colorByte2Int(pixelIrA, pixelIrR, pixelIrG, pixelIrB);
-                
-        
-               
+                //DEPTH
+                depthData[pDepthTmp] =  colorByte2Int(pixelDepthG);
 
-                
-                irData[pDepthTmp] =  val;//colorByte2Int(col
-            
-                
+                //IR
+                irData[pDepthTmp] =  colorByte2Int(pixelIrR);
+              
             
                 //gray strips just like the kinect v2 sdk
-               // float gray = (float)pixelB * 0.2126 * (float)pixelG * 0.2126 + (float)pixelR * 0.0722;
-               // depthData[pDepthTmp] = colorByte2Int((uint32_t)gray);
-                
-                int gray =  int(((pixelB) * valB)  +  ((pixelG) * valG)  +  ((pixelR)* valR) + ((pixelA) * valA));
-                
+                // float gray = (float)pixelB * 0.2126 * (float)pixelG * 0.2126 + (float)pixelR * 0.0722;
+                // depthData[pDepthTmp] = colorByte2Int((uint32_t)gray);
                 //uint32_t gray =  ((float)pixelB * valB)  +  ((float)pixelG * valG)  +  ((float)pixelR * valR) + ((float)pixelA * valA);
                 //float gray = pow(((float)pixelB * valB), gamma)  * pow(((float)pixelG * valG), gamma)  + pow(((float)pixelR * valR), gamma) + pow(((float)pixelA * valA), gamma);
-                
-            
-                //b =0;
-                //a = 0;
-                
-                //4500.0f
-                //2654.98, grayValue
-              
-                    
-                if(gray > maxa)
-                    maxa= gray;
-                if(gray < mina )
-                    mina = gray;
-                
-                
-                //if (map == 255)
-                 //   map = 0.0;
-        
-                //32 -> 500
-                if(mapDepth){
-                    
-                   // map  = lmap((float)pixelG, 0.0, 255, 0, 255, true);
-                 //   int map  = (int)lmap((float)pixelG, 0.0, 255, 255, 0, true);
-                    depthData[pDepthTmp] =  colorByte2Int(pixelG);
-                }else{
-                    // depthData[pDepthTmp] = gray;
-                   // int map  = (int)lmap((float)pixelG, 0.0, 255, 255, 0, true);
-                    depthData[pDepthTmp] = colorByte2Int(pixelG + min);
-                }
-            
-                
-                
-               // depthData[pDepthTmp] = colorByte2Int(pixelA + pixelR + pixelG);
-                pDepthTmp++;
-               // std::cout<<(float)pixelA * valA<<" "<<pixelA<<std::endl;
-               // std::cout<<gray<<" ";
-                //std::cout<<(int)pixelA<<" "<<(int)pixelR<<" "<<(int)pixelG<<" "<<(int)pixelB<<std::endl;
-            }
-            couter++;
-            //value -= 0.001;
-            //std::cout<<value<<std::endl;
-            if( couter % 90 == 0)
-                std::cout<<maxa<<", "<<mina<<std::endl;
-        
-            
-            //depth -> 32 bit floating point signed depth in one channel
-            // 32FC1
-            //cv::imshow("depth", cv::Mat(depth->height, depth->width, CV_32FC1, depth->data) / 4500.0f);
-            //copy frame data the the depthData
-           // if(depth->data != NULL)
-                //memcpy(depth->data, depthData, FRAME_SIZE_DEPTH * 4);
-           // std::cout<<"sending depth"<<std::endl;
-            // registration->apply(rgb,depth, &undistorted, &registered);
+                //int gray =  int(((pixelDepthB) * valB)  +  ((pixelDepthG) * valG)  +  ((pixelDepthR)* valR) + ((pixelDepthA) * valA));
 
-            
+                
+                pDepthTmp++;
+
+            }
+        
           
     
             //Converts Color Format to RGB.
             int pColorEnd = (FRAME_SIZE_COLOR);
-            
-            
             int indexColor = 0;
             int pColorIndex = 0;
             
