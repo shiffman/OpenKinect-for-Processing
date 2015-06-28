@@ -223,7 +223,7 @@ namespace openKinect2 {
               
             
                 //gray strips just like the kinect v2 sdk
-                // float gray = (float)pixelB * 0.2126 * (float)pixelG * 0.2126 + (float)pixelR * 0.0722;
+                // float gray = (float)pixelB * 0.2126 * (float)pixelG * 0.7152f + (float)pixelR * 0.0722;
                 // depthData[pDepthTmp] = colorByte2Int((uint32_t)gray);
                 //uint32_t gray =  ((float)pixelB * valB)  +  ((float)pixelG * valG)  +  ((float)pixelR * valR) + ((float)pixelA * valA);
                 //float gray = pow(((float)pixelB * valB), gamma)  * pow(((float)pixelG * valG), gamma)  + pow(((float)pixelR * valR), gamma) + pow(((float)pixelA * valA), gamma);

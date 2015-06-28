@@ -6,7 +6,7 @@
 
 *.mode2v3
 
-buid/Java/lib/JNILibfreenect2.build
+build_openKinect2/Java/lib/JNILibfreenect2.build
 
 *.dSYM
 *.dylib.dSYM
@@ -16,11 +16,11 @@ buid/Java/lib/JNILibfreenect2.build
 
 *.metadata
 
-build/.metadata
+build_openKinect2/.metadata
 
-build/.recommenders
+build_openKinect2/.recommenders
 
-build/openKinectv2/bin/java.policy.applet
+build_openKinect2/openKinectv2/bin/java.policy.applet
 
 #processing
 
@@ -53,6 +53,6 @@ build/openKinectv2/bin/java.policy.applet
 *.lock
 
 
-build/openKinectv2/lib/libJNILibfreenect2.dylib.dSYM/Contents/Resources/DWARF/libJNILibfreenect2.dylib
+build_openKinect2/openKinectv2/lib/libJNILibfreenect2.dylib.dSYM/Contents/Resources/DWARF/libJNILibfreenect2.dylib
 
 *.log
