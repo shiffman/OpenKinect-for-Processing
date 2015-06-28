@@ -33,7 +33,7 @@ public class Device {
 		colorImg = parent.createImage(1920, 1080, PImage.ARGB);
 		//System.out.println(version());
 		
-		shader = parent.loadShader(System.getProperty("user.dir")+"/data/color.glsl");
+		//shader = parent.loadShader(System.getProperty("user.dir")+"/data/color.glsl");
     }
     
     void openDevice(){
