@@ -248,7 +248,7 @@ namespace openKinect2 {
                 undisortedData[pIndexTmp] =  colorByte2Int(pixelUndistR);
                 
                 //registered
-                registeredData[pIndexTmp] =  colorByte2Int(pixelRegR);
+                registeredData[pIndexTmp] = colorByte2Int(pixelRegR, pixelRegG, pixelRegB, pixelRegA);
                 
                 pIndexTmp++;
 
