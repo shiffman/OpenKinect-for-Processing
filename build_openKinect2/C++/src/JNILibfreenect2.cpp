@@ -205,8 +205,8 @@ namespace openKinect2 {
             //COLOR DEPTH MAPPING
             registration->apply(rgb, depth, &undistorted, &registered);
             
-            int pDepthTmp = 0;
-            int pDepthEnd = (FRAME_SIZE_DEPTH);
+            int pIndexTmp = 0;
+            int pIndexEnd = (FRAME_SIZE_DEPTH);
             
             int indexDepth = 0;
             int indexIR = 0;
@@ -214,7 +214,7 @@ namespace openKinect2 {
             int indexRegistered = 0;
             
             //DEPTH AND IR
-            while(pDepthTmp < pDepthEnd){
+            while(pIndexTmp < pIndexEnd){
                 
                 //DEPTH
                 int pixelDepthA = depth->data[indexDepth++];//noisy
@@ -239,12 +239,18 @@ namespace openKinect2 {
                 int pixelRegA = registered.data[indexRegistered++];
                 
                 //DEPTH
-                depthData[pDepthTmp] =  colorByte2Int(pixelDepthG);
+                depthData[pIndexTmp] =  colorByte2Int(pixelDepthG);
 
                 //IR
-                irData[pDepthTmp] =  colorByte2Int(pixelIrR);
+                irData[pIndexTmp] =  colorByte2Int(pixelIrR);
                 
-                pDepthTmp++;
+                //undistored
+                undisortedData[pIndexTmp] =  colorByte2Int(pixelUndistR);
+                
+                //registered
+                registeredData[pIndexTmp] =  colorByte2Int(pixelRegR);
+                
+                pIndexTmp++;
 
             }
         
