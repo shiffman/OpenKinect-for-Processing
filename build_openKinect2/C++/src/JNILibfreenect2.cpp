@@ -144,7 +144,6 @@ namespace openKinect2 {
             dev->close();
         
             if( registration != NULL){
-                std::cout<<"eror 4"<<std::endl;
                 delete registration;
             }
         }
@@ -193,6 +192,11 @@ namespace openKinect2 {
         
 
         //MAIN THREAD
+        float  pixelDepth =0;
+        int     timeCounter = 0;
+        float   max = 0;
+        float   min = 99999;
+        
         while(initialized_device){
             listener->waitForNewFrame(frames);
             
@@ -204,6 +208,8 @@ namespace openKinect2 {
             
             //COLOR DEPTH MAPPING
             registration->apply(rgb, depth, &undistorted, &registered);
+            
+           
             
             int pIndexTmp = 0;
             int pIndexEnd = (FRAME_SIZE_DEPTH);
@@ -217,32 +223,41 @@ namespace openKinect2 {
             while(pIndexTmp < pIndexEnd){
                 
                 //DEPTH
-                int pixelDepthA = depth->data[indexDepth++];//noisy
-                int pixelDepthR = depth->data[indexDepth++];//noisy lines
-                int pixelDepthG = depth->data[indexDepth++]; //great but with white lines
-                int pixelDepthB = depth->data[indexDepth++]; // gray depth no scale
+                uint8_t pixelDepthB = depth->data[indexDepth++];//noisy
+                uint8_t pixelDepthG = depth->data[indexDepth++];//noisy lines
+                uint8_t pixelDepthR = depth->data[indexDepth++]; //great but with white lines
+                uint8_t pixelDepthA = depth->data[indexDepth++]; // gray depth no scale
                 
                 //IR
-                int pixelIrB = ir->data[indexIR++];//noise
-                int pixelIrG = ir->data[indexIR++];//noise
-                int pixelIrR = ir->data[indexIR++]; //gray with noise
-                int pixelIrA = ir->data[indexIR++]; // gray with no light
+                uint8_t pixelIrB = ir->data[indexIR++];//noise
+                uint8_t pixelIrG = ir->data[indexIR++];//noise
+                uint8_t pixelIrR = ir->data[indexIR++]; //gray with noise
+                uint8_t pixelIrA = ir->data[indexIR++]; // gray with no light
                 
-                int pixelUndistB = undistorted.data[indexUndisorted++];
-                int pixelUndistG = undistorted.data[indexUndisorted++];
-                int pixelUndistR = undistorted.data[indexUndisorted++];
-                int pixelUndistA = undistorted.data[indexUndisorted++];
+                uint8_t pixelUndistB = undistorted.data[indexUndisorted++];
+                uint8_t pixelUndistG = undistorted.data[indexUndisorted++];
+                uint8_t pixelUndistR = undistorted.data[indexUndisorted++];
+                uint8_t pixelUndistA = undistorted.data[indexUndisorted++];
                 
-                int pixelRegB = registered.data[indexRegistered++];
-                int pixelRegG = registered.data[indexRegistered++];
-                int pixelRegR = registered.data[indexRegistered++];
-                int pixelRegA = registered.data[indexRegistered++];
+                uint8_t pixelRegB = registered.data[indexRegistered++];
+                uint8_t pixelRegG = registered.data[indexRegistered++];
+                uint8_t pixelRegR = registered.data[indexRegistered++];
+                uint8_t pixelRegA = registered.data[indexRegistered++];
                 
                 //DEPTH
-                depthData[pIndexTmp] =  colorByte2Int(pixelDepthG);
-
+                pixelDepth = 0.2126 * pixelDepthA + 0.7152 * pixelDepthR + 0.0722 * pixelDepthG;
+                uint8_t pix = u8fromfloat_trick(pixelDepth);
+                depthData[pIndexTmp] =  colorByte2Int(pixelDepthG, pixelDepthR, pixelDepthA, pixelDepthB);
+                
+                if(pixelDepth > max)
+                    max =pixelDepth;
+                
+                if(pixelDepth < min)
+                    min = pixelDepth;
+                
                 //IR
-                irData[pIndexTmp] =  colorByte2Int(pixelIrR);
+                uint8_t pixelIr = uint32_t( 0.2126 * pixelIrA + 0.7152 * pixelIrR + 0.0722 * pixelIrG);
+                irData[pIndexTmp] =  colorByte2Int(pixelIrA);//, pixelIr, pixelIr);
                 
                 //undistored
                 undisortedData[pIndexTmp] =  colorByte2Int(pixelUndistR);
@@ -251,8 +266,13 @@ namespace openKinect2 {
                 registeredData[pIndexTmp] = colorByte2Int(pixelRegR, pixelRegG, pixelRegB, pixelRegA);
                 
                 pIndexTmp++;
-
             }
+            
+            if(timeCounter % 90 == 0){
+                std::cout<<"pixel "<<min<<" "<<max<<std::endl;
+            }
+            
+            timeCounter++;
         
           
     
@@ -262,10 +282,10 @@ namespace openKinect2 {
             int pColorIndex = 0;
             
             while(pColorIndex < pColorEnd){
-                int pixelColB =  rgb->data[indexColor++];
-                int pixelColG =  rgb->data[indexColor++];
-                int pixelColR =  rgb->data[indexColor++];
-                int pixelColA =  rgb->data[indexColor++];
+                uint8_t pixelColB =  rgb->data[indexColor++];
+                uint8_t pixelColG =  rgb->data[indexColor++];
+                uint8_t pixelColR =  rgb->data[indexColor++];
+                uint8_t pixelColA =  rgb->data[indexColor++];
                 
                 //ABGR format
                 
@@ -332,21 +352,25 @@ namespace openKinect2 {
     }
     
     
-    int Device::colorByte2Int(int gray, int alpha)
+    uint32_t Device::colorByte2Int(uint8_t gray, uint8_t alpha)
     {
         gray = gray & 0xffff;
         alpha = alpha & 0xffff;
         return (alpha << 24) | (gray << 16) | (gray << 8) | gray;
     }
     
-    int Device::colorByte2Int(int gray)
+    uint32_t Device::colorByte2Int(uint8_t gray)
     {
         gray = gray & 0xffff;
         return 0xff000000 | (gray << 16) | (gray << 8) | gray;
     }
     
+    uint32_t Device::colorByte2Int(uint8_t r, uint8_t g, uint8_t b)
+    {
+         return 0xff000000  | (r << 16) | (g << 8) | b;
+    }
     
-    uint32_t Device::colorByte2Int(int r, int g, int b, int  a)
+    uint32_t Device::colorByte2Int(uint8_t r, uint8_t g, uint8_t b, uint8_t  a)
     {
         //return a | ( int(r) << 8 ) | ( int(g) << 16 ) | ( int(b) << 24 );
         //return (a << 24) | (r << 16) | (g << 8) | b;

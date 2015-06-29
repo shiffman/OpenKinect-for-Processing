@@ -34,10 +34,10 @@ public class Device {
 		
 		ptr = initJNI();
 		
-		depthImg = parent.createImage(512, 424, PImage.ARGB);
+		depthImg = parent.createImage(512, 424, PImage.ALPHA);
 		irImg 	 = parent.createImage(512, 424, PImage.ALPHA);
 		colorImg = parent.createImage(1920, 1080, PImage.ARGB);
-		undistortedImg = parent.createImage(512, 424, PImage.ARGB);
+		undistortedImg = parent.createImage(512, 424, PImage.ALPHA);
 		registeredImg  = parent.createImage(512, 424, PImage.ARGB);
 		
 		//System.out.println(version());

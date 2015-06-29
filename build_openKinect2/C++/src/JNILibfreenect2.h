@@ -88,9 +88,10 @@ namespace  openKinect2{
         }
         
         //help functions
-       int colorByte2Int(int gray);
-       int colorByte2Int(int gray, int alpha);
-        uint32_t colorByte2Int(int r, int g, int b, int  a);
+        uint32_t colorByte2Int(uint8_t gray);
+        uint32_t colorByte2Int(uint8_t gray, uint8_t alpha);
+        uint32_t colorByte2Int(uint8_t r, uint8_t g, uint8_t b, uint8_t  a);
+        uint32_t colorByte2Int(uint8_t r, uint8_t g, uint8_t b);
         
     private:
         
