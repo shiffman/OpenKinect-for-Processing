@@ -19,6 +19,8 @@ public class Device {
 	PImage depthImg;
 	PImage irImg;
 	PImage colorImg;
+	PImage undistortedImg;
+	PImage registeredImg;
 	
 	PShader shader;
 	
@@ -31,6 +33,10 @@ public class Device {
 		depthImg = parent.createImage(512, 424, PImage.ARGB);
 		irImg 	 = parent.createImage(512, 424, PImage.ALPHA);
 		colorImg = parent.createImage(1920, 1080, PImage.ARGB);
+		undistortedImg = parent.createImage(512, 424, PImage.ARGB);
+		registeredImg  = parent.createImage(512, 424, PImage.ARGB);
+		
+		
 		//System.out.println(version());
 		
 		//shader = parent.loadShader(System.getProperty("user.dir")+"/data/color.glsl");
@@ -122,6 +128,20 @@ public class Device {
 		return colorImg;
     }
     
+    public PImage getUndistoredImage(){
+    	int[] undistoredData = jniGetUndistorted();
+    	PApplet.arrayCopy(undistoredData, 0, undistortedImg.pixels, 0, undistortedImg.width* undistortedImg.height);;
+    	undistortedImg.updatePixels();
+    	return undistortedImg;
+    }
+    
+    public PImage getRegisteredImage(){
+    	int[] registeredData = jniGetRegistered();
+    	PApplet.arrayCopy(registeredData, 0, registeredImg.pixels, 0, registeredImg.width* registeredImg.height);;
+    	registeredImg.updatePixels();
+    	return registeredImg;
+    }
+    
 
     
     //JNI Functions
@@ -141,8 +161,9 @@ public class Device {
     private native void jniGamma(float val);
     private  native String version();
     
-    private  native int[] jniGetDepthData();
-    private  native int[] jniGetIrData();
-    private  native int[] jniGetColorData();
-    
+    private  native int [] jniGetDepthData();
+    private  native int [] jniGetIrData();
+    private  native int [] jniGetColorData();
+    private  native int [] jniGetUndistorted();
+    private  native int [] jniGetRegistered();
 }

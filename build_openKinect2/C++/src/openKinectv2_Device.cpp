@@ -55,7 +55,7 @@ JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetDepthData(JNIEnv * en
     jintArray buffer = env->NewIntArray((jsize)FRAME_SIZE_DEPTH);
     
     const jint * pInt;
-    if(kinect->isDepthReady()){
+    if(kinect->isKinectReady()){
         pInt = (const jint * )kinect->JNI_GetDepth();
         env->SetIntArrayRegion(buffer, 0, (jsize)FRAME_SIZE_DEPTH, (const jint *)(pInt));
     }
@@ -73,7 +73,7 @@ JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetIrData(JNIEnv * env, 
     jintArray buffer = env->NewIntArray((jsize)FRAME_SIZE_DEPTH);
     
     const jint * pInt;
-    if(kinect->isDepthReady()){
+    if(kinect->isKinectReady()){
         pInt = (const jint * )kinect->JNI_GetIr();
         env->SetIntArrayRegion(buffer, 0, (jsize)FRAME_SIZE_DEPTH, (const jint *)(pInt));
     }
@@ -91,9 +91,48 @@ JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetColorData(JNIEnv * en
     jintArray buffer = env->NewIntArray((jsize)FRAME_SIZE_COLOR);
     
     const jint * pInt;
-    if(kinect->isDepthReady()){
+    if(kinect->isKinectReady()){
         pInt = (const jint * )kinect->JNI_GetColor();
         env->SetIntArrayRegion(buffer, 0, (jsize)FRAME_SIZE_COLOR, (const jint *)(pInt));
+    }
+    
+    return buffer;
+}
+
+/*
+ * Class:     openKinectv2_Device
+ * Method:    jniGetDepthData
+ * Signature: ()[I
+ */
+JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetUndistorted(JNIEnv * env, jobject obj)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    jintArray buffer = env->NewIntArray((jsize)FRAME_SIZE_DEPTH);
+    
+    const jint * pInt;
+    if(kinect->isKinectReady()){
+        pInt = (const jint * )kinect->JNI_GetUndistorted();
+        env->SetIntArrayRegion(buffer, 0, (jsize)FRAME_SIZE_DEPTH, (const jint *)(pInt));
+    }
+    
+    return buffer;
+}
+
+JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetRegistered(JNIEnv * env, jobject obj)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    jintArray buffer = env->NewIntArray((jsize)FRAME_SIZE_DEPTH);
+    
+    const jint * pInt;
+    if(kinect->isKinectReady()){
+        pInt = (const jint * )kinect->JNI_GetRegistered();
+        env->SetIntArrayRegion(buffer, 0, (jsize)FRAME_SIZE_DEPTH, (const jint *)(pInt));
     }
     
     return buffer;

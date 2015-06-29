@@ -52,8 +52,10 @@ namespace  openKinect2{
         uint32_t *	JNI_GetDepth();
         uint32_t *  JNI_GetColor();
         uint32_t *  JNI_GetIr();
+        uint32_t *  JNI_GetUndistorted();
+        uint32_t *  JNI_GetRegistered();
         
-        bool        isDepthReady();
+        bool        isKinectReady();
     
         
         
@@ -66,7 +68,7 @@ namespace  openKinect2{
         float min;
         float max;
         
-              bool mapDepth;
+        bool mapDepth;
         
     private:
         void    updateKinect();
@@ -77,9 +79,6 @@ namespace  openKinect2{
         
         float   clamp(float value, float min, float max);
         float   lmap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp);
-        
-        //float clamp(float val, float low1, float high1, float low2, float hgih2);
-        
         
         static inline uint8_t u8fromfloat_trick(float x)
         {
@@ -110,8 +109,8 @@ namespace  openKinect2{
         uint32_t *	 depthData;
         uint32_t *	 colorData;
         uint32_t *	 irData;
-        uint32_t *   undisorted;
-        uint32_t *   registered;
+        uint32_t *   undisortedData;
+        uint32_t *   registeredData;
         
         
         std::string version;
