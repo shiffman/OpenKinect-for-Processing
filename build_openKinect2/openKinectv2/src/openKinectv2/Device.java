@@ -24,6 +24,10 @@ public class Device {
 	
 	PShader shader;
 	
+	/**
+	 * Constructor for openKinect 2
+	 * @param _p PApplet parent
+	 */
     public Device(PApplet _p) {
 		parent = _p;
 		System.out.println("Starting Device");
@@ -36,18 +40,22 @@ public class Device {
 		undistortedImg = parent.createImage(512, 424, PImage.ARGB);
 		registeredImg  = parent.createImage(512, 424, PImage.ARGB);
 		
-		
 		//System.out.println(version());
-		
-		//shader = parent.loadShader(System.getProperty("user.dir")+"/data/color.glsl");
     }
     
-    void openDevice(){
+   
+    /**
+     * Open and initialize the Device
+     */
+    public void openDevice(){
     	openJNI();
     	
     }
     
-    void stopDevice(){
+    /**
+     * Close Device
+     */
+    public void stopDevice(){
     	stopJNI();
     }
     
@@ -83,51 +91,43 @@ public class Device {
     
     
     /**
-     * Process Depth Image
-     * @return
+     * Process Depth Image (512 x 424)
+     * @return PImage
      */
     public PImage getDepthImage(){
     	int[] depthRawData = jniGetDepthData();
-    	//if(depthMaskData.length == depthImg.width * depthImg.height){
-    		PApplet.arrayCopy(depthRawData, 0, depthImg.pixels, 0, depthImg.width * depthImg.height);
-    		depthImg.updatePixels();
-    		//System.out.println("get depth");
-    	//}
-		
+    	PApplet.arrayCopy(depthRawData, 0, depthImg.pixels, 0, depthImg.width * depthImg.height);
+    	depthImg.updatePixels();
 		return depthImg;
     }
     
     /**
-     * Process Infrared Image
-     * @return
+     * Process Infrared Image (512 x 424)
+     * @return PImage
      */
     public PImage getIrImage(){
     	int[] irRawData = jniGetIrData();
-    	//if(depthMaskData.length == depthImg.width * depthImg.height){
-    		PApplet.arrayCopy(irRawData, 0, irImg.pixels, 0, irImg.width * irImg.height);
-    		irImg.updatePixels();
-    		//System.out.println("get depth");
-    	//}
-		
+    	PApplet.arrayCopy(irRawData, 0, irImg.pixels, 0, irImg.width * irImg.height);
+    	irImg.updatePixels();
 		return irImg;
     }
     
     
     /**
-     *  Process Color Image
-     * @return
+     *  Process Color Image (1920 x 1080)
+     * @return PImage
      */
     public PImage getColorImage(){
     	int[] colorRawData = jniGetColorData();
-    	//if(depthMaskData.length == depthImg.width * depthImg.height){
-    		PApplet.arrayCopy(colorRawData, 0, colorImg.pixels, 0, colorImg.width * colorImg.height);
-    		colorImg.updatePixels();
-    		//System.out.println("get depth");
-    	//}
-		
+    	PApplet.arrayCopy(colorRawData, 0, colorImg.pixels, 0, colorImg.width * colorImg.height);
+    	colorImg.updatePixels();
 		return colorImg;
     }
     
+    /**
+     * Process the undistored Image  (512 x 442) Image output
+     * @return PImage 
+     */
     public PImage getUndistoredImage(){
     	int[] undistoredData = jniGetUndistorted();
     	PApplet.arrayCopy(undistoredData, 0, undistortedImg.pixels, 0, undistortedImg.width* undistortedImg.height);;
@@ -135,6 +135,10 @@ public class Device {
     	return undistortedImg;
     }
     
+    /**
+     * Process the registered Image RGB and Depth mapping (512 x 442) Image output
+     * @return PImage
+     */
     public PImage getRegisteredImage(){
     	int[] registeredData = jniGetRegistered();
     	PApplet.arrayCopy(registeredData, 0, registeredImg.pixels, 0, registeredImg.width* registeredImg.height);;
