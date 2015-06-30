@@ -14,7 +14,7 @@
 		<string>github.com:ThomasLengeling/libfreenect2-for-processing.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>build/protonectTest/xcode/ProtonectTest.xcodeproj</string>
+	<string>build_openKinect2/protonectTest/xcode/ProtonectTest.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>49AA77055867AAE9A10721EEA59C590D1EAEDB9C</key>
@@ -34,7 +34,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>49AA77055867AAE9A10721EEA59C590D1EAEDB9C</string>
 			<key>IDESourceControlWCCName</key>
-			<string>libfreenect2-for-processing</string>
+			<string>openKinect2</string>
 		</dict>
 	</array>
 </dict>

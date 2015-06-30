@@ -24,10 +24,8 @@
 		E2F1A5771B2FBE8800CC239C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F1A5761B2FBE8800CC239C /* IOKit.framework */; };
 		E2F1A5791B2FBE9100CC239C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F1A5781B2FBE9100CC239C /* CoreFoundation.framework */; };
 		E2F1A57B1B2FBE9600CC239C /* OpenCL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F1A57A1B2FBE9600CC239C /* OpenCL.framework */; };
-		E2F1A57C1B2FBF6200CC239C /* Protonect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A54B1B2FBE4C00CC239C /* Protonect.cpp */; };
 		E2F1A57D1B2FBF6E00CC239C /* rgb_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A5601B2FBE4C00CC239C /* rgb_packet_processor.cpp */; };
 		E2F1A57E1B2FBF7900CC239C /* command_transaction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A54E1B2FBE4C00CC239C /* command_transaction.cpp */; };
-		E2F1A57F1B2FBF7900CC239C /* cpu_depth_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A54F1B2FBE4C00CC239C /* cpu_depth_packet_processor.cpp */; };
 		E2F1A5801B2FBF7900CC239C /* depth_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A5501B2FBE4C00CC239C /* depth_packet_processor.cpp */; };
 		E2F1A5811B2FBF7900CC239C /* depth_packet_stream_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A5511B2FBE4C00CC239C /* depth_packet_stream_parser.cpp */; };
 		E2F1A5821B2FBF7900CC239C /* double_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A5521B2FBE4C00CC239C /* double_buffer.cpp */; };
@@ -41,7 +39,6 @@
 		E2F1A58A1B2FBF8F00CC239C /* registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A55D1B2FBE4C00CC239C /* registration.cpp */; };
 		E2F1A58B1B2FBF8F00CC239C /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A55E1B2FBE4C00CC239C /* resource.cpp */; };
 		E2F1A58C1B2FBF9800CC239C /* rgb_packet_stream_parser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A5611B2FBE4C00CC239C /* rgb_packet_stream_parser.cpp */; };
-		E2F1A5901B2FC28100CC239C /* Protonect.h in Headers */ = {isa = PBXBuildFile; fileRef = E2F1A54C1B2FBE4C00CC239C /* Protonect.h */; };
 		E2F1A5921B2FC2E000CC239C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F1A5911B2FC2E000CC239C /* OpenGL.framework */; };
 /* End PBXBuildFile section */
 
@@ -96,10 +93,7 @@
 		E2F1A5471B2FBE4C00CC239C /* threading.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = threading.h; sourceTree = "<group>"; };
 		E2F1A5491B2FBE4C00CC239C /* event_loop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = event_loop.h; sourceTree = "<group>"; };
 		E2F1A54A1B2FBE4C00CC239C /* transfer_pool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = transfer_pool.h; sourceTree = "<group>"; };
-		E2F1A54B1B2FBE4C00CC239C /* Protonect.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Protonect.cpp; sourceTree = "<group>"; };
-		E2F1A54C1B2FBE4C00CC239C /* Protonect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Protonect.h; sourceTree = "<group>"; };
 		E2F1A54E1B2FBE4C00CC239C /* command_transaction.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = command_transaction.cpp; sourceTree = "<group>"; };
-		E2F1A54F1B2FBE4C00CC239C /* cpu_depth_packet_processor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = cpu_depth_packet_processor.cpp; sourceTree = "<group>"; };
 		E2F1A5501B2FBE4C00CC239C /* depth_packet_processor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = depth_packet_processor.cpp; sourceTree = "<group>"; };
 		E2F1A5511B2FBE4C00CC239C /* depth_packet_stream_parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = depth_packet_stream_parser.cpp; sourceTree = "<group>"; };
 		E2F1A5521B2FBE4C00CC239C /* double_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = double_buffer.cpp; sourceTree = "<group>"; };
@@ -330,8 +324,6 @@
 			isa = PBXGroup;
 			children = (
 				E2F1A5301B2FBE4C00CC239C /* include */,
-				E2F1A54B1B2FBE4C00CC239C /* Protonect.cpp */,
-				E2F1A54C1B2FBE4C00CC239C /* Protonect.h */,
 				E2F1A54D1B2FBE4C00CC239C /* src */,
 			);
 			name = protonect;
@@ -398,7 +390,6 @@
 			children = (
 				E2BC4C9A1B2FCC4400E95658 /* resources.inc.h */,
 				E2F1A54E1B2FBE4C00CC239C /* command_transaction.cpp */,
-				E2F1A54F1B2FBE4C00CC239C /* cpu_depth_packet_processor.cpp */,
 				E2F1A5501B2FBE4C00CC239C /* depth_packet_processor.cpp */,
 				E2F1A5511B2FBE4C00CC239C /* depth_packet_stream_parser.cpp */,
 				E2F1A5521B2FBE4C00CC239C /* double_buffer.cpp */,
@@ -464,7 +455,6 @@
 			files = (
 				E2785DB01B334B23007E4654 /* turbojpeg.h in Headers */,
 				E2BC4C9B1B2FCC4400E95658 /* resources.inc.h in Headers */,
-				E2F1A5901B2FC28100CC239C /* Protonect.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -539,13 +529,11 @@
 				E2F1A5851B2FBF8800CC239C /* generate_resources.cpp in Sources */,
 				E2F1A5861B2FBF8800CC239C /* libfreenect2.cpp in Sources */,
 				E2F1A57E1B2FBF7900CC239C /* command_transaction.cpp in Sources */,
-				E2F1A57F1B2FBF7900CC239C /* cpu_depth_packet_processor.cpp in Sources */,
 				E2F1A5801B2FBF7900CC239C /* depth_packet_processor.cpp in Sources */,
 				E2F1A5811B2FBF7900CC239C /* depth_packet_stream_parser.cpp in Sources */,
 				E2F1A5821B2FBF7900CC239C /* double_buffer.cpp in Sources */,
 				E2F1A5831B2FBF7900CC239C /* event_loop.cpp in Sources */,
 				E2F1A57D1B2FBF6E00CC239C /* rgb_packet_processor.cpp in Sources */,
-				E2F1A57C1B2FBF6200CC239C /* Protonect.cpp in Sources */,
 				E287FF441B295C18005F5D56 /* JNILibfreenect2.cpp in Sources */,
 				E287FF431B295C08005F5D56 /* openKinectv2_Device.cpp in Sources */,
 			);
@@ -746,19 +734,6 @@
 					"-lobjc",
 					../libs/libTurboJpeg/lib/osx/libturbojpeg.dylib,
 					"-lglfw",
-					"-lopencv_calib3d",
-					"-lopencv_core",
-					"-lopencv_features2d",
-					"-lopencv_flann",
-					"-lopencv_highgui",
-					"-lopencv_imgproc",
-					"-lopencv_ml",
-					"-lopencv_objdetect",
-					"-lopencv_photo",
-					"-lopencv_stitching",
-					"-lopencv_superres",
-					"-lopencv_ts",
-					"-lopencv_video",
 					"-lc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -813,19 +788,6 @@
 					"-lobjc",
 					../libs/libTurboJpeg/lib/osx/libturbojpeg.dylib,
 					"-lglfw",
-					"-lopencv_calib3d",
-					"-lopencv_core",
-					"-lopencv_features2d",
-					"-lopencv_flann",
-					"-lopencv_highgui",
-					"-lopencv_imgproc",
-					"-lopencv_ml",
-					"-lopencv_objdetect",
-					"-lopencv_photo",
-					"-lopencv_stitching",
-					"-lopencv_superres",
-					"-lopencv_ts",
-					"-lopencv_video",
 					"-lc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";

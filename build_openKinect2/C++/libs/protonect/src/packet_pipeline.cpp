@@ -79,23 +79,6 @@ DepthPacketProcessor *BasePacketPipeline::getDepthPacketProcessor() const
   return depth_processor_;
 }
 
-CpuPacketPipeline::CpuPacketPipeline()
-{ 
-  initialize();
-}
-
-CpuPacketPipeline::~CpuPacketPipeline() { }
-
-DepthPacketProcessor *CpuPacketPipeline::createDepthPacketProcessor()
-{
-  CpuDepthPacketProcessor *depth_processor = new CpuDepthPacketProcessor();
-  depth_processor->load11To16LutFromFile("11to16.bin");
-  depth_processor->loadXTableFromFile("xTable.bin");
-  depth_processor->loadZTableFromFile("zTable.bin");
-  
-  return depth_processor;
-}
-
 #ifdef LIBFREENECT2_WITH_OPENGL_SUPPORT
 OpenGLPacketPipeline::OpenGLPacketPipeline(void *parent_opengl_context, bool debug) : parent_opengl_context_(parent_opengl_context), debug_(debug)
 { 

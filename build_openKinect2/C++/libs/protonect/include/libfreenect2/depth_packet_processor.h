@@ -139,35 +139,6 @@ private:
 };
 #endif // LIBFREENECT2_WITH_OPENGL_SUPPORT
 
-// TODO: push this to some internal namespace
-// use pimpl to hide opencv dependency
-class CpuDepthPacketProcessorImpl;
-
-class LIBFREENECT2_API CpuDepthPacketProcessor : public DepthPacketProcessor
-{
-public:
-  CpuDepthPacketProcessor();
-  virtual ~CpuDepthPacketProcessor();
-  virtual void setConfiguration(const libfreenect2::DepthPacketProcessor::Config &config);
-
-  virtual void loadP0TablesFromCommandResponse(unsigned char* buffer, size_t buffer_length);
-
-  void loadP0TablesFromFiles(const char* p0_filename, const char* p1_filename, const char* p2_filename);
-
-  /**
-   * GUESS: the x and z table follow some polynomial, until we know the exact polynom formula and its coefficients
-   * just load them from a memory dump - although they probably vary per camera
-   */
-  void loadXTableFromFile(const char* filename);
-
-  void loadZTableFromFile(const char* filename);
-
-  void load11To16LutFromFile(const char* filename);
-
-  virtual void process(const DepthPacket &packet);
-private:
-  CpuDepthPacketProcessorImpl *impl_;
-};
 
 #ifdef LIBFREENECT2_WITH_OPENCL_SUPPORT
 class OpenCLDepthPacketProcessorImpl;

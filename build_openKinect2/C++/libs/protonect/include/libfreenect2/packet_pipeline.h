@@ -73,15 +73,6 @@ public:
   virtual DepthPacketProcessor *getDepthPacketProcessor() const;
 };
 
-class LIBFREENECT2_API CpuPacketPipeline : public BasePacketPipeline
-{
-protected:
-  virtual DepthPacketProcessor *createDepthPacketProcessor();
-public:
-  CpuPacketPipeline();
-  virtual ~CpuPacketPipeline();
-};
-
 #ifdef LIBFREENECT2_WITH_OPENGL_SUPPORT
 class LIBFREENECT2_API OpenGLPacketPipeline : public BasePacketPipeline
 {

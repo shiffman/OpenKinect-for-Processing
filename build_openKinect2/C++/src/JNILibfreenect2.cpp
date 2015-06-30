@@ -48,17 +48,7 @@ namespace openKinect2 {
         
         std::string serial = freenect2.getDefaultDeviceSerialNumber();
         
-        if(mode == 1) //cpu
-        {
-            if(!pipeline){
-                pipeline = new libfreenect2::CpuPacketPipeline();
-                initialized_device = true;
-            }else{
-                 initialized_device = false;
-                return -1;
-            }
-        }
-        else if(mode == 2)
+        if(mode == 2)
         {
             
             if(!pipeline){

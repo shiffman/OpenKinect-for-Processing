@@ -628,8 +628,6 @@ PacketPipeline *createDefaultPacketPipeline()
 #else
   #ifdef LIBFREENECT2_WITH_OPENCL_SUPPORT
     return new OpenCLPacketPipeline();
-  #else
-  return new CpuPacketPipeline();
   #endif
 #endif
 }
