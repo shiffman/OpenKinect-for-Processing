@@ -110,7 +110,7 @@ void TurboJpegRgbPacketProcessor::process(const RgbPacket &packet)
 {
   if(impl_->decompressor != 0 && listener_ != 0)
   {
-    impl_->startTiming();
+    //impl_->startTiming();
 
     impl_->frame->timestamp = packet.timestamp;
     impl_->frame->sequence = packet.sequence;
@@ -129,7 +129,7 @@ void TurboJpegRgbPacketProcessor::process(const RgbPacket &packet)
       std::cerr << "[TurboJpegRgbPacketProcessor::doProcess] Failed to decompress rgb image! TurboJPEG error: '" << tjGetErrorStr() << "'" << std::endl;
     }
 
-    impl_->stopTiming();
+    //impl_->stopTiming();
   }
 }
 

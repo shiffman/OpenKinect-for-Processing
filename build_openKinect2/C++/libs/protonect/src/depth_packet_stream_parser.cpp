@@ -113,7 +113,7 @@ void DepthPacketStreamParser::onDataReceived(unsigned char* buffer, size_t in_le
             }
             else
             {
-              std::cerr << "[DepthPacketStreamParser::onDataReceived] skipping depth packet" << std::endl;
+              //std::cerr << "[DepthPacketStreamParser::onDataReceived] skipping depth packet" << std::endl;
             }
           }
           else

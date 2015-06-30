@@ -630,7 +630,7 @@ void OpenCLDepthPacketProcessor::process(const DepthPacket &packet)
     return;
   }
 
-  impl_->startTiming();
+  //impl_->startTiming();
 
   impl_->ir_frame->timestamp = packet.timestamp;
   impl_->depth_frame->timestamp = packet.timestamp;
@@ -639,7 +639,7 @@ void OpenCLDepthPacketProcessor::process(const DepthPacket &packet)
 
   impl_->run(packet);
 
-  impl_->stopTiming();
+  //impl_->stopTiming();
 
   if(has_listener)
   {
