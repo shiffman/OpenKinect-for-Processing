@@ -3,7 +3,7 @@ package openKinectv2;
 import processing.core.PApplet;
 
 /*
-KinectV2.0 library for Processing
+openKinect2 library for Processing
 Copyright (c) 2014 Thomas Sanchez Lengeling
 
 * Redistribution and use in source and binary forms, with or
@@ -18,12 +18,12 @@ Copyright (c) 2014 Thomas Sanchez Lengeling
 * distribution.
 *
 
-KinectfV2.0 library  library for Processing is free software: you can redistribute it and/or
+openKinect2 library for Processing is free software: you can redistribute it and/or
 modify it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-KinectfV2.0 library for Processing is distributed in the hope that it will be
+openKinect2for Processing is distributed in the hope that it will be
 useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.

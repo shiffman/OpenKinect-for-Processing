@@ -8,7 +8,7 @@ public class FrameTest extends PApplet{
 	OpenKinectv2 openKinect2;
 
 	public void setup(){
-		size(512*3, 424, P3D);
+		size(512*3, 424);
 		openKinect2 = new OpenKinectv2(this);
 		openKinect2.open();
 	}

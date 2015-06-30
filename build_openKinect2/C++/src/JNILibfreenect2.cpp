@@ -3,7 +3,7 @@
 //  JNILibfreenect2
 //
 //  Created by tom on 6/10/15.
-//  Copyright (c) 2015 tom. All rights reserved.
+//  Copyright (c) 2015 Thomas Sanchez Lengeling. All rights reserved.
 //
 
 #include <stdio.h>
@@ -219,7 +219,6 @@ namespace openKinect2 {
             memcpy(registeredData, reinterpret_cast<const uint32_t * >(registered.data), 512 * 424 * 4);
             
         
-            
             //convert depth, ir to processing pixels
             int indexFD = 0;
             int pIndexEnd = (FRAME_SIZE_DEPTH);
@@ -306,12 +305,6 @@ namespace openKinect2 {
             }
             return outVal;
         }
-    }
-    
-    uint32_t Device::colorByte2Int(uint8_t gray)
-    {
-        gray = gray & 0xffff;
-        return 0xff000000 | (gray << 16) | (gray << 8) | gray;
     }
     
     uint32_t Device::colorByte2Int(uint32_t gray)

@@ -3,7 +3,7 @@
  *  JNILibfreenect2
  *
  *  Created by tom on 6/7/15.
- *  Copyright (c) 2015 tom. All rights reserved.
+ *  Copyright (c) 2015 Thomas Sanchez Lengeling. All rights reserved.
  *
  */
 
