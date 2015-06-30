@@ -11,7 +11,15 @@ Processing Kinect v2 library.
  
 ## Installation
 
-- Follow the Mac OS X installation guide from [libfreenect2 repository](https://github.com/OpenKinect/libfreenect2)
-    - Launch the protonect example to make sure the kinect v2 is working correctly. 
+- Install (brew)[http://brew.sh/] for Mac OS X
+- Install the following libraries using brew in the Terminal
+    ```
+brew update
+brew tap homebrew/science
+brew install wget nasm jpeg-turbo
+brew tap homebrew/versions
+brew install glfw3
+```
 - Copy openKinect2 folder into your processing library folder.
 - Enjoy.
+
