@@ -30,12 +30,6 @@ namespace openKinect2 {
         version = "0.01";
         mSerialKinect = "";
         
-        mapDepth = false;
-        gamma =1.0f;
-        
-        min = 0;
-        max = 4500;
-
     }
     
     std::string Device::getVersion()
@@ -170,9 +164,6 @@ namespace openKinect2 {
         
     }
     
-    /*
-     
-    */
     void Device::open(int mode)
     {
         int retVal = openKinect(mode);
@@ -261,6 +252,11 @@ namespace openKinect2 {
         
     }
     
+    bool Device::isKinectReady()
+    {
+        return  initialized_device;
+    }
+    
     //depth
     uint32_t * Device::JNI_GetDepth()
     {
@@ -288,7 +284,6 @@ namespace openKinect2 {
     }
     
     //HELP functions
-    
     float Device::clamp(float value, float min, float max) {
         return value < min ? min : value > max ? max : value;
     }
@@ -313,14 +308,6 @@ namespace openKinect2 {
         }
     }
     
-    
-    uint32_t Device::colorByte2Int(uint8_t gray, uint8_t alpha)
-    {
-        gray = gray & 0xffff;
-        alpha = alpha & 0xffff;
-        return (alpha << 24) | (gray << 16) | (gray << 8) | gray;
-    }
-    
     uint32_t Device::colorByte2Int(uint8_t gray)
     {
         gray = gray & 0xffff;
@@ -341,16 +328,8 @@ namespace openKinect2 {
     
     uint32_t Device::colorByte2Int(uint8_t r, uint8_t g, uint8_t b, uint8_t  a)
     {
-        //return a | ( int(r) << 8 ) | ( int(g) << 16 ) | ( int(b) << 24 );
-        //return (a << 24) | (r << 16) | (g << 8) | b;
-        // gray = gray & 0xffff;
-        // return 0xff000000 | (gray << 16) | (gray << 8) | gray;
-        
         return a << 24 | (r << 16) | (g << 8) | b;
     }
     
-    bool Device::isKinectReady()
-    {
-        return  initialized_device;
-    }
+
 }

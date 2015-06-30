@@ -58,39 +58,18 @@ namespace  openKinect2{
         uint32_t *  JNI_GetRegistered();
         
         bool        isKinectReady();
-    
-        
-        
-        float valR;
-        float valG;
-        float valB;
-        float valA;
-        float gamma;
-        
-        float min;
-        float max;
-        
-        bool mapDepth;
         
     private:
         void    updateKinect();
         
         void    setupDepth();
         
-        int     openKinect(int mode = 1);
+        int     openKinect(int mode = 3);
         
         float   clamp(float value, float min, float max);
         float   lmap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp);
         
-        static inline uint8_t u8fromfloat_trick(float x)
-        {
-            union { float f; uint32_t i; } u;
-            u.f = 32768.0f + x * (255.0f / 256.0f);
-            return (uint8_t)u.i;
-        }
-        
         //help functions
-        uint32_t colorByte2Int(uint8_t gray);
         uint32_t colorByte2Int(uint32_t gray);
         uint32_t colorByte2Int(uint8_t gray, uint8_t alpha);
         uint32_t colorByte2Int(uint8_t r, uint8_t g, uint8_t b, uint8_t  a);

@@ -22,8 +22,6 @@ public class Device {
 	PImage undistortedImg;
 	PImage registeredImg;
 	
-	PShader shader;
-	
 	/**
 	 * Constructor for openKinect 2
 	 * @param _p PApplet parent
@@ -57,38 +55,7 @@ public class Device {
      */
     public void stopDevice(){
     	stopJNI();
-    }
-    
-    public void changeA(float value){
-    	jniChangeA(value);
-    }
-    public void changeR(float value){
-    	jniChangeR(value);
-    }
-    public void changeG(float value){
-    	jniChangeG(value);
-    }
-    public void changeB(float value){
-    	jniChangeB(value);
-    }
-    
-    public void mapDepth(boolean val){
-    	jniDepth(val);
-    }
-    
-    public void setGamma(float value){
-    	jniGamma(value);
-    }
-    
-    public void setMin(float v){
-    	jniMin(v);
-    }
-    
-    public void setMax(float v){
-    	jniMax(v);
-    }
-    
-    
+    }    
     
     /**
      * Process Depth Image (512 x 424)
@@ -152,17 +119,7 @@ public class Device {
     private  native long initJNI();
     private  native void openJNI();
     private  native void stopJNI();
-    
-    private native void jniChangeA(float value);
-    private native void jniChangeR(float value);
-    private native void jniChangeG(float value);
-    private native void jniChangeB(float value);
-    private native void jniDepth(boolean val);
-    
-    private native void jniMin(float val);
-    private native void jniMax(float val);
-    
-    private native void jniGamma(float val);
+
     private  native String version();
     
     private  native int [] jniGetDepthData();

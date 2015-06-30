@@ -79,33 +79,6 @@ JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetUndistorted
  */
 JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetRegistered
 (JNIEnv *, jobject);
-    
-    
-JNIEXPORT void JNICALL Java_openKinectv2_Device_jniChangeA
-    (JNIEnv *, jobject, jfloat value);
-    
-JNIEXPORT void JNICALL Java_openKinectv2_Device_jniChangeR
-    (JNIEnv *, jobject, jfloat value);
-    
-JNIEXPORT void JNICALL Java_openKinectv2_Device_jniChangeG
-    (JNIEnv *, jobject, jfloat value);
-    
-JNIEXPORT void JNICALL Java_openKinectv2_Device_jniChangeB
-    (JNIEnv *, jobject, jfloat value);
-    
-JNIEXPORT void JNICALL Java_openKinectv2_Device_jniDepth
-    (JNIEnv *, jobject, jboolean mapDepth);
-    
-JNIEXPORT void JNICALL Java_openKinectv2_Device_jniGamma
-    (JNIEnv *, jobject, jfloat Gamma);
-    
-JNIEXPORT void JNICALL Java_openKinectv2_Device_jniMin
-    (JNIEnv *, jobject, jfloat  min);
-    
-JNIEXPORT void JNICALL Java_openKinectv2_Device_jniMax
-    (JNIEnv *, jobject, jfloat max);
-    
-    
 
 #ifdef __cplusplus
 }
