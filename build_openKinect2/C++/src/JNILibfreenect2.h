@@ -15,6 +15,8 @@
 #include <mutex>
 #include <cmath>
 
+#include <algorithm>
+
 #include <iostream>
 #include <signal.h>
 
@@ -89,6 +91,7 @@ namespace  openKinect2{
         
         //help functions
         uint32_t colorByte2Int(uint8_t gray);
+        uint32_t colorByte2Int(uint32_t gray);
         uint32_t colorByte2Int(uint8_t gray, uint8_t alpha);
         uint32_t colorByte2Int(uint8_t r, uint8_t g, uint8_t b, uint8_t  a);
         uint32_t colorByte2Int(uint8_t r, uint8_t g, uint8_t b);

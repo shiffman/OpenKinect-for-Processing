@@ -168,7 +168,6 @@ namespace openKinect2 {
             delete registeredData;
         }
         
-        
     }
     
     /*
@@ -191,12 +190,13 @@ namespace openKinect2 {
         libfreenect2::FrameMap frames;
         
 
-        //MAIN THREAD
-        float  pixelDepth =0;
-        int     timeCounter = 0;
-        float   max = 0;
-        float   min = 99999;
+        //Temporary arrays
+        float * newDepth = new float[512 * 424];
+        float * newIr    = new float[512 * 424];
+        float * newUndisorted =  new float[512 * 424];
         
+        
+        //MAIN THREAD
         while(initialized_device){
             listener->waitForNewFrame(frames);
             
@@ -209,93 +209,55 @@ namespace openKinect2 {
             //COLOR DEPTH MAPPING
             registration->apply(rgb, depth, &undistorted, &registered);
             
-           
+       
+            //Memory copies to the data arrays to send them to processing via JNI
+            //DEPTH
+            memcpy(newDepth, reinterpret_cast<const float * >(depth->data), 512 * 424 * 4);
             
-            int pIndexTmp = 0;
+            //IR
+            memcpy(newIr, reinterpret_cast<const float * >(ir->data), 512 * 424 * 4);
+            
+            //Color
+            memcpy(colorData, reinterpret_cast<const uint32_t *>(rgb->data), 1920 * 1080 * 4);
+            
+            //Mapers
+            //undisorted
+            memcpy(newUndisorted, reinterpret_cast<const float * >(undistorted.data), 512 * 424 * 4);
+            
+            //registered
+            memcpy(registeredData, reinterpret_cast<const uint32_t * >(registered.data), 512 * 424 * 4);
+            
+        
+            
+            //convert depth, ir to processing pixels
+            int indexFD = 0;
             int pIndexEnd = (FRAME_SIZE_DEPTH);
             
-            int indexDepth = 0;
-            int indexIR = 0;
-            int indexUndisorted = 0;
-            int indexRegistered = 0;
-            
-            //DEPTH AND IR
-            while(pIndexTmp < pIndexEnd){
+            while(indexFD < pIndexEnd){
                 
-                //DEPTH
-                uint8_t pixelDepthB = depth->data[indexDepth++];//noisy
-                uint8_t pixelDepthG = depth->data[indexDepth++];//noisy lines
-                uint8_t pixelDepthR = depth->data[indexDepth++]; //great but with white lines
-                uint8_t pixelDepthA = depth->data[indexDepth++]; // gray depth no scale
+                //0.0566666f -> (value/45000)* 255
                 
-                //IR
-                uint8_t pixelIrB = ir->data[indexIR++];//noise
-                uint8_t pixelIrG = ir->data[indexIR++];//noise
-                uint8_t pixelIrR = ir->data[indexIR++]; //gray with noise
-                uint8_t pixelIrA = ir->data[indexIR++]; // gray with no light
-                
-                uint8_t pixelUndistB = undistorted.data[indexUndisorted++];
-                uint8_t pixelUndistG = undistorted.data[indexUndisorted++];
-                uint8_t pixelUndistR = undistorted.data[indexUndisorted++];
-                uint8_t pixelUndistA = undistorted.data[indexUndisorted++];
-                
-                uint8_t pixelRegB = registered.data[indexRegistered++];
-                uint8_t pixelRegG = registered.data[indexRegistered++];
-                uint8_t pixelRegR = registered.data[indexRegistered++];
-                uint8_t pixelRegA = registered.data[indexRegistered++];
-                
-                //DEPTH
-                pixelDepth = 0.2126 * pixelDepthA + 0.7152 * pixelDepthR + 0.0722 * pixelDepthG;
-                uint8_t pix = u8fromfloat_trick(pixelDepth);
-                depthData[pIndexTmp] =  colorByte2Int(pixelDepthG, pixelDepthR, pixelDepthA, pixelDepthB);
-                
-                if(pixelDepth > max)
-                    max =pixelDepth;
-                
-                if(pixelDepth < min)
-                    min = pixelDepth;
-                
-                //IR
-                uint8_t pixelIr = uint32_t( 0.2126 * pixelIrA + 0.7152 * pixelIrR + 0.0722 * pixelIrG);
-                irData[pIndexTmp] =  colorByte2Int(pixelIrA);//, pixelIr, pixelIr);
-                
-                //undistored
-                undisortedData[pIndexTmp] =  colorByte2Int(pixelUndistR);
-                
-                //registered
-                registeredData[pIndexTmp] = colorByte2Int(pixelRegR, pixelRegG, pixelRegB, pixelRegA);
-                
-                pIndexTmp++;
-            }
-            
-            if(timeCounter % 90 == 0){
-                std::cout<<"pixel "<<min<<" "<<max<<std::endl;
-            }
-            
-            timeCounter++;
-        
-          
+                //Depth
+                depthData[indexFD]  = colorByte2Int(uint32_t(newDepth[indexFD]*0.0566666f));
     
-            //Converts Color Format to RGB.
-            int pColorEnd = (FRAME_SIZE_COLOR);
-            int indexColor = 0;
-            int pColorIndex = 0;
-            
-            while(pColorIndex < pColorEnd){
-                uint8_t pixelColB =  rgb->data[indexColor++];
-                uint8_t pixelColG =  rgb->data[indexColor++];
-                uint8_t pixelColR =  rgb->data[indexColor++];
-                uint8_t pixelColA =  rgb->data[indexColor++];
+                //IR
+                irData[indexFD]  = colorByte2Int((uint32_t(newIr[indexFD]*0.0566666f)>>4));
                 
-                //ABGR format
+                //undisorted
+                undisortedData[indexFD]  = colorByte2Int(uint32_t(newUndisorted[indexFD]*0.0566666f));
                 
-                colorData[pColorIndex] = colorByte2Int(pixelColR, pixelColG, pixelColB, pixelColA);
-                pColorIndex++;
+                indexFD++;
             }
+            
             
             //framw listener
             listener->release(frames);
         }
+        
+        //clean up
+        if(newDepth != NULL) delete newDepth;
+        if(newIr != NULL) delete newIr;
+        if(newUndisorted != NULL) delete newUndisorted;
         
     }
     
@@ -364,6 +326,13 @@ namespace openKinect2 {
         gray = gray & 0xffff;
         return 0xff000000 | (gray << 16) | (gray << 8) | gray;
     }
+    
+    uint32_t Device::colorByte2Int(uint32_t gray)
+    {
+        gray = gray & 0xffff;
+        return 0xff000000 | (gray << 16) | (gray << 8) | gray;
+    }
+    
     
     uint32_t Device::colorByte2Int(uint8_t r, uint8_t g, uint8_t b)
     {
