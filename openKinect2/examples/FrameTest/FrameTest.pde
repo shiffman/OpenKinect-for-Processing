@@ -17,7 +17,7 @@ void draw() {
   PImage ir = openKinect2.getIrImage();
   image(ir, 512, 0);
 
-  PImage color = openKinect2.getColorImage();
-  image(color, 512*2, 0, 512, 424);
+  PImage rgb = openKinect2.getColorImage();
+  image(rgb, 512*2, 0, 512, 424);
 }
 
