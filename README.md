@@ -11,8 +11,8 @@ Processing Kinect v2 library.
  
 ## Installation
 
-- Install (brew)[http://brew.sh/] for Mac OS X
-- Install the following libraries using brew in the Terminal
+- Install [brew](http://brew.sh/) for Mac OS X
+- Install the following libraries in the Terminal using brew for Mac
 
       ```      
  brew update 
