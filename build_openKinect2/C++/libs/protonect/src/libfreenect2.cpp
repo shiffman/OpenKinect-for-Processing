@@ -623,13 +623,10 @@ void Freenect2DeviceImpl::close()
 
 PacketPipeline *createDefaultPacketPipeline()
 {
-#ifdef LIBFREENECT2_WITH_OPENGL_SUPPORT
-  return new OpenGLPacketPipeline();
-#else
+
   #ifdef LIBFREENECT2_WITH_OPENCL_SUPPORT
     return new OpenCLPacketPipeline();
   #endif
-#endif
 }
 
 Freenect2::Freenect2(void *usb_context) :

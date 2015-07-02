@@ -48,20 +48,7 @@ namespace openKinect2 {
         
         std::string serial = freenect2.getDefaultDeviceSerialNumber();
         
-        if(mode == 2)
-        {
-            
-            if(!pipeline){
-                pipeline = new libfreenect2::OpenGLPacketPipeline();
-                 initialized_device = true;
-            }else{
-                 initialized_device = false;
-                return -1;
-            }
-            //std::cout << "OpenGL pipeline is not supported!" << std::endl;
-            
-        }
-        else if(mode == 3)
+        if(mode == 3)
         {
             
             if(!pipeline){

@@ -19,7 +19,6 @@
 		E2BC4CCB1B2FDB6400E95658 /* tinythread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A56B1B2FBE4C00CC239C /* tinythread.cpp */; };
 		E2BC4CCD1B2FDD0D00E95658 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BC4CCC1B2FDD0D00E95658 /* Cocoa.framework */; };
 		E2BC4CCF1B2FDD2500E95658 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2BC4CCE1B2FDD2500E95658 /* CoreVideo.framework */; };
-		E2BC4CD01B2FDFB800E95658 /* flextGL.c in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A5541B2FBE4C00CC239C /* flextGL.c */; };
 		E2F1A5751B2FBE8200CC239C /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F1A5741B2FBE8200CC239C /* ApplicationServices.framework */; };
 		E2F1A5771B2FBE8800CC239C /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F1A5761B2FBE8800CC239C /* IOKit.framework */; };
 		E2F1A5791B2FBE9100CC239C /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2F1A5781B2FBE9100CC239C /* CoreFoundation.framework */; };
@@ -34,7 +33,6 @@
 		E2F1A5851B2FBF8800CC239C /* generate_resources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A5571B2FBE4C00CC239C /* generate_resources.cpp */; };
 		E2F1A5861B2FBF8800CC239C /* libfreenect2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A5581B2FBE4C00CC239C /* libfreenect2.cpp */; };
 		E2F1A5871B2FBF8F00CC239C /* opencl_depth_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A55A1B2FBE4C00CC239C /* opencl_depth_packet_processor.cpp */; };
-		E2F1A5881B2FBF8F00CC239C /* opengl_depth_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A55B1B2FBE4C00CC239C /* opengl_depth_packet_processor.cpp */; };
 		E2F1A5891B2FBF8F00CC239C /* packet_pipeline.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A55C1B2FBE4C00CC239C /* packet_pipeline.cpp */; };
 		E2F1A58A1B2FBF8F00CC239C /* registration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A55D1B2FBE4C00CC239C /* registration.cpp */; };
 		E2F1A58B1B2FBF8F00CC239C /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A55E1B2FBE4C00CC239C /* resource.cpp */; };
@@ -98,14 +96,11 @@
 		E2F1A5511B2FBE4C00CC239C /* depth_packet_stream_parser.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = depth_packet_stream_parser.cpp; sourceTree = "<group>"; };
 		E2F1A5521B2FBE4C00CC239C /* double_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = double_buffer.cpp; sourceTree = "<group>"; };
 		E2F1A5531B2FBE4C00CC239C /* event_loop.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = event_loop.cpp; sourceTree = "<group>"; };
-		E2F1A5541B2FBE4C00CC239C /* flextGL.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = flextGL.c; sourceTree = "<group>"; };
-		E2F1A5551B2FBE4C00CC239C /* flextGL.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = flextGL.h; sourceTree = "<group>"; };
 		E2F1A5561B2FBE4C00CC239C /* frame_listener_impl.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = frame_listener_impl.cpp; sourceTree = "<group>"; };
 		E2F1A5571B2FBE4C00CC239C /* generate_resources.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = generate_resources.cpp; sourceTree = "<group>"; };
 		E2F1A5581B2FBE4C00CC239C /* libfreenect2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = libfreenect2.cpp; sourceTree = "<group>"; };
 		E2F1A5591B2FBE4C00CC239C /* opencl_depth_packet_processor.cl */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.opencl; path = opencl_depth_packet_processor.cl; sourceTree = "<group>"; };
 		E2F1A55A1B2FBE4C00CC239C /* opencl_depth_packet_processor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = opencl_depth_packet_processor.cpp; sourceTree = "<group>"; };
-		E2F1A55B1B2FBE4C00CC239C /* opengl_depth_packet_processor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = opengl_depth_packet_processor.cpp; sourceTree = "<group>"; };
 		E2F1A55C1B2FBE4C00CC239C /* packet_pipeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = packet_pipeline.cpp; sourceTree = "<group>"; };
 		E2F1A55D1B2FBE4C00CC239C /* registration.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = registration.cpp; sourceTree = "<group>"; };
 		E2F1A55E1B2FBE4C00CC239C /* resource.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = resource.cpp; sourceTree = "<group>"; };
@@ -394,14 +389,11 @@
 				E2F1A5511B2FBE4C00CC239C /* depth_packet_stream_parser.cpp */,
 				E2F1A5521B2FBE4C00CC239C /* double_buffer.cpp */,
 				E2F1A5531B2FBE4C00CC239C /* event_loop.cpp */,
-				E2F1A5541B2FBE4C00CC239C /* flextGL.c */,
-				E2F1A5551B2FBE4C00CC239C /* flextGL.h */,
 				E2F1A5561B2FBE4C00CC239C /* frame_listener_impl.cpp */,
 				E2F1A5571B2FBE4C00CC239C /* generate_resources.cpp */,
 				E2F1A5581B2FBE4C00CC239C /* libfreenect2.cpp */,
 				E2F1A5591B2FBE4C00CC239C /* opencl_depth_packet_processor.cl */,
 				E2F1A55A1B2FBE4C00CC239C /* opencl_depth_packet_processor.cpp */,
-				E2F1A55B1B2FBE4C00CC239C /* opengl_depth_packet_processor.cpp */,
 				E2F1A55C1B2FBE4C00CC239C /* packet_pipeline.cpp */,
 				E2F1A55D1B2FBE4C00CC239C /* registration.cpp */,
 				E2F1A55E1B2FBE4C00CC239C /* resource.cpp */,
@@ -514,14 +506,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2BC4CD01B2FDFB800E95658 /* flextGL.c in Sources */,
 				E2BC4CCB1B2FDB6400E95658 /* tinythread.cpp in Sources */,
 				E2BC4CCA1B2FDB6000E95658 /* usb_control.cpp in Sources */,
 				E2BC4CC91B2FDB5B00E95658 /* transfer_pool.cpp in Sources */,
 				E2BC4C9C1B2FD23B00E95658 /* turbo_jpeg_rgb_packet_processor.cpp in Sources */,
 				E2F1A58C1B2FBF9800CC239C /* rgb_packet_stream_parser.cpp in Sources */,
 				E2F1A5871B2FBF8F00CC239C /* opencl_depth_packet_processor.cpp in Sources */,
-				E2F1A5881B2FBF8F00CC239C /* opengl_depth_packet_processor.cpp in Sources */,
 				E2F1A5891B2FBF8F00CC239C /* packet_pipeline.cpp in Sources */,
 				E2F1A58A1B2FBF8F00CC239C /* registration.cpp in Sources */,
 				E2F1A58B1B2FBF8F00CC239C /* resource.cpp in Sources */,
@@ -671,7 +661,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/System/Library/Frameworks/JavaVM.framework/Headers,
-					/usr/local/include,
 					../libs/libusb/include/libusb,
 					../libs/libusb/include/libusb/os,
 					../libs/libusb,
@@ -687,7 +676,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/usr/local/lib,
 					../libs/libusb/lib/osx,
 					../libs/libTurboJpeg/lib/osx,
 				);
@@ -701,7 +689,6 @@
 					"../libs/libusb/lib/osx/usb-1.0.0-superspeed.a",
 					"-lobjc",
 					../libs/libTurboJpeg/lib/osx/libturbojpeg.dylib,
-					"-lglfw",
 					"-lc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -725,7 +712,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/System/Library/Frameworks/JavaVM.framework/Headers,
-					/usr/local/include,
 					../libs/libusb/include/libusb,
 					../libs/libusb/include/libusb/os,
 					../libs/libusb,
@@ -741,7 +727,6 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/usr/local/lib,
 					../libs/libusb/lib/osx,
 					../libs/libTurboJpeg/lib/osx,
 				);
@@ -755,7 +740,6 @@
 					"../libs/libusb/lib/osx/usb-1.0.0-superspeed.a",
 					"-lobjc",
 					../libs/libTurboJpeg/lib/osx/libturbojpeg.dylib,
-					"-lglfw",
 					"-lc",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
