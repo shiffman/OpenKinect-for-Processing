@@ -5,6 +5,11 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="openKinectv2/lib"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="lib">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="openKinectv2/lib"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/processing2.1/gluegen-rt-natives-linux-amd64.jar"/>
 	<classpathentry kind="lib" path="lib/processing2.1/gluegen-rt-natives-linux-armv6hf.jar"/>
