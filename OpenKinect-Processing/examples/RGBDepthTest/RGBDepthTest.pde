@@ -1,9 +1,8 @@
 // Daniel Shiffman
-// Depth thresholding example
+// All features test
 
 // https://github.com/shiffman/OpenKinect-for-Processing
 // http://shiffman.net/p5/kinect/
-
 
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
@@ -16,7 +15,7 @@ boolean ir = false;
 boolean colorDepth = false;
 
 void setup() {
-  size(1280, 520, P2D);
+  size(1280, 520);
   kinect = new Kinect(this);
   kinect.startDepth();
   kinect.startVideo();
