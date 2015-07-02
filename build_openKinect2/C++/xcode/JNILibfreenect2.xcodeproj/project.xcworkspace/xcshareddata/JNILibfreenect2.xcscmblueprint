@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "1104B1852A18E28A16521C44CCB6A0ED65579468",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "49AA77055867AAE9A10721EEA59C590D1EAEDB9C" : 0,
+    "1104B1852A18E28A16521C44CCB6A0ED65579468" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "389166F2-24D7-4A1D-9B77-AE3A08EF9B22",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "49AA77055867AAE9A10721EEA59C590D1EAEDB9C" : "openKinect2",
+    "1104B1852A18E28A16521C44CCB6A0ED65579468" : "openKinect\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "JNILibfreenect2",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "build_openKinect2\/C++\/xcode\/JNILibfreenect2.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/shiffman\/OpenKinect-for-Processing",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "1104B1852A18E28A16521C44CCB6A0ED65579468"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:ThomasLengeling\/libfreenect2-for-processing.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "49AA77055867AAE9A10721EEA59C590D1EAEDB9C"
+    }
+  ]
+}

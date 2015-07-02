@@ -559,7 +559,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CONFIGURATION_BUILD_DIR = "";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -593,25 +593,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = (
-					../libs/libTurboJpeg/lib/osx/libturbojpeg.dylib,
-					"../libs/libusb/lib/osx/usb-1.0.0-superspeed.a",
-					"-lopencv_calib3d",
-					"-lopencv_core",
-					"-lopencv_features2d",
-					"-lopencv_flann",
-					"-lopencv_highgui",
-					"-lopencv_imgproc",
-					"-lopencv_ml",
-					"-lopencv_objdetect",
-					"-lopencv_photo",
-					"-lopencv_stitching",
-					"-lopencv_superres",
-					"-lopencv_ts",
-					"-lopencv_video",
-					"-lopencv_videostab",
-				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
 				SYMROOT = ../../openKinectv2/lib;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -663,24 +646,8 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = (
-					../libs/libTurboJpeg/lib/osx/libturbojpeg.dylib,
-					"../libs/libusb/lib/osx/usb-1.0.0-superspeed.a",
-					"-lopencv_calib3d",
-					"-lopencv_core",
-					"-lopencv_features2d",
-					"-lopencv_flann",
-					"-lopencv_highgui",
-					"-lopencv_imgproc",
-					"-lopencv_ml",
-					"-lopencv_objdetect",
-					"-lopencv_photo",
-					"-lopencv_stitching",
-					"-lopencv_superres",
-					"-lopencv_ts",
-					"-lopencv_video",
-					"-lopencv_videostab",
-				);
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "";
 				SDKROOT = macosx;
 				SYMROOT = ../../openKinectv2/lib;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -692,6 +659,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				EXECUTABLE_PREFIX = lib;

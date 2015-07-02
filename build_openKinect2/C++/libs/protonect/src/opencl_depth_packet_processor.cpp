@@ -28,10 +28,12 @@
 #include <libfreenect2/resource.h>
 #include <libfreenect2/protocol/response.h>
 
-#include <opencv2/opencv.hpp>
+
 #include <iostream>
 #include <fstream>
 #include <sstream>
+
+#include <math.h>
 
 #if defined(WIN32)
 #define _USE_MATH_DEFINES
@@ -516,25 +518,6 @@ public:
   {
     source = loadCLSource("src/opencl_depth_packet_processor.cl");
     return !source.empty();
-  }
-
-  void startTiming()
-  {
-    timing_current_start = cv::getTickCount();
-  }
-
-  void stopTiming()
-  {
-    timing_acc += (cv::getTickCount() - timing_current_start) / cv::getTickFrequency();
-    timing_acc_n += 1.0;
-
-    if(timing_acc_n >= 100.0)
-    {
-      double avg = (timing_acc / timing_acc_n);
-      std::cout << "[OpenCLDepthPacketProcessor] avg. time: " << (avg * 1000) << "ms -> ~" << (1.0 / avg) << "Hz" << std::endl;
-      timing_acc = 0.0;
-      timing_acc_n = 0.0;
-    }
   }
 
   void newIrFrame()

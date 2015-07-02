@@ -10,6 +10,8 @@
 	<string>JNILibfreenect2</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>1104B1852A18E28A16521C44CCB6A0ED65579468</key>
+		<string>https://github.com/shiffman/OpenKinect-for-Processing</string>
 		<key>49AA77055867AAE9A10721EEA59C590D1EAEDB9C</key>
 		<string>github.com:ThomasLengeling/libfreenect2-for-processing.git</string>
 	</dict>
@@ -17,17 +19,27 @@
 	<string>build_openKinect2/C++/xcode/JNILibfreenect2.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>49AA77055867AAE9A10721EEA59C590D1EAEDB9C</key>
+		<key>1104B1852A18E28A16521C44CCB6A0ED65579468</key>
 		<string>../../../../..</string>
+		<key>49AA77055867AAE9A10721EEA59C590D1EAEDB9C</key>
+		<string>../../../../../../openKinect2</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>github.com:ThomasLengeling/libfreenect2-for-processing.git</string>
+	<string>https://github.com/shiffman/OpenKinect-for-Processing</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>49AA77055867AAE9A10721EEA59C590D1EAEDB9C</string>
+	<string>1104B1852A18E28A16521C44CCB6A0ED65579468</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1104B1852A18E28A16521C44CCB6A0ED65579468</string>
+			<key>IDESourceControlWCCName</key>
+			<string>openKinect</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
