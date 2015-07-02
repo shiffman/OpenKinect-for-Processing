@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>AF17A384-55BC-41E6-BA6F-67D0E77A28E0</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ProtonectTest</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>49AA77055867AAE9A10721EEA59C590D1EAEDB9C</key>
+		<string>github.com:ThomasLengeling/libfreenect2-for-processing.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>build_openKinect2/protonectTest/xcode/ProtonectTest.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>49AA77055867AAE9A10721EEA59C590D1EAEDB9C</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:ThomasLengeling/libfreenect2-for-processing.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>49AA77055867AAE9A10721EEA59C590D1EAEDB9C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>49AA77055867AAE9A10721EEA59C590D1EAEDB9C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>openKinect2</string>
+		</dict>
+	</array>
+</dict>
+</plist>

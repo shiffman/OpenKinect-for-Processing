@@ -1,0 +1,579 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		E2D1F7001B2AA36300B6D960 /* usb-1.0.0-superspeed.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D1F6A01B2AA36200B6D960 /* usb-1.0.0-superspeed.a */; };
+		E2D1F7161B2AA36300B6D960 /* libturbojpeg.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D1F6FD1B2AA36300B6D960 /* libturbojpeg.dylib */; };
+		E2D1F71D1B2AA36D00B6D960 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2D1F71C1B2AA36D00B6D960 /* main.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E2D362CC1B2A2DD60098FC16 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		E2BC4CAA1B2FD71F00E95658 /* async_packet_processor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = async_packet_processor.h; sourceTree = "<group>"; };
+		E2BC4CAB1B2FD71F00E95658 /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = config.h; sourceTree = "<group>"; };
+		E2BC4CAC1B2FD71F00E95658 /* config.h.in */ = {isa = PBXFileReference; lastKnownFileType = text; path = config.h.in; sourceTree = "<group>"; };
+		E2BC4CAD1B2FD71F00E95658 /* data_callback.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = data_callback.h; sourceTree = "<group>"; };
+		E2BC4CAE1B2FD71F00E95658 /* depth_packet_processor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = depth_packet_processor.h; sourceTree = "<group>"; };
+		E2BC4CAF1B2FD71F00E95658 /* depth_packet_stream_parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = depth_packet_stream_parser.h; sourceTree = "<group>"; };
+		E2BC4CB01B2FD71F00E95658 /* double_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = double_buffer.h; sourceTree = "<group>"; };
+		E2BC4CB11B2FD71F00E95658 /* frame_listener.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = frame_listener.hpp; sourceTree = "<group>"; };
+		E2BC4CB21B2FD71F00E95658 /* frame_listener_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = frame_listener_impl.h; sourceTree = "<group>"; };
+		E2BC4CB31B2FD71F00E95658 /* libfreenect2.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = libfreenect2.hpp; sourceTree = "<group>"; };
+		E2BC4CB41B2FD71F00E95658 /* packet_pipeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = packet_pipeline.h; sourceTree = "<group>"; };
+		E2BC4CB51B2FD71F00E95658 /* packet_processor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = packet_processor.h; sourceTree = "<group>"; };
+		E2BC4CB71B2FD71F00E95658 /* command.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = command.h; sourceTree = "<group>"; };
+		E2BC4CB81B2FD71F00E95658 /* command_transaction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = command_transaction.h; sourceTree = "<group>"; };
+		E2BC4CB91B2FD71F00E95658 /* response.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = response.h; sourceTree = "<group>"; };
+		E2BC4CBA1B2FD71F00E95658 /* usb_control.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = usb_control.h; sourceTree = "<group>"; };
+		E2BC4CBB1B2FD71F00E95658 /* registration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = registration.h; sourceTree = "<group>"; };
+		E2BC4CBC1B2FD71F00E95658 /* resource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = resource.h; sourceTree = "<group>"; };
+		E2BC4CBD1B2FD71F00E95658 /* rgb_packet_processor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rgb_packet_processor.h; sourceTree = "<group>"; };
+		E2BC4CBE1B2FD71F00E95658 /* rgb_packet_stream_parser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rgb_packet_stream_parser.h; sourceTree = "<group>"; };
+		E2BC4CBF1B2FD71F00E95658 /* threading.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = threading.h; sourceTree = "<group>"; };
+		E2BC4CC11B2FD71F00E95658 /* event_loop.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = event_loop.h; sourceTree = "<group>"; };
+		E2BC4CC21B2FD71F00E95658 /* transfer_pool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = transfer_pool.h; sourceTree = "<group>"; };
+		E2BC4CC41B2FD71F00E95658 /* libfreenect2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libfreenect2.a; sourceTree = "<group>"; };
+		E2BC4CC51B2FD71F00E95658 /* libfreenect2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libfreenect2.dylib; sourceTree = "<group>"; };
+		E2BC4CC71B2FD94900E95658 /* tinythread.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = tinythread.cpp; sourceTree = "<group>"; };
+		E2BC4CC81B2FD94900E95658 /* tinythread.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tinythread.h; sourceTree = "<group>"; };
+		E2D1F68B1B2AA36200B6D960 /* libfreenect2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libfreenect2.h; sourceTree = "<group>"; };
+		E2D1F68F1B2AA36200B6D960 /* hotplug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hotplug.h; sourceTree = "<group>"; };
+		E2D1F6901B2AA36200B6D960 /* libusb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libusb.h; sourceTree = "<group>"; };
+		E2D1F6911B2AA36200B6D960 /* libusbi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libusbi.h; sourceTree = "<group>"; };
+		E2D1F6931B2AA36200B6D960 /* darwin_usb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = darwin_usb.h; sourceTree = "<group>"; };
+		E2D1F6941B2AA36200B6D960 /* linux_usbfs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = linux_usbfs.h; sourceTree = "<group>"; };
+		E2D1F6951B2AA36200B6D960 /* poll_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poll_posix.h; sourceTree = "<group>"; };
+		E2D1F6961B2AA36200B6D960 /* poll_windows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = poll_windows.h; sourceTree = "<group>"; };
+		E2D1F6971B2AA36200B6D960 /* threads_posix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threads_posix.h; sourceTree = "<group>"; };
+		E2D1F6981B2AA36200B6D960 /* threads_windows.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = threads_windows.h; sourceTree = "<group>"; };
+		E2D1F6991B2AA36200B6D960 /* wince_usb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wince_usb.h; sourceTree = "<group>"; };
+		E2D1F69A1B2AA36200B6D960 /* windows_common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = windows_common.h; sourceTree = "<group>"; };
+		E2D1F69B1B2AA36200B6D960 /* windows_usb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = windows_usb.h; sourceTree = "<group>"; };
+		E2D1F69C1B2AA36200B6D960 /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
+		E2D1F69D1B2AA36200B6D960 /* version_nano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version_nano.h; sourceTree = "<group>"; };
+		E2D1F6A01B2AA36200B6D960 /* usb-1.0.0-superspeed.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "usb-1.0.0-superspeed.a"; sourceTree = "<group>"; };
+		E2D1F6FA1B2AA36300B6D960 /* turbojpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = turbojpeg.h; sourceTree = "<group>"; };
+		E2D1F6FD1B2AA36300B6D960 /* libturbojpeg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libturbojpeg.dylib; sourceTree = "<group>"; };
+		E2D1F71C1B2AA36D00B6D960 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		E2D362CE1B2A2DD60098FC16 /* ProtonectTest */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ProtonectTest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		E2D362CB1B2A2DD60098FC16 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2D1F7001B2AA36300B6D960 /* usb-1.0.0-superspeed.a in Frameworks */,
+				E2D1F7161B2AA36300B6D960 /* libturbojpeg.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		E2BC4CA71B2FD71F00E95658 /* protonect */ = {
+			isa = PBXGroup;
+			children = (
+				E2BC4CA81B2FD71F00E95658 /* include */,
+				E2BC4CC31B2FD71F00E95658 /* lib */,
+			);
+			path = protonect;
+			sourceTree = "<group>";
+		};
+		E2BC4CA81B2FD71F00E95658 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				E2BC4CA91B2FD71F00E95658 /* libfreenect2 */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		E2BC4CA91B2FD71F00E95658 /* libfreenect2 */ = {
+			isa = PBXGroup;
+			children = (
+				E2BC4CC61B2FD94900E95658 /* tinythread */,
+				E2BC4CAA1B2FD71F00E95658 /* async_packet_processor.h */,
+				E2BC4CAB1B2FD71F00E95658 /* config.h */,
+				E2BC4CAC1B2FD71F00E95658 /* config.h.in */,
+				E2BC4CAD1B2FD71F00E95658 /* data_callback.h */,
+				E2BC4CAE1B2FD71F00E95658 /* depth_packet_processor.h */,
+				E2BC4CAF1B2FD71F00E95658 /* depth_packet_stream_parser.h */,
+				E2BC4CB01B2FD71F00E95658 /* double_buffer.h */,
+				E2BC4CB11B2FD71F00E95658 /* frame_listener.hpp */,
+				E2BC4CB21B2FD71F00E95658 /* frame_listener_impl.h */,
+				E2BC4CB31B2FD71F00E95658 /* libfreenect2.hpp */,
+				E2BC4CB41B2FD71F00E95658 /* packet_pipeline.h */,
+				E2BC4CB51B2FD71F00E95658 /* packet_processor.h */,
+				E2BC4CB61B2FD71F00E95658 /* protocol */,
+				E2BC4CBB1B2FD71F00E95658 /* registration.h */,
+				E2BC4CBC1B2FD71F00E95658 /* resource.h */,
+				E2BC4CBD1B2FD71F00E95658 /* rgb_packet_processor.h */,
+				E2BC4CBE1B2FD71F00E95658 /* rgb_packet_stream_parser.h */,
+				E2BC4CBF1B2FD71F00E95658 /* threading.h */,
+				E2BC4CC01B2FD71F00E95658 /* usb */,
+			);
+			path = libfreenect2;
+			sourceTree = "<group>";
+		};
+		E2BC4CB61B2FD71F00E95658 /* protocol */ = {
+			isa = PBXGroup;
+			children = (
+				E2BC4CB71B2FD71F00E95658 /* command.h */,
+				E2BC4CB81B2FD71F00E95658 /* command_transaction.h */,
+				E2BC4CB91B2FD71F00E95658 /* response.h */,
+				E2BC4CBA1B2FD71F00E95658 /* usb_control.h */,
+			);
+			path = protocol;
+			sourceTree = "<group>";
+		};
+		E2BC4CC01B2FD71F00E95658 /* usb */ = {
+			isa = PBXGroup;
+			children = (
+				E2BC4CC11B2FD71F00E95658 /* event_loop.h */,
+				E2BC4CC21B2FD71F00E95658 /* transfer_pool.h */,
+			);
+			path = usb;
+			sourceTree = "<group>";
+		};
+		E2BC4CC31B2FD71F00E95658 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				E2BC4CC41B2FD71F00E95658 /* libfreenect2.a */,
+				E2BC4CC51B2FD71F00E95658 /* libfreenect2.dylib */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		E2BC4CC61B2FD94900E95658 /* tinythread */ = {
+			isa = PBXGroup;
+			children = (
+				E2BC4CC71B2FD94900E95658 /* tinythread.cpp */,
+				E2BC4CC81B2FD94900E95658 /* tinythread.h */,
+			);
+			path = tinythread;
+			sourceTree = "<group>";
+		};
+		E2D1F6881B2AA36200B6D960 /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				E2BC4CA71B2FD71F00E95658 /* protonect */,
+				E2D1F6891B2AA36200B6D960 /* libfreenect2 */,
+				E2D1F68C1B2AA36200B6D960 /* libusb */,
+				E2D1F6D91B2AA36200B6D960 /* TurboJpeg */,
+			);
+			name = libs;
+			path = ../libs;
+			sourceTree = "<group>";
+		};
+		E2D1F6891B2AA36200B6D960 /* libfreenect2 */ = {
+			isa = PBXGroup;
+			children = (
+				E2D1F68A1B2AA36200B6D960 /* include */,
+			);
+			path = libfreenect2;
+			sourceTree = "<group>";
+		};
+		E2D1F68A1B2AA36200B6D960 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				E2D1F68B1B2AA36200B6D960 /* libfreenect2.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		E2D1F68C1B2AA36200B6D960 /* libusb */ = {
+			isa = PBXGroup;
+			children = (
+				E2D1F68D1B2AA36200B6D960 /* include */,
+				E2D1F69E1B2AA36200B6D960 /* lib */,
+			);
+			path = libusb;
+			sourceTree = "<group>";
+		};
+		E2D1F68D1B2AA36200B6D960 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				E2D1F68E1B2AA36200B6D960 /* libusb */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		E2D1F68E1B2AA36200B6D960 /* libusb */ = {
+			isa = PBXGroup;
+			children = (
+				E2D1F68F1B2AA36200B6D960 /* hotplug.h */,
+				E2D1F6901B2AA36200B6D960 /* libusb.h */,
+				E2D1F6911B2AA36200B6D960 /* libusbi.h */,
+				E2D1F6921B2AA36200B6D960 /* os */,
+				E2D1F69C1B2AA36200B6D960 /* version.h */,
+				E2D1F69D1B2AA36200B6D960 /* version_nano.h */,
+			);
+			path = libusb;
+			sourceTree = "<group>";
+		};
+		E2D1F6921B2AA36200B6D960 /* os */ = {
+			isa = PBXGroup;
+			children = (
+				E2D1F6931B2AA36200B6D960 /* darwin_usb.h */,
+				E2D1F6941B2AA36200B6D960 /* linux_usbfs.h */,
+				E2D1F6951B2AA36200B6D960 /* poll_posix.h */,
+				E2D1F6961B2AA36200B6D960 /* poll_windows.h */,
+				E2D1F6971B2AA36200B6D960 /* threads_posix.h */,
+				E2D1F6981B2AA36200B6D960 /* threads_windows.h */,
+				E2D1F6991B2AA36200B6D960 /* wince_usb.h */,
+				E2D1F69A1B2AA36200B6D960 /* windows_common.h */,
+				E2D1F69B1B2AA36200B6D960 /* windows_usb.h */,
+			);
+			path = os;
+			sourceTree = "<group>";
+		};
+		E2D1F69E1B2AA36200B6D960 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				E2D1F69F1B2AA36200B6D960 /* osx */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		E2D1F69F1B2AA36200B6D960 /* osx */ = {
+			isa = PBXGroup;
+			children = (
+				E2D1F6A01B2AA36200B6D960 /* usb-1.0.0-superspeed.a */,
+			);
+			path = osx;
+			sourceTree = "<group>";
+		};
+		E2D1F6D91B2AA36200B6D960 /* TurboJpeg */ = {
+			isa = PBXGroup;
+			children = (
+				E2D1F6F91B2AA36300B6D960 /* include */,
+				E2D1F6FB1B2AA36300B6D960 /* lib */,
+			);
+			path = TurboJpeg;
+			sourceTree = "<group>";
+		};
+		E2D1F6F91B2AA36300B6D960 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				E2D1F6FA1B2AA36300B6D960 /* turbojpeg.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		E2D1F6FB1B2AA36300B6D960 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				E2D1F6FC1B2AA36300B6D960 /* osx */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		E2D1F6FC1B2AA36300B6D960 /* osx */ = {
+			isa = PBXGroup;
+			children = (
+				E2D1F6FD1B2AA36300B6D960 /* libturbojpeg.dylib */,
+			);
+			path = osx;
+			sourceTree = "<group>";
+		};
+		E2D1F71B1B2AA36D00B6D960 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E2D1F71C1B2AA36D00B6D960 /* main.cpp */,
+			);
+			name = src;
+			path = ../src;
+			sourceTree = "<group>";
+		};
+		E2D362C51B2A2DD60098FC16 = {
+			isa = PBXGroup;
+			children = (
+				E2D1F71B1B2AA36D00B6D960 /* src */,
+				E2D1F6881B2AA36200B6D960 /* libs */,
+				E2D362CF1B2A2DD60098FC16 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		E2D362CF1B2A2DD60098FC16 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E2D362CE1B2A2DD60098FC16 /* ProtonectTest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		E2D362CD1B2A2DD60098FC16 /* ProtonectTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E2D362D51B2A2DD60098FC16 /* Build configuration list for PBXNativeTarget "ProtonectTest" */;
+			buildPhases = (
+				E2D362CA1B2A2DD60098FC16 /* Sources */,
+				E2D362CB1B2A2DD60098FC16 /* Frameworks */,
+				E2D362CC1B2A2DD60098FC16 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ProtonectTest;
+			productName = ProtonectTest;
+			productReference = E2D362CE1B2A2DD60098FC16 /* ProtonectTest */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		E2D362C61B2A2DD60098FC16 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = tom;
+				TargetAttributes = {
+					E2D362CD1B2A2DD60098FC16 = {
+						CreatedOnToolsVersion = 6.3.1;
+					};
+				};
+			};
+			buildConfigurationList = E2D362C91B2A2DD60098FC16 /* Build configuration list for PBXProject "ProtonectTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = E2D362C51B2A2DD60098FC16;
+			productRefGroup = E2D362CF1B2A2DD60098FC16 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E2D362CD1B2A2DD60098FC16 /* ProtonectTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		E2D362CA1B2A2DD60098FC16 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E2D1F71D1B2AA36D00B6D960 /* main.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		E2D362D31B2A2DD60098FC16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		E2D362D41B2A2DD60098FC16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		E2D362D61B2A2DD60098FC16 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+					../libs/libusb/include/libusb/os,
+					../libs/libusb/include/libusb,
+					../libs/TurboJpeg/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/libs/libusb/lib/osx",
+					"$(PROJECT_DIR)/libs/TurboJpeg/lib/osx",
+					/usr/local/lib,
+				);
+				MACH_O_TYPE = mh_execute;
+				OTHER_LDFLAGS = (
+					../libs/TurboJpeg/lib/osx/libturbojpeg.dylib,
+					"../libs/libusb/lib/osx/usb-1.0.0-superspeed.a",
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_ts",
+					"-lopencv_video",
+					"-lopencv_videostab",
+					"-lturbojpeg",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "../libs/libusb/include/libusb/os ../libs/libusb/include/libusb ../libs/libusb/include ../libs/libfreenect2/include ../libs/protonect/include ../libs/protonect/src/tinythread ../libs/protonect/include/libfreenect2/protocol ../libs/protonect/include/libfreenect2/usb ../libs/protonect/include/libfreenect2 ../libs/protonect/include/ ../libs/ ../libs/libusb ../libs/protonect";
+			};
+			name = Debug;
+		};
+		E2D362D71B2A2DD60098FC16 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+					../libs/libusb/include/libusb/os,
+					../libs/libusb/include/libusb,
+					../libs/TurboJpeg/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/libs/libusb/lib/osx",
+					"$(PROJECT_DIR)/libs/TurboJpeg/lib/osx",
+					/usr/local/lib,
+				);
+				MACH_O_TYPE = mh_execute;
+				OTHER_LDFLAGS = (
+					../libs/TurboJpeg/lib/osx/libturbojpeg.dylib,
+					"../libs/libusb/lib/osx/usb-1.0.0-superspeed.a",
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_ts",
+					"-lopencv_video",
+					"-lopencv_videostab",
+					"-lturbojpeg",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "../libs/libusb/include/libusb/os ../libs/libusb/include/libusb ../libs/libusb/include ../libs/libfreenect2/include ../libs/protonect/include ../libs/protonect/src/tinythread ../libs/protonect/include/libfreenect2/protocol ../libs/protonect/include/libfreenect2/usb ../libs/protonect/include/libfreenect2 ../libs/protonect/include/ ../libs/ ../libs/libusb ../libs/protonect";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		E2D362C91B2A2DD60098FC16 /* Build configuration list for PBXProject "ProtonectTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2D362D31B2A2DD60098FC16 /* Debug */,
+				E2D362D41B2A2DD60098FC16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		E2D362D51B2A2DD60098FC16 /* Build configuration list for PBXNativeTarget "ProtonectTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E2D362D61B2A2DD60098FC16 /* Debug */,
+				E2D362D71B2A2DD60098FC16 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = E2D362C61B2A2DD60098FC16 /* Project object */;
+}
