@@ -21,7 +21,7 @@ import processing.core.PImage;
 public class Kinect {
 
 	public static PApplet p5parent;
-	
+
 	Method depthEventMethod;
 	Method videoEventMethod;
 
@@ -39,10 +39,14 @@ public class Kinect {
 	int h = 480;
 
 	boolean irMode = false;
-	
+	boolean colorDepthMode = false;
+
 	boolean depthEnabled = false;
 	boolean videoEnabled = false;
-	
+
+	int currentDeviceIndex = 0;
+
+	boolean started = false;
 
 	public Kinect(PApplet _p) {
 		p5parent = _p;
@@ -63,16 +67,25 @@ public class Kinect {
 
 		depthImage = p5parent.createImage(w, h, PConstants.RGB);
 		videoImage = p5parent.createImage(w, h, PConstants.RGB);
-		
-		start(0);
+
+		context = Freenect.createContext();
+		if(numDevices() < 1) {
+			System.err.println("No Kinect devices found.");
+		}
+		//start(0);
 	}
 
-	public void start(int num) {
-		context = Freenect.createContext();
-		if(context.numDevices() < 1) {
-			System.out.println("No Kinect devices found.");
-		}
-		device = context.openDevice(num);
+	public int numDevices() {
+		return context.numDevices();		
+	}
+
+	public void setDevice(int n) {
+		currentDeviceIndex = n;
+	}
+
+	void start() {
+		started = true;
+		device = context.openDevice(currentDeviceIndex);
 	}
 
 	public int[] getRawDepth() {
@@ -87,17 +100,17 @@ public class Kinect {
 		}
 		return rawDepth;
 	}
-	
+
 	public void stopDepth() {
 		device.stopDepth();
 		depthEnabled = false;
 	}
-	
+
 	public void stopVideo() {
 		device.stopVideo();
 		videoEnabled = false;
 	}
-	
+
 	public void toggleDepth() {
 		depthEnabled = !depthEnabled;
 		if (depthEnabled) {
@@ -106,7 +119,7 @@ public class Kinect {
 			stopDepth();
 		}
 	}
-	
+
 	public void toggleVideo() {
 		videoEnabled = !videoEnabled;
 		if (videoEnabled) {
@@ -117,13 +130,17 @@ public class Kinect {
 	}
 
 	public void startDepth() {
+
+		if (!started) {
+			start();
+		}
 		depthEnabled = true;
 		device.setDepthFormat(DepthFormat.D11BIT);
 		final Kinect ref = this;
 		device.startDepth(new DepthHandler() {
 			public void onFrameReceived(FrameMode mode, ByteBuffer frame, int timestamp) {
 				rawDepthBuffer = frame.asShortBuffer();
-				DepthImage.data(rawDepthBuffer, depthImage);
+				DepthImage.data(rawDepthBuffer, depthImage, colorDepthMode);
 				if (depthEventMethod != null) {
 					try {
 						depthEventMethod.invoke(p5parent,  new Object[] { ref } );
@@ -136,6 +153,9 @@ public class Kinect {
 	}
 
 	public void startVideo() {
+		if (!started) {
+			start();
+		}
 		videoEnabled = true;
 		final Kinect ref = this;
 		if (irMode) {
@@ -162,22 +182,17 @@ public class Kinect {
 		device.setTiltAngle(deg);
 	}
 
-	public void enableIR(boolean b) {
+	public float getTilt() {
+		return (float) device.getTiltAngle();
+	}
+
+	public void setIR(boolean b) {
 		irMode = b;
 	}
 
-	//	public float getVideoFPS() {
-	//		return kimg.getFPS();
-	//	}
-
-	//	public float getDepthFPS() {
-	//		return dimg.getFPS();
-	//	}
-
-	//	public PImage getVideoImage() {
-	//		return kimg.img;
-	//		//return kimg.imgCopy;
-	//	}
+	public void setColorDepth(boolean b) {
+		colorDepthMode = b;
+	}
 
 	public PImage getDepthImage() {
 		return depthImage;

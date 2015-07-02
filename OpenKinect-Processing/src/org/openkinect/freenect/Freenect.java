@@ -35,6 +35,7 @@ import java.nio.DoubleBuffer;
 import org.openkinect.processing.LibraryPath;
 
 
+
 public class Freenect implements Library {
 	
 	// Ok, need a better way to get these constants!
@@ -49,7 +50,7 @@ public class Freenect implements Library {
 			LibraryPath libPath = new LibraryPath();
 		    String path = libPath.get();  
 		    // When testing from Eclipse
-		    path = "lib";
+		    //path = "lib";
 		    // System.out.println("Found path: " + path);
 		    
 			NativeLibrary.addSearchPath("freenect", path);
