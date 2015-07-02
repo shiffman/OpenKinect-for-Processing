@@ -113,19 +113,19 @@ public class Freenect implements Library {
 		}
 
 		@Override
-		public int numDevices () {
+		public int numDevices() {
 			return freenect_num_devices(this);
 		}
 
 		@Override
 		public Device openDevice (int index) {
 			PointerByReference devicePtr = new PointerByReference();
-			System.out.println("Opening device");
 			int rval = freenect_open_device(this, devicePtr, index);
 			if (rval != 0) {
-				throw new IllegalStateException("freenect_open_device() returned " + rval);
+				System.err.println("There are no kinects, returning null");
+				return null;
+				// throw new IllegalStateException("freenect_open_device() returned " + rval);
 			}
-			//System.out.println(devicePtr.getValue());
 			return new NativeDevice(devicePtr.getValue(), index);
 		}
 

@@ -1,10 +1,13 @@
+// Daniel Shiffman
+// Tracking the average location beyond a given depth threshold
+// Thanks to Dan O'Sullivan
+
+// https://github.com/shiffman/OpenKinect-for-Processing
+// http://shiffman.net/p5/kinect/
+
 class KinectTracker {
 
-
-
   // Size of kinect image
-  int kw = 640;
-  int kh = 480;
   int threshold = 745;
 
   // Raw location
@@ -16,25 +19,16 @@ class KinectTracker {
   // Depth data
   int[] depth;
 
-
   PImage display;
 
   KinectTracker() {
-    kinect.start();
-    kinect.enableDepth(true);
-
-    // We could skip processing the grayscale image for efficiency
-    // but this example is just demonstrating everything
-    kinect.processDepthImage(true);
-
-    display = createImage(kw,kh,PConstants.RGB);
-
-    loc = new PVector(0,0);
-    lerpedLoc = new PVector(0,0);
+    kinect.startDepth();
+    display = createImage(kinect.width, kinect.height, RGB);
+    loc = new PVector(0, 0);
+    lerpedLoc = new PVector(0, 0);
   }
 
   void track() {
-
     // Get the raw depth as array of integers
     depth = kinect.getRawDepth();
 
@@ -45,10 +39,10 @@ class KinectTracker {
     float sumY = 0;
     float count = 0;
 
-    for(int x = 0; x < kw; x++) {
-      for(int y = 0; y < kh; y++) {
+    for (int x = 0; x < kinect.width; x++) {
+      for (int y = 0; y < kinect.height; y++) {
         // Mirroring the image
-        int offset = kw-x-1+y*kw;
+        int offset = kinect.width-x-1 + y*kinect.width;
         // Grabbing the raw depth
         int rawDepth = depth[offset];
 
@@ -62,7 +56,7 @@ class KinectTracker {
     }
     // As long as we found something
     if (count != 0) {
-      loc = new PVector(sumX/count,sumY/count);
+      loc = new PVector(sumX/count, sumY/count);
     }
 
     // Interpolating the location, doing it arbitrarily for now
@@ -87,19 +81,18 @@ class KinectTracker {
     // Going to rewrite the depth image to show which pixels are in threshold
     // A lot of this is redundant, but this is just for demonstration purposes
     display.loadPixels();
-    for(int x = 0; x < kw; x++) {
-      for(int y = 0; y < kh; y++) {
+    for (int x = 0; x < kinect.width; x++) {
+      for (int y = 0; y < kinect.height; y++) {
         // mirroring image
-        int offset = kw-x-1+y*kw;
+        int offset = kinect.width-x-1+y*kinect.width;
         // Raw depth
         int rawDepth = depth[offset];
 
         int pix = x+y*display.width;
         if (rawDepth < threshold) {
           // A red color instead
-          display.pixels[pix] = color(150,50,50);
-        } 
-        else {
+          display.pixels[pix] = color(150, 50, 50);
+        } else {
           display.pixels[pix] = img.pixels[offset];
         }
       }
@@ -107,11 +100,7 @@ class KinectTracker {
     display.updatePixels();
 
     // Draw the image
-    image(display,0,0);
-  }
-
-  void quit() {
-    kinect.quit();
+    image(display, 0, 0);
   }
 
   int getThreshold() {
@@ -122,4 +111,3 @@ class KinectTracker {
     threshold =  t;
   }
 }
-

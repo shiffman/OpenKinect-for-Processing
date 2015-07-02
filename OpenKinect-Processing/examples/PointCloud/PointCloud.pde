@@ -1,9 +1,10 @@
 // Daniel Shiffman
 // Kinect Point Cloud example
-// http://www.shiffman.net
-// https://github.com/shiffman/libfreenect/tree/master/wrappers/java/processing
 
-import org.openkinect.*;
+// https://github.com/shiffman/OpenKinect-for-Processing
+// http://shiffman.net/p5/kinect/
+
+import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
 
 // Kinect Library object
@@ -11,22 +12,13 @@ Kinect kinect;
 
 float a = 0;
 
-// Size of kinect image
-int w = 640;
-int h = 480;
-
-
 // We'll use a lookup table so that we don't have to repeat the math over and over
 float[] depthLookUp = new float[2048];
 
 void setup() {
-  size(800,600,P3D);
+  size(800, 600, P3D);
   kinect = new Kinect(this);
-  kinect.start();
-  kinect.enableDepth(true);
-  // We don't need the grayscale image in this example
-  // so this makes it more efficient
-  kinect.processDepthImage(false);
+  kinect.startDepth();
 
   // Lookup table for all possible depth values (0 - 2047)
   for (int i = 0; i < depthLookUp.length; i++) {
@@ -37,9 +29,6 @@ void setup() {
 void draw() {
 
   background(0);
-  fill(255);
-  textMode(SCREEN);
-  text("Kinect FR: " + (int)kinect.getDepthFPS() + "\nProcessing FR: " + (int)frameRate,10,16);
 
   // Get the raw depth as array of integers
   int[] depth = kinect.getRawDepth();
@@ -48,24 +37,24 @@ void draw() {
   int skip = 4;
 
   // Translate and rotate
-  translate(width/2,height/2,-50);
+  translate(width/2, height/2, -50);
   rotateY(a);
 
-  for(int x=0; x<w; x+=skip) {
-    for(int y=0; y<h; y+=skip) {
-      int offset = x+y*w;
+  for (int x = 0; x < kinect.width; x += skip) {
+    for (int y = 0; y < kinect.height; y += skip) {
+      int offset = x + y*kinect.width;
 
       // Convert kinect data to world xyz coordinate
       int rawDepth = depth[offset];
-      PVector v = depthToWorld(x,y,rawDepth);
+      PVector v = depthToWorld(x, y, rawDepth);
 
       stroke(255);
       pushMatrix();
       // Scale up by 200
       float factor = 200;
-      translate(v.x*factor,v.y*factor,factor-v.z*factor);
+      translate(v.x*factor, v.y*factor, factor-v.z*factor);
       // Draw a point
-      point(0,0);
+      point(0, 0);
       popMatrix();
     }
   }
@@ -96,9 +85,3 @@ PVector depthToWorld(int x, int y, int depthValue) {
   result.z = (float)(depth);
   return result;
 }
-
-void stop() {
-  kinect.quit();
-  super.stop();
-}
-

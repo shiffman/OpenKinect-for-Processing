@@ -1,20 +1,30 @@
+// Daniel Shiffman
+// Depth thresholding example
+
+// https://github.com/shiffman/OpenKinect-for-Processing
+// http://shiffman.net/p5/kinect/
+
+
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
 
 Kinect kinect;
 
-float deg = 15; // Start at 15 degrees
+float deg;
 
 boolean ir = false;
+boolean colorDepth = false;
 
 void setup() {
-  size(1280, 520);
+  size(1280, 520, P2D);
   kinect = new Kinect(this);
-  //kinect.start();
   kinect.startDepth();
   kinect.startVideo();
-  kinect.enableIR(ir);
-  kinect.tilt(deg);
+  //kinect.setIR(ir);
+  kinect.setColorDepth(colorDepth);
+  
+  deg = kinect.getTilt();
+  // kinect.tilt(deg);
 }
 
 
@@ -23,7 +33,12 @@ void draw() {
   image(kinect.getVideoImage(), 0, 0);
   image(kinect.getDepthImage(), 640, 0);
   fill(255);
-  text("Press 'd' to enable/disable depth    Press 'r' to enable/disable rgb image   Press 'i' to enable/disable IR image  UP and DOWN to tilt camera   Framerate: " + frameRate, 10, 515);
+  text("Press 'd' to enable/disable depth    " + 
+    "Press 'r' to enable/disable rgb image   " + 
+    "Press 'i' to enable/disable IR image  " + 
+    "Press 'c' to enable/disable color depth image  " + 
+    "UP and DOWN to tilt camera   " + 
+    "Framerate: " + int(frameRate), 10, 515);
 }
 
 void keyPressed() {
@@ -33,7 +48,10 @@ void keyPressed() {
     kinect.toggleVideo();
   } else if (key == 'i') {
     ir = !ir;
-    kinect.enableIR(ir);
+    kinect.setIR(ir);
+  } else if (key == 'c') {
+    colorDepth = !colorDepth;
+    kinect.setColorDepth(colorDepth);
   } else if (key == CODED) {
     if (keyCode == UP) {
       deg++;
