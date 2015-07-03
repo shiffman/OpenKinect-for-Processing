@@ -25,9 +25,8 @@
  */
 
 #include <libfreenect2/rgb_packet_processor.h>
-
-#include <opencv2/opencv.hpp>
 #include <turbojpeg.h>
+#include <iostream>
 
 namespace libfreenect2
 {
@@ -76,24 +75,6 @@ public:
     frame = new Frame(1920, 1080, tjPixelSize[TJPF_BGRX]);
   }
 
-  void startTiming()
-  {
-    timing_current_start = cv::getTickCount();
-  }
-
-  void stopTiming()
-  {
-    timing_acc += (cv::getTickCount() - timing_current_start) / cv::getTickFrequency();
-    timing_acc_n += 1.0;
-
-    if(timing_acc_n >= 100.0)
-    {
-      double avg = (timing_acc / timing_acc_n);
-      std::cout << "[TurboJpegRgbPacketProcessor] avg. time: " << (avg * 1000) << "ms -> ~" << (1.0/avg) << "Hz" << std::endl;
-      timing_acc = 0.0;
-      timing_acc_n = 0.0;
-    }
-  }
 };
 
 TurboJpegRgbPacketProcessor::TurboJpegRgbPacketProcessor() :

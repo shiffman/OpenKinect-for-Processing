@@ -46,6 +46,9 @@ public class Device {
     private PApplet parent;
 	private long ptr;
 	
+	//version control for openKinect2
+	private String version = "";
+		
 	PImage depthImg;
 	PImage irImg;
 	PImage colorImg;
@@ -67,6 +70,21 @@ public class Device {
 		colorImg = parent.createImage(1920, 1080, PImage.ARGB);
 		undistortedImg = parent.createImage(512, 424, PImage.ALPHA);
 		registeredImg  = parent.createImage(512, 424, PImage.ARGB);
+		
+		for(int i = 0; i < 512; i++){
+			for(int j = 0; j < 424; j++){
+				depthImg.set(i, j, parent.color(0));
+				irImg.set(i, j, parent.color(0));
+				undistortedImg.set(i, j, parent.color(0));
+				registeredImg.set(i, j, parent.color(0));
+			}
+		}
+		
+		for(int i = 0; i < 1920; i++){
+			for(int j = 0; j < 1080; j++){
+				colorImg.set(i, j, parent.color(0));
+			}
+		}
 		
 		//System.out.println(version());
     }
@@ -138,11 +156,18 @@ public class Device {
      */
     public PImage getRegisteredImage(){
     	int[] registeredData = jniGetRegistered();
-    	PApplet.arrayCopy(registeredData, 0, registeredImg.pixels, 0, registeredImg.width* registeredImg.height);;
+    	PApplet.arrayCopy(registeredData, 0, registeredImg.pixels, 0, registeredImg.width* registeredImg.height);
     	registeredImg.updatePixels();
     	return registeredImg;
     }
     
+    /**
+     *  get the raw depth data
+     * @return array of ints from 0 - 45000
+     */
+    public int []  getRawDepthData(){
+    	return jniGetRawDepthData();
+    }
 
     
     //JNI Functions
@@ -150,9 +175,9 @@ public class Device {
     private  native void openJNI();
     private  native void stopJNI();
 
-    private  native String version();
-    
     private  native int [] jniGetDepthData();
+    private  native int [] jniGetRawDepthData();
+    
     private  native int [] jniGetIrData();
     private  native int [] jniGetColorData();
     private  native int [] jniGetUndistorted();

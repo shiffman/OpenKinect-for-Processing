@@ -14,4 +14,11 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>lib/processing_2.2.1</name>
+			<type>2</type>
+			<location>/Users/tom/Documents/Programming/openKinect/build_openKinect2/openKinectv2/lib/processing_2.2.1</location>
+		</link>
+	</linkedResources>
 </projectDescription>

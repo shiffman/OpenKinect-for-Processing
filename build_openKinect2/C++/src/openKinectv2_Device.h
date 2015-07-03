@@ -33,19 +33,21 @@ JNIEXPORT void JNICALL Java_openKinectv2_Device_stopJNI
 
 /*
  * Class:     openKinectv2_Device
- * Method:    version
- * Signature: ()Ljava/lang/String;
- */
-JNIEXPORT jstring JNICALL Java_openKinectv2_Device_version
-  (JNIEnv *, jobject);
-
-/*
- * Class:     openKinectv2_Device
  * Method:    jniGetDepthData
  * Signature: ()[I
  */
 JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetDepthData
   (JNIEnv *, jobject);
+    
+/*
+ * Class:     openKinectv2_Device
+ * Method:    jniGetDepthData
+ * Signature: ()[I
+ */
+    
+JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetRawDepthData
+(JNIEnv *, jobject);
+    
     
 /*
  * Class:     openKinectv2_Device

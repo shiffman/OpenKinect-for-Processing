@@ -37,14 +37,6 @@ JNIEXPORT void JNICALL Java_openKinectv2_Device_stopJNI(JNIEnv* env, jobject obj
     env->DeleteGlobalRef( obj );
 }
 
-JNIEXPORT jstring JNICALL Java_openKinectv2_Device_version(JNIEnv* env, jobject obj)
-{
-    jclass cls = env->GetObjectClass(obj);
-    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
-    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
-    return env->NewStringUTF(kinect->getVersion().c_str());
-}
-
 /// ------ get Depth data
 JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetDepthData(JNIEnv * env, jobject obj)
 {
@@ -63,6 +55,22 @@ JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetDepthData(JNIEnv * en
     return buffer;
 }
 
+JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetRawDepthData(JNIEnv * env, jobject obj)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    jintArray buffer = env->NewIntArray((jsize)FRAME_SIZE_DEPTH);
+    
+    const jint * pInt;
+    if(kinect->isKinectReady()){
+        pInt = (const jint * )kinect->JNI_GetRawDepth();
+        env->SetIntArrayRegion(buffer, 0, (jsize)FRAME_SIZE_DEPTH, (const jint *)(pInt));
+    }
+    
+    return buffer;
+}
 /// ------  get Ir data
 JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetIrData(JNIEnv * env, jobject obj)
 {
