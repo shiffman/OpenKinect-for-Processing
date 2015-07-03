@@ -30,7 +30,10 @@
 /* The classes below are exported */
 #pragma GCC visibility push(default)
 
-#define FRAME_SIZE_DEPTH    217088
+
+#define FRAME_SIZE_DEPTH            217088      //512 x 424
+#define FRAME_BYTE_SIZE_DEPTH       868352      //512 x 424 x 4
+
 #define FRAME_SIZE_COLOR    2073600
 #define FLT_EPSILON         1.19209290e-07F
 
@@ -42,63 +45,75 @@ namespace  openKinect2{
     public:
         Device();
         
-        void    open(int mode = 1);
+        void        open(int mode = 1);
         
-        void    closeKinect();
+        void        closeKinect();
         
-        void    sigint_handler(int s);
-        
-        std::string getVersion();
-        
-        
-        uint32_t *	JNI_GetDepth();
-        uint32_t *  JNI_GetColor();
-        uint32_t *  JNI_GetIr();
-        uint32_t *  JNI_GetUndistorted();
-        uint32_t *  JNI_GetRegistered();
+        void        sigint_handler(int s);
         
         bool        isKinectReady();
         
+        
+        //get Depth Frame
+        uint32_t *	JNI_GetDepth();
+        
+        //get color RGB  frame
+        uint32_t *  JNI_GetColor();
+        
+        // get the IR frame
+        uint32_t *  JNI_GetIr();
+        
+        //get the depth undistorted for the depth mapping
+        uint32_t *  JNI_GetUndistorted();
+        
+        //get depth + rgb map
+        uint32_t *  JNI_GetRegistered();
+        
+        //get raw depth data
+        uint32_t *  JNI_GetRawDepth();
+        
+        
     private:
-        void    updateKinect();
+        void        updateKinect();
         
-        void    setupDepth();
+        void        setupDepth();
         
-        int     openKinect(int mode = 3);
+        int         openKinect(int mode = 3);
         
-        float   clamp(float value, float min, float max);
-        float   lmap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp);
+        float       clamp(float value, float min, float max);
+        float       lmap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp);
         
-        //help functions
+        //help function to map to processing color format
         uint32_t colorByte2Int(uint32_t gray);
         uint32_t colorByte2Int(uint8_t gray, uint8_t alpha);
         uint32_t colorByte2Int(uint8_t r, uint8_t g, uint8_t b, uint8_t  a);
         uint32_t colorByte2Int(uint8_t r, uint8_t g, uint8_t b);
         
     private:
-        
-        
-        std::thread         mKinectThread;
-        
-        //initilized
-        bool                initialized_device;
     
+        //libfreenect
         libfreenect2::Freenect2                  freenect2;
         libfreenect2::SyncMultiFrameListener *   listener = 0;
         libfreenect2::Freenect2Device *          dev = 0;
         libfreenect2::PacketPipeline  *          pipeline = 0;
         libfreenect2::Registration    *          registration = 0;
         
+        //Main thread
+        std::thread                 mKinectThread;
+        
+        //initilized
+        bool                        initialized_device;
+        
+        //Data
         uint32_t *	 depthData;
+        uint32_t *   rawDepthData;
         uint32_t *	 colorData;
         uint32_t *	 irData;
         uint32_t *   undisortedData;
         uint32_t *   registeredData;
         
-        
-        std::string version;
-        
-        std::string mSerialKinect;
+        //for multiples Kinects
+        std::string     mSerialKinect;
         
     
     };

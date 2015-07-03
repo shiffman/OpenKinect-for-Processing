@@ -21,22 +21,19 @@ namespace openKinect2 {
     {
         initialized_device = false;
         
+        //load memory
         depthData      = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
         irData         = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
         colorData      = (uint32_t *)malloc(FRAME_SIZE_COLOR * sizeof(uint32_t));
         undisortedData = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
         registeredData = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
+        rawDepthData   = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
         
-        version = "0.01";
         mSerialKinect = "";
         
     }
     
-    std::string Device::getVersion()
-    {
-        return version;
-    }
-    
+    //open the kinect
     int Device::openKinect(int mode)
     {
         if(freenect2.enumerateDevices() == 0)
@@ -48,6 +45,7 @@ namespace openKinect2 {
         
         std::string serial = freenect2.getDefaultDeviceSerialNumber();
         
+        //there are 3 modes, opengl and gpu, only use opencl
         if(mode == 3)
         {
             
@@ -123,6 +121,10 @@ namespace openKinect2 {
             delete depthData;
         }
         
+        if(rawDepthData != NULL){
+            delete rawDepthData;
+        }
+        
         if(irData != NULL){
             delete  irData;
         }
@@ -138,6 +140,7 @@ namespace openKinect2 {
         if(registeredData != NULL){
             delete registeredData;
         }
+    
         
     }
     
@@ -159,9 +162,9 @@ namespace openKinect2 {
         
 
         //Temporary arrays
-        float * newDepth = new float[512 * 424];
-        float * newIr    = new float[512 * 424];
-        float * newUndisorted =  new float[512 * 424];
+        float * newDepth = new float[FRAME_SIZE_DEPTH];
+        float * newIr    = new float[FRAME_SIZE_DEPTH];
+        float * newUndisorted =  new float[FRAME_SIZE_DEPTH];
         
         
         //MAIN THREAD
@@ -180,20 +183,24 @@ namespace openKinect2 {
        
             //Memory copies to the data arrays to send them to processing via JNI
             //DEPTH
-            memcpy(newDepth, reinterpret_cast<const float * >(depth->data), 512 * 424 * 4);
+            memcpy(newDepth, reinterpret_cast<const float * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
+            
+            //copy raw depth
+            memcpy(rawDepthData, reinterpret_cast<const float * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
+            
             
             //IR
-            memcpy(newIr, reinterpret_cast<const float * >(ir->data), 512 * 424 * 4);
+            memcpy(newIr, reinterpret_cast<const float * >(ir->data), FRAME_BYTE_SIZE_DEPTH);
             
             //Color
             memcpy(colorData, reinterpret_cast<const uint32_t *>(rgb->data), 1920 * 1080 * 4);
             
             //Mapers
             //undisorted
-            memcpy(newUndisorted, reinterpret_cast<const float * >(undistorted.data), 512 * 424 * 4);
+            memcpy(newUndisorted, reinterpret_cast<const float * >(undistorted.data), FRAME_BYTE_SIZE_DEPTH);
             
             //registered
-            memcpy(registeredData, reinterpret_cast<const uint32_t * >(registered.data), 512 * 424 * 4);
+            memcpy(registeredData, reinterpret_cast<const uint32_t * >(registered.data), FRAME_BYTE_SIZE_DEPTH);
             
         
             //convert depth, ir to processing pixels
@@ -206,6 +213,7 @@ namespace openKinect2 {
                 
                 //Depth
                 depthData[indexFD]  = colorByte2Int(uint32_t(newDepth[indexFD]*0.0566666f));
+                
     
                 //IR
                 irData[indexFD]  = colorByte2Int((uint32_t(newIr[indexFD]*0.0566666f)>>4));
@@ -239,6 +247,12 @@ namespace openKinect2 {
         return depthData;
     }
     
+    //Raw Depth
+    uint32_t * Device::JNI_GetRawDepth()
+    {
+        return rawDepthData;
+    }
+    
     uint32_t *  Device::JNI_GetColor()
     {
         return colorData;
@@ -259,7 +273,7 @@ namespace openKinect2 {
         return registeredData;
     }
     
-    //HELP functions
+    //----HELP functions-----
     float Device::clamp(float value, float min, float max) {
         return value < min ? min : value > max ? max : value;
     }
