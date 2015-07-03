@@ -8,7 +8,7 @@
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
 
-// Showing how we can farm all the kinect stuff out to a separate class
+// The kinect stuff is happening in another class
 KinectTracker tracker;
 Kinect kinect;
 
@@ -42,9 +42,11 @@ void draw() {
   // Display some info
   int t = tracker.getThreshold();
   fill(0);
-  text("threshold: " + t + "    " +  "framerate: " + (int)frameRate + "    " + "UP increase threshold, DOWN decrease threshold", 10, 500);
+  text("threshold: " + t + "    " +  "framerate: " + int(frameRate) + "    " + 
+    "UP increase threshold, DOWN decrease threshold", 10, 500);
 }
 
+// Adjust the threshold with key presses
 void keyPressed() {
   int t = tracker.getThreshold();
   if (key == CODED) {

@@ -7,15 +7,19 @@
 // Original example by Elie Zananiri
 // http://www.silentlycrashing.net
 
-import org.openkinect.*;
+import org.openkinect.freenect.*;
 import org.openkinect.processing.*;
 
 Kinect kinect;
 
+// Depth image
 PImage depthImg;
+
+// Which pixels do we care about?
 int minDepth =  60;
 int maxDepth = 860;
 
+// What is the kinect's angle
 float angle;
 
 void setup() {
@@ -24,14 +28,16 @@ void setup() {
   kinect = new Kinect(this);
   kinect.startDepth();
   angle = kinect.getTilt();
+
+  // Blank image
   depthImg = new PImage(kinect.width, kinect.height);
 }
 
 void draw() {
-  // draw the raw image
+  // Draw the raw image
   image(kinect.getDepthImage(), 0, 0);
 
-  // threshold the depth image
+  // Threshold the depth image
   int[] rawDepth = kinect.getRawDepth();
   for (int i=0; i < rawDepth.length; i++) {
     if (rawDepth[i] >= minDepth && rawDepth[i] <= maxDepth) {
@@ -41,7 +47,7 @@ void draw() {
     }
   }
 
-  // draw the thresholded image
+  // Draw the thresholded image
   depthImg.updatePixels();
   image(depthImg, kinect.width, 0);
 
@@ -50,6 +56,7 @@ void draw() {
   text("THRESHOLD: [" + minDepth + ", " + maxDepth + "]", 10, 36);
 }
 
+// Adjust the angle and the depth threshold min and max
 void keyPressed() {
   if (key == CODED) {
     if (keyCode == UP) {
