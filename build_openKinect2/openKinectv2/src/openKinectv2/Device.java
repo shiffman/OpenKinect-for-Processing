@@ -68,6 +68,21 @@ public class Device {
 		undistortedImg = parent.createImage(512, 424, PImage.ALPHA);
 		registeredImg  = parent.createImage(512, 424, PImage.ARGB);
 		
+		for(int i = 0; i < 512; i++){
+			for(int j = 0; j < 424; j++){
+				depthImg.set(i, j, parent.color(0));
+				irImg.set(i, j, parent.color(0));
+				undistortedImg.set(i, j, parent.color(0));
+				registeredImg.set(i, j, parent.color(0));
+			}
+		}
+		
+		for(int i = 0; i < 1920; i++){
+			for(int j = 0; j < 1080; j++){
+				colorImg.set(i, j, parent.color(0));
+			}
+		}
+		
 		//System.out.println(version());
     }
     
@@ -138,7 +153,7 @@ public class Device {
      */
     public PImage getRegisteredImage(){
     	int[] registeredData = jniGetRegistered();
-    	PApplet.arrayCopy(registeredData, 0, registeredImg.pixels, 0, registeredImg.width* registeredImg.height);;
+    	PApplet.arrayCopy(registeredData, 0, registeredImg.pixels, 0, registeredImg.width* registeredImg.height);
     	registeredImg.updatePixels();
     	return registeredImg;
     }
