@@ -225,7 +225,9 @@ ${line}
  			<fileset dir="${project.tmp}/${project.name}/src" defaultexcludes="yes">
 			<!-- add packages to be added to reference. -->
 				<include name="**/*"/>
-			</fileset>
+ 				<exclude name="org/openkinect/freenect/**"/>
+ 				<exclude name="org/openkinect/processing/LibraryPath.java"/>
+ 			</fileset>
 	 	</javadoc>
 	</target>
 	

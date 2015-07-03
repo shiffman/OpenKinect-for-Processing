@@ -1,5 +1,32 @@
-package org.openkinect.processing;
+/**
+ * Open Kinect for Processing
+ * A Mac OS X Kinect implementation using open source drivers (libfreenect).
+ * https://github.com/shiffman/OpenKinect-for-Processing
+ *
+ * Copyright 2015 Daniel Shiffman
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ * 
+ * You should have received a copy of the GNU Lesser General
+ * Public License along with this library; if not, write to the
+ * Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+ * Boston, MA  02111-1307  USA
+ * 
+ * @author      Daniel Shiffman
+ * @modified    July 3, 2015
+ * @version     0.3a (3)
+ */
 
+
+package org.openkinect.processing;
 
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
@@ -20,7 +47,7 @@ import processing.core.PImage;
 
 public class Kinect {
 
-	public static PApplet p5parent;
+	static PApplet p5parent;
 
 	Method depthEventMethod;
 	Method videoEventMethod;
@@ -48,6 +75,14 @@ public class Kinect {
 
 	boolean started = false;
 
+	
+	/**
+	 * Kinect constructor, usually called in the setup() method in your sketch to
+	 * initialize and start the library.
+	 * 
+	 * @param _p parent sketch (usually "this")
+	 */
+	
 	public Kinect(PApplet _p) {
 		p5parent = _p;
 
@@ -75,19 +110,36 @@ public class Kinect {
 		//start(0);
 	}
 
+	/**
+	 * Returns the number of Kinect devices detected
+	 * 
+	 * @return number of Kinect devices detected
+	 */
 	public int numDevices() {
 		return context.numDevices();		
 	}
 
+
+	/**
+	 * Set the active device
+	 * 
+	 * @param n index of which device to select
+	 */
 	public void setDevice(int n) {
 		currentDeviceIndex = n;
 	}
-
+ 
+	// Called internally
 	void start() {
 		started = true;
 		device = context.openDevice(currentDeviceIndex);		
 	}
 
+	/**
+	 * Get the raw depth values from the Kinect.
+	 * 
+	 * @return the raw depth values (range: 0 - 2047) as int array
+	 */
 	public int[] getRawDepth() {
 		if (rawDepth == null) {
 			rawDepth = new int[width*height];
@@ -101,16 +153,28 @@ public class Kinect {
 		return rawDepth;
 	}
 
+	/**
+	 * Stop getting depth from Kinect.
+	 * 
+	 */
 	public void stopDepth() {
 		device.stopDepth();
 		depthEnabled = false;
 	}
 
+	/**
+	 * Stop getting RGB video from Kinect.
+	 * 
+	 */
 	public void stopVideo() {
 		device.stopVideo();
 		videoEnabled = false;
 	}
 
+	/**
+	 * Toggle depth (start or stop depending on whether it's active or not.)
+	 * 
+	 */
 	public void toggleDepth() {
 		if (!depthEnabled) {
 			startDepth();
@@ -119,6 +183,11 @@ public class Kinect {
 		}
 	}
 
+
+	/**
+	 * Toggle RGB video (start or stop depending on whether it's active or not.)
+	 * 
+	 */
 	public void toggleVideo() {
 		if (!videoEnabled) {
 			startVideo();
@@ -127,6 +196,10 @@ public class Kinect {
 		}
 	}
 
+	/**
+	 * Start getting depth from Kinect (available as raw array or mapped to image)
+	 * 
+	 */
 	public void startDepth() {
 
 		if (!started) {
@@ -153,6 +226,11 @@ public class Kinect {
 		}
 	}
 
+
+	/**
+	 * Start getting RGB video from Kinect.
+	 * 
+	 */
 	public void startVideo() {
 		if (!started) {
 			start();
@@ -181,12 +259,22 @@ public class Kinect {
 		}
 	}
 
+	/**
+	 * Set the tilt angle of the Kinect.
+	 * 
+	 * @param deg the angle (in degrees, range 0-30).
+	 */
 	public void tilt(float deg) {
 		if (device != null) {
 			device.setTiltAngle(deg);
 		}
 	}
 
+	/**
+	 * Get the tilt angle of the Kinect.
+	 * 
+	 * @return the angle
+	 */
 	public float getTilt() {
 		if (device != null) {
 			return (float) device.getTiltAngle();
@@ -195,6 +283,11 @@ public class Kinect {
 		}
 	}
 
+	/**
+	 * Enable IR image (instead of RGB video)
+	 * 
+	 * @param b true to turn it on, false to turn it off
+	 */
 	public void setIR(boolean b) {
 		// If nothing has changed let's not do anything
 		if (irMode == b) {
@@ -214,13 +307,29 @@ public class Kinect {
 		}
 	}
 
+	/**
+	 * Enable mapping depth values to color image (instead of grayscale)
+	 * 
+	 * @param b true to turn it on, false to turn it off
+	 */	
 	public void setColorDepth(boolean b) {
 		colorDepthMode = b;
 	}
 
+	/**
+	 * Get the depth image (does not make a new object, use get() if you need a copy)
+	 * 
+	 * @return reference to depth image 
+	 */	
 	public PImage getDepthImage() {
 		return depthImage;
 	}
+	
+	/**
+	 * Get the video image (does not make a new object, use get() if you need a copy)
+	 * 
+	 * @return reference to video image 
+	 */		
 	public PImage getVideoImage() {
 		return videoImage;
 	}

@@ -3,9 +3,9 @@ package org.openkinect.processing;
 import java.nio.ByteBuffer;
 import processing.core.PImage;
 
-public class RGBImage {
+class RGBImage {
 
-	public static void data(ByteBuffer data, PImage img, boolean irMode) {
+	static void data(ByteBuffer data, PImage img, boolean irMode) {
 		if (irMode) {
 			for(int y=0; y<img.height; y++) {
 				for(int x=0; x<img.width; x++) {

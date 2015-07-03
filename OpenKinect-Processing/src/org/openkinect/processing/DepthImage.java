@@ -3,9 +3,9 @@ package org.openkinect.processing;
 import java.nio.ShortBuffer;
 import processing.core.PImage;
 
-public class DepthImage {
+class DepthImage {
 
-	public static void data(ShortBuffer data, PImage img, boolean colorDepth) {
+	static void data(ShortBuffer data, PImage img, boolean colorDepth) {
 		img.loadPixels();
 		for(int y = 0; y < img.height; y++) {
 			for(int x = 0; x < img.width; x++) {
