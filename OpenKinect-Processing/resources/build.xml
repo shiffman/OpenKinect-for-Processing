@@ -1,4 +1,4 @@
-<project name="ProcessingLibs" default="clean" basedir="../">
+<project name="Processing Library" default="clean" basedir="../">
 
     
 <!--	
@@ -52,8 +52,8 @@
 	<property name="project.reference" location="reference"/>
 	<property name="project.dist" location="distribution"/>
 	<property name="project.dist.version" location="distribution/${project.name}-${library.version}"/>
-	<property name="install.source" location="resources/install_instructions.txt"/>
-	<property name="install.destination" location="${project.dist.version}/INSTALL.txt"/>
+	<property name="install.source" location="resources/README.md"/>
+	<property name="install.destination" location="${project.dist.version}/README.md"/>
 	<property name="libprops.source" location="resources/library.properties"/>
 	
 	<taskdef resource="net/sf/antcontrib/antcontrib.properties">
@@ -271,6 +271,9 @@ ${line}
         <replaceregexp file="${file}" match="##library.version##" replace="${library.version}" flags="g" />
         <replaceregexp file="${file}" match="##library.prettyVersion##" replace="${library.prettyVersion}" flags="g" /> 
         
+        <replaceregexp file="${file}" match="##compatible.minRevision##" replace="${compatible.minRevision}" flags="g" />
+        <replaceregexp file="${file}" match="##compatible.maxRevision##" replace="${compatible.maxRevision}" flags="g" /> 
+        
         <replaceregexp file="${file}" match="##library.url##" replace="${library.url}" flags="g" />
         <replaceregexp file="${file}" match="##library.category##" replace="${library.category}" flags="g" />
         <replaceregexp file="${file}" match="##library.sentence##" replace="${library.sentence}" flags="g" />
@@ -289,7 +292,7 @@ ${line}
 	
 	
 	<target name="generate.install.library" if="is.normal">	
-		<copy file="${install.source}" tofile="${project.dist.version}/INSTALL.txt" />
+		<copy file="${install.source}" tofile="${install.destination}" />
 		
 		<antcall target="parse.file"><param name="file" value="${install.destination}"/></antcall>
 	</target>	
