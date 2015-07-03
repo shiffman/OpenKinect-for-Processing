@@ -46,6 +46,9 @@ public class Device {
     private PApplet parent;
 	private long ptr;
 	
+	//version control for openKinect2
+	private String version = "";
+		
 	PImage depthImg;
 	PImage irImg;
 	PImage colorImg;
@@ -158,6 +161,13 @@ public class Device {
     	return registeredImg;
     }
     
+    /**
+     *  get the raw depth data
+     * @return array of ints from 0 - 45000
+     */
+    public int []  getRawDepthData(){
+    	return jniGetRawDepthData();
+    }
 
     
     //JNI Functions
@@ -165,9 +175,9 @@ public class Device {
     private  native void openJNI();
     private  native void stopJNI();
 
-    private  native String version();
-    
     private  native int [] jniGetDepthData();
+    private  native int [] jniGetRawDepthData();
+    
     private  native int [] jniGetIrData();
     private  native int [] jniGetColorData();
     private  native int [] jniGetUndistorted();
