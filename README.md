@@ -25,16 +25,6 @@ Thanks to @ThomasLengeling, there is now a Processing Kinect v2 library here!  S
  
 ## Installation
 
-- Install [brew](http://brew.sh/) for Mac OS X
-- Install the following libraries in the Terminal using brew for Mac
-
-```      
- brew update 
- brew tap homebrew/science
- brew install wget nasm jpeg-turbo
- brew tap homebrew/versions
- brew install glfw3
-```
- 
+- Install [Turbo Jpeg for Mac](http://sourceforge.net/projects/libjpeg-turbo/)
 - Copy openKinect2 folder into your processing library folder.
 - Enjoy.
