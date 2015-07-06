@@ -20,7 +20,7 @@ Thanks to @ThomasLengeling, there is now a Processing Kinect v2 library here!  S
 ## Requirements
 
 - USB 3.0 Host Controller (NEC Corporation USB 3.0, Intel Chipset)
-- Currently only for Mac OS X
+- Minimum Mac OS X 10.9
 - Kinect v2
  
 ## Installation
