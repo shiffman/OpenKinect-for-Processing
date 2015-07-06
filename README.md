@@ -4,7 +4,7 @@
 
 This repository is for for using the Microsoft Kinect sensor with [Processing](http://processing.org).  It uses the open source drivers from the [libfreenect](https://github.com/OpenKinect/libfreenect) project. 
 
-For more, read this [online tutorial](http://shiffman.net/p5/kinect/) or check out the [javadocs](http://shiffman.net/p5/kinect/javadoc/).
+For more, read this [online tutorial](http://shiffman.net/p5/kinect/) or check out the [javadocs](http://shiffman.net/p5/kinect/reference).
 
 Some important notes:
 * This is current Mac OS X only! [I'd like this to change](https://github.com/shiffman/OpenKinect-for-Processing/issues/13).
