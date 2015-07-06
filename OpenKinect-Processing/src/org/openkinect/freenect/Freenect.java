@@ -50,7 +50,7 @@ public class Freenect implements Library {
 			LibraryPath libPath = new LibraryPath();
 		    String path = libPath.get();  
 		    // When testing from Eclipse
-		    //path = "lib";
+		    // path = "lib";
 		    // System.out.println("Found path: " + path);
 		    
 			NativeLibrary.addSearchPath("freenect", path);
