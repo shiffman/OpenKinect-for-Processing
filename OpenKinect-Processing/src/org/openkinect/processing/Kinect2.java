@@ -25,13 +25,13 @@ modify it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-openKinect2for Processing is distributed in the hope that it will be
+openKinect2 for Processing is distributed in the hope that it will be
 useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with KinectfV2.0 library for Processing.  If not, see
+along with openKinect2 library for Processing.  If not, see
 <http://www.gnu.org/licenses/>.
 */
 
@@ -45,10 +45,7 @@ public class Kinect2 extends Device{
 		
 		parent.registerMethod("dispose", this);
 	}
-	
-	public void open(){
-		openDevice();
-	}
+
 
 	public void dispose() {
 		System.out.println("EXIT");

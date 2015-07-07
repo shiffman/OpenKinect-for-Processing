@@ -16,6 +16,8 @@ build_openKinect2/Java/lib/JNILibfreenect2.build
 
 *.metadata
 
+*.recommenders
+
 build_openKinect2/.metadata
 
 build_openKinect2/.recommenders

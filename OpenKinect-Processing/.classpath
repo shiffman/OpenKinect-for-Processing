@@ -2,11 +2,25 @@
 <classpath>
 	<classpathentry kind="src" output="bin" path="src">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="OpenKinect-Processing/lib2"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="OpenKinect-Processing/lib"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/processing-core"/>
 	<classpathentry kind="lib" path="lib/jna.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/core.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/gluegen-rt-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/gluegen-rt-natives-linux-armv6hf.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/gluegen-rt-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/gluegen-rt-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/gluegen-rt-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/gluegen-rt-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/jogl-all-natives-linux-amd64.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/jogl-all-natives-linux-armv6hf.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/jogl-all-natives-linux-i586.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/jogl-all-natives-macosx-universal.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/jogl-all-natives-windows-amd64.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/jogl-all-natives-windows-i586.jar"/>
+	<classpathentry kind="lib" path="lib/processing_3.10a/jogl-all.jar"/>
 	<classpathentry kind="output" path="resources/code"/>
 </classpath>

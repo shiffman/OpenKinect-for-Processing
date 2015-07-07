@@ -1,4 +1,4 @@
-package openKinectv2;
+package org.openkinect.freenect2;
 
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -26,13 +26,13 @@ modify it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
 
-openKinect2for Processing is distributed in the hope that it will be
+openKinect2 for Processing is distributed in the hope that it will be
 useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with KinectfV2.0 library for Processing.  If not, see
+along with openKinect2  for Processing.  If not, see
 <http://www.gnu.org/licenses/>.
 */
 
@@ -61,9 +61,8 @@ public class Device {
 	 */
     public Device(PApplet _p) {
 		parent = _p;
-		System.out.println("Starting Device");
 		
-		ptr = initJNI();
+		ptr = jniInit();
 		
 		depthImg = parent.createImage(512, 424, PImage.ALPHA);
 		irImg 	 = parent.createImage(512, 424, PImage.ALPHA);
@@ -91,18 +90,27 @@ public class Device {
     
    
     /**
-     * Open and initialize the Device
+     * Open and initialize the a default Device
      */
-    public void openDevice(){
-    	openJNI();
+    public void open(){
+    	jniOpen();
     	
     }
+    
+    /**
+     * Open and initialize a specific Device index [0, numDevices - 1]
+     * @param index
+     */
+    public void open(int index){
+    	jniOpenM(index);
+    }
+    
     
     /**
      * Close Device
      */
     public void stopDevice(){
-    	stopJNI();
+    	jniStop();
     }    
     
     /**
@@ -162,24 +170,67 @@ public class Device {
     }
     
     /**
-     *  get the raw depth data
+     * get the raw depth data 512 x 424
      * @return array of ints from 0 - 45000
      */
     public int []  getRawDepthData(){
     	return jniGetRawDepthData();
     }
-
+    
+    /**
+     * Get the number of Devices connected to the computer
+     * @return int
+     */
+    public int  getNumKinects(){
+    	return jniGetNumDevices();
+    }
+    
+    /**
+     * Get the Serial Number 
+     * @return
+     */
+    public String getDefaulSerialNum(){
+    	if(jniGetNumDevices() > 0)
+    		return jniGetSerialDevice(0);
+    	return "123456789";
+    }
+    
+    
+    /**
+     * Get the Serial Number 
+     * @return
+     */
+    public String getSerialNum(int index){
+    	if(jniGetNumDevices() > 0 && jniGetNumDevices() < index)
+    		return jniGetSerialDevice(index);
+    	return "123456789";
+    }
+    
+    /**
+     * Print Number of Kinect v2 connected 
+     */
+    public void printDevices(){
+    	jniEumerateDevices();
+    }
     
     //JNI Functions
-    private  native long initJNI();
-    private  native void openJNI();
-    private  native void stopJNI();
-
-    private  native int [] jniGetDepthData();
-    private  native int [] jniGetRawDepthData();
+    private  native long 	jniInit();
+    private  native void 	jniOpen();
+    private  native void 	jniOpenM(int index);
+    private  native void 	jniStop();
+    private  native void 	jniEumerateDevices();
     
-    private  native int [] jniGetIrData();
-    private  native int [] jniGetColorData();
-    private  native int [] jniGetUndistorted();
-    private  native int [] jniGetRegistered();
+    //Multiple Kinect Funtions
+    private  native void    jniOpenSerial(String serialNumber);
+    private  native int	    jniGetNumDevices();
+    private  native String  jniGetSerialDevice(int index);
+    
+
+    private  native int []  jniGetDepthData();
+    private  native int []  jniGetRawDepthData();
+    
+    private  native int []  jniGetIrData();
+    private  native int []  jniGetColorData();
+    private  native int []  jniGetUndistorted();
+    private  native int []  jniGetRegistered();
 }

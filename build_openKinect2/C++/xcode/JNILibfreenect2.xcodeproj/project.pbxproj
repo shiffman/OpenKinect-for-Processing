@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		E23D3D691B462FDF00E7DC1B /* libturbojpeg.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E2785DAF1B334B23007E4654 /* libturbojpeg.dylib */; };
 		E2785DB01B334B23007E4654 /* turbojpeg.h in Headers */ = {isa = PBXBuildFile; fileRef = E2785DAC1B334B23007E4654 /* turbojpeg.h */; };
-		E287FF431B295C08005F5D56 /* openKinectv2_Device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2EC00B31B254B5E002AD63A /* openKinectv2_Device.cpp */; };
+		E287FF431B295C08005F5D56 /* org_openkinect_freenect2_Device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2EC00B31B254B5E002AD63A /* org_openkinect_freenect2_Device.cpp */; };
 		E287FF441B295C18005F5D56 /* JNILibfreenect2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E287FDFF1B289501005F5D56 /* JNILibfreenect2.cpp */; };
 		E2BC4C9B1B2FCC4400E95658 /* resources.inc.h in Headers */ = {isa = PBXBuildFile; fileRef = E2BC4C9A1B2FCC4400E95658 /* resources.inc.h */; };
 		E2BC4C9C1B2FD23B00E95658 /* turbo_jpeg_rgb_packet_processor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E2F1A56E1B2FBE4C00CC239C /* turbo_jpeg_rgb_packet_processor.cpp */; };
@@ -44,14 +44,14 @@
 		E2785DAC1B334B23007E4654 /* turbojpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = turbojpeg.h; sourceTree = "<group>"; };
 		E2785DAF1B334B23007E4654 /* libturbojpeg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libturbojpeg.dylib; sourceTree = "<group>"; };
 		E287FDFF1B289501005F5D56 /* JNILibfreenect2.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JNILibfreenect2.cpp; path = ../src/JNILibfreenect2.cpp; sourceTree = "<group>"; };
-		E287FE011B292206005F5D56 /* openKinectv2_Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = openKinectv2_Device.h; path = ../src/openKinectv2_Device.h; sourceTree = "<group>"; };
+		E287FE011B292206005F5D56 /* org_openkinect_freenect2_Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = org_openkinect_freenect2_Device.h; path = ../src/org_openkinect_freenect2_Device.h; sourceTree = "<group>"; };
 		E28BD2441B45FFB9007C6609 /* libturbojpeg.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libturbojpeg.dylib; path = ../../../../openKinect2/library/libturbojpeg.dylib; sourceTree = "<group>"; };
 		E2BC4C9A1B2FCC4400E95658 /* resources.inc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resources.inc.h; sourceTree = "<group>"; };
 		E2BC4CA51B2FD62500E95658 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		E2BC4CCC1B2FDD0D00E95658 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E2BC4CCE1B2FDD2500E95658 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		E2EC00881B254489002AD63A /* libJNILibfreenect2.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libJNILibfreenect2.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		E2EC00B31B254B5E002AD63A /* openKinectv2_Device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = openKinectv2_Device.cpp; path = ../src/openKinectv2_Device.cpp; sourceTree = "<group>"; };
+		E2EC00B31B254B5E002AD63A /* org_openkinect_freenect2_Device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = org_openkinect_freenect2_Device.cpp; path = ../src/org_openkinect_freenect2_Device.cpp; sourceTree = "<group>"; };
 		E2EC00B41B254B5E002AD63A /* JNILibfreenect2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JNILibfreenect2.h; path = ../src/JNILibfreenect2.h; sourceTree = "<group>"; };
 		E2F1A5191B2FBE4C00CC239C /* libfreenect2.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libfreenect2.h; sourceTree = "<group>"; };
 		E2F1A51D1B2FBE4C00CC239C /* hotplug.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = hotplug.h; sourceTree = "<group>"; };
@@ -201,8 +201,8 @@
 		E2EC00B21B254B52002AD63A /* src */ = {
 			isa = PBXGroup;
 			children = (
-				E2EC00B31B254B5E002AD63A /* openKinectv2_Device.cpp */,
-				E287FE011B292206005F5D56 /* openKinectv2_Device.h */,
+				E2EC00B31B254B5E002AD63A /* org_openkinect_freenect2_Device.cpp */,
+				E287FE011B292206005F5D56 /* org_openkinect_freenect2_Device.h */,
 				E2EC00B41B254B5E002AD63A /* JNILibfreenect2.h */,
 				E287FDFF1B289501005F5D56 /* JNILibfreenect2.cpp */,
 			);
@@ -527,7 +527,7 @@
 				E2F1A5831B2FBF7900CC239C /* event_loop.cpp in Sources */,
 				E2F1A57D1B2FBF6E00CC239C /* rgb_packet_processor.cpp in Sources */,
 				E287FF441B295C18005F5D56 /* JNILibfreenect2.cpp in Sources */,
-				E287FF431B295C08005F5D56 /* openKinectv2_Device.cpp in Sources */,
+				E287FF431B295C08005F5D56 /* org_openkinect_freenect2_Device.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

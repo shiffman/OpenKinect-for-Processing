@@ -32,9 +32,7 @@ namespace openKinect2 {
         mSerialKinect = "";
         mNumDevices   = 0;
         
-       // std::cout<<"inv: "<<std::endl;
-        //mSerialKinect = freenect2.getDefaultDeviceSerialNumber();
-       // std::cout<<"Serial: "<<mSerialKinect<<std::endl;
+        enumerateDevices();
     }
     
     void Device::enumerateDevices()

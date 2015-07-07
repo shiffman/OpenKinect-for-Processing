@@ -1,11 +1,11 @@
-#include "openKinectv2_Device.h"
+#include "org_openkinect_freenect2_Device.h"
 #include "JNILibfreenect2.h"
 #include <iostream>
 
 
-JNIEXPORT jlong JNICALL Java_openKinectv2_Device_jniInit(JNIEnv* env, jobject obj)
+JNIEXPORT jlong JNICALL Java_org_openkinect_freenect2_Device_jniInit(JNIEnv* env, jobject obj)
 {
-    std::cout<<"Init openKinectv2 "<<std::endl;
+    std::cout<<"Init Kinect2 "<<std::endl;
     
     openKinect2::Device * kinect = new openKinect2::Device();
     jclass cls = env->GetObjectClass(obj);
@@ -15,7 +15,7 @@ JNIEXPORT jlong JNICALL Java_openKinectv2_Device_jniInit(JNIEnv* env, jobject ob
     return (jlong) ptr;
 }
 
-JNIEXPORT void JNICALL Java_openKinectv2_Device_jniOpen(JNIEnv* env, jobject obj)
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniOpen(JNIEnv* env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
@@ -24,7 +24,7 @@ JNIEXPORT void JNICALL Java_openKinectv2_Device_jniOpen(JNIEnv* env, jobject obj
     env->DeleteLocalRef(cls);
 }
 
-JNIEXPORT void JNICALL Java_openKinectv2_Device_jniOpenM(JNIEnv* env, jobject obj, jint index)
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniOpenM(JNIEnv* env, jobject obj, jint index)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
@@ -33,7 +33,7 @@ JNIEXPORT void JNICALL Java_openKinectv2_Device_jniOpenM(JNIEnv* env, jobject ob
     env->DeleteLocalRef(cls);
 }
 
-JNIEXPORT void JNICALL Java_openKinectv2_Device_jniStop(JNIEnv* env, jobject obj)
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniStop(JNIEnv* env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
@@ -46,7 +46,7 @@ JNIEXPORT void JNICALL Java_openKinectv2_Device_jniStop(JNIEnv* env, jobject obj
     env->DeleteGlobalRef( obj );
 }
 
-JNIEXPORT void JNICALL Java_openKinectv2_Device_jniEumerateDevices(JNIEnv* env, jobject obj)
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEumerateDevices(JNIEnv* env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
@@ -55,7 +55,7 @@ JNIEXPORT void JNICALL Java_openKinectv2_Device_jniEumerateDevices(JNIEnv* env, 
     env->DeleteLocalRef(cls);
 }
 
-JNIEXPORT void JNICALL Java_openKinectv2_Device_jniOpenSerial(JNIEnv *env, jobject obj, jint index)
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniOpenSerial(JNIEnv *env, jobject obj, jint index)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
@@ -64,7 +64,7 @@ JNIEXPORT void JNICALL Java_openKinectv2_Device_jniOpenSerial(JNIEnv *env, jobje
     env->DeleteLocalRef(cls);
 }
 
-JNIEXPORT int JNICALL Java_openKinectv2_Device_jniGetNumDevices(JNIEnv * env, jobject obj)
+JNIEXPORT int JNICALL Java_org_openkinect_freenect2_Device_jniGetNumDevices(JNIEnv * env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
@@ -72,7 +72,7 @@ JNIEXPORT int JNICALL Java_openKinectv2_Device_jniGetNumDevices(JNIEnv * env, jo
     return kinect->getDeviceCount();
 }
 
-JNIEXPORT jstring JNICALL Java_openKinectv2_Device_jniGetSerialDevice(JNIEnv * env , jobject obj, jint index)
+JNIEXPORT jstring JNICALL Java_org_openkinect_freenect2_Device_jniGetSerialDevice(JNIEnv * env , jobject obj, jint index)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
@@ -81,7 +81,7 @@ JNIEXPORT jstring JNICALL Java_openKinectv2_Device_jniGetSerialDevice(JNIEnv * e
 }
 
 /// ------ get Depth data
-JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetDepthData(JNIEnv * env, jobject obj)
+JNIEXPORT jintArray JNICALL Java_org_openkinect_freenect2_Device_jniGetDepthData(JNIEnv * env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
@@ -98,7 +98,7 @@ JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetDepthData(JNIEnv * en
     return buffer;
 }
 
-JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetRawDepthData(JNIEnv * env, jobject obj)
+JNIEXPORT jintArray JNICALL Java_org_openkinect_freenect2_Device_jniGetRawDepthData(JNIEnv * env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
@@ -115,7 +115,7 @@ JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetRawDepthData(JNIEnv *
     return buffer;
 }
 /// ------  get Ir data
-JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetIrData(JNIEnv * env, jobject obj)
+JNIEXPORT jintArray JNICALL Java_org_openkinect_freenect2_Device_jniGetIrData(JNIEnv * env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
@@ -133,7 +133,7 @@ JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetIrData(JNIEnv * env, 
 }
 
 /// ------  get Color data
-JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetColorData(JNIEnv * env, jobject obj)
+JNIEXPORT jintArray JNICALL Java_org_openkinect_freenect2_Device_jniGetColorData(JNIEnv * env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
@@ -151,11 +151,11 @@ JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetColorData(JNIEnv * en
 }
 
 /*
- * Class:     openKinectv2_Device
+ * Class:     org_openkinect_freenect2_Device
  * Method:    jniGetDepthData
  * Signature: ()[I
  */
-JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetUndistorted(JNIEnv * env, jobject obj)
+JNIEXPORT jintArray JNICALL Java_org_openkinect_freenect2_Device_jniGetUndistorted(JNIEnv * env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
@@ -172,7 +172,7 @@ JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetUndistorted(JNIEnv * 
     return buffer;
 }
 
-JNIEXPORT jintArray JNICALL Java_openKinectv2_Device_jniGetRegistered(JNIEnv * env, jobject obj)
+JNIEXPORT jintArray JNICALL Java_org_openkinect_freenect2_Device_jniGetRegistered(JNIEnv * env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
