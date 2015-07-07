@@ -45,13 +45,23 @@ namespace  openKinect2{
     public:
         Device();
         
-        void        open(int mode = 1);
+        
+        //open a Device from a specific Serial Number
+        void        openKinect(std::string serial = "");
+        
+        void        updateKinect();
+        
+        void        setupDepth();
         
         void        closeKinect();
         
         void        sigint_handler(int s);
         
         bool        isKinectReady();
+        
+        static int  getDeviceCount();
+        
+        std::string getSerial();
         
         
         //get Depth Frame
@@ -74,11 +84,6 @@ namespace  openKinect2{
         
         
     private:
-        void        updateKinect();
-        
-        void        setupDepth();
-        
-        int         openKinect(int mode = 3);
         
         float       clamp(float value, float min, float max);
         float       lmap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp);

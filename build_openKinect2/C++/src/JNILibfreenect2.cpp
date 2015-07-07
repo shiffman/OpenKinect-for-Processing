@@ -31,42 +31,41 @@ namespace openKinect2 {
         
         mSerialKinect = "";
         
+        mSerialKinect = freenect2.getDefaultDeviceSerialNumber();
+        std::cout<<"Serial: "<<mSerialKinect<<std::endl;
     }
     
     //open the kinect
-    int Device::openKinect(int mode)
+    void Device::openKinect(std::string serial)
     {
         if(freenect2.enumerateDevices() == 0)
         {
-            std::cout << "no device connected!" << std::endl;
+            std::cout << "No Device Connected!" << std::endl;
             initialized_device = false;
-            return -1;
+            return;
         }
-        
-        std::string serial = freenect2.getDefaultDeviceSerialNumber();
         
         //there are 3 modes, opengl and gpu, only use opencl
-        if(mode == 3)
-        {
-            
-            if(!pipeline){
-                pipeline = new libfreenect2::OpenCLPacketPipeline();
-                 initialized_device = true;
-            }else{
-                initialized_device = false;
-                return -1;
-            }
-            //std::cout << "OpenCL pipeline is not supported!" << std::endl;
+
+        
+        if(!pipeline){
+            pipeline = new libfreenect2::OpenCLPacketPipeline();
+             initialized_device = true;
         }else{
+            std::cout << "OpenCL pipeline is not supported!" << std::endl;
             initialized_device = false;
-            return -1;
+            return;
         }
-        
-        
+
         if(pipeline)
         {
             initialized_device = true;
-            dev = freenect2.openDevice(serial, pipeline);
+            
+            //open the kinect with a specific Serial number
+            if(serial.compare("") == 0)
+                dev = freenect2.openDevice(mSerialKinect, pipeline);
+            else
+                dev = freenect2.openDevice(serial, pipeline);
         }
         else
         {
@@ -84,27 +83,28 @@ namespace openKinect2 {
             dev->setIrAndDepthFrameListener(listener);
             dev->start();
         
-            std::cout << "device serial: " << dev->getSerialNumber() << std::endl;
-            std::cout << "device firmware: " << dev->getFirmwareVersion() << std::endl;
-            
-            mSerialKinect = dev->getSerialNumber();
+            std::cout << "Device Serial: " << dev->getSerialNumber() << std::endl;
+            std::cout << "Device Firmware: " << dev->getFirmwareVersion() << std::endl;
             
             registration = new libfreenect2::Registration(dev->getIrCameraParams(), dev->getColorCameraParams());
         }
         
         if(registration != NULL){
             initialized_device = true;
-            return 1;
         }else{
             initialized_device = false;
-            return -1;
+            return;
         }
         
-        return 1;
+        if(initialized_device){
+            mKinectThread = std::thread(&Device::updateKinect, this);
+        }else{
+            return;
+        }
+
     }
     
-
-    
+    //close the kinect
     void Device::closeKinect()
     {
         std::cout<<"closing Kinect v2 :"<<mSerialKinect<<std::endl;
@@ -140,22 +140,22 @@ namespace openKinect2 {
         if(registeredData != NULL){
             delete registeredData;
         }
-    
-        
     }
     
-    void Device::open(int mode)
+    //get number of devices
+    int Device::getDeviceCount()
     {
-        int retVal = openKinect(mode);
-        
-        if(retVal == 1){
-            mKinectThread = std::thread(&Device::updateKinect, this);
-            initialized_device = true;
-        }else{
-            initialized_device = false;
-        }
+        libfreenect2::Freenect2  libFreenect2;
+        return libFreenect2.enumerateDevices();
     }
     
+    //get the serial number from the kinect
+    std::string Device::getSerial()
+    {
+        return mSerialKinect;
+    }
+    
+    //update the kinect
     void Device::updateKinect()
     {
         libfreenect2::FrameMap frames;
@@ -187,7 +187,6 @@ namespace openKinect2 {
             
             //copy raw depth
             memcpy(rawDepthData, reinterpret_cast<const float * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
-            
             
             //IR
             memcpy(newIr, reinterpret_cast<const float * >(ir->data), FRAME_BYTE_SIZE_DEPTH);
