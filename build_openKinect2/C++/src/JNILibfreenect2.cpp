@@ -79,8 +79,10 @@ namespace openKinect2 {
         }
         else
         {
-            std::string serial = "0123456789";
-            dev = freenect2.openDevice(serial);
+            initialized_device = false;
+           // std::string serial = "0123456789";
+           // dev = freenect2.openDevice(serial);
+            return;
         }
         
         if(initialized_device){

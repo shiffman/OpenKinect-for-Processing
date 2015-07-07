@@ -10,12 +10,12 @@ public class MultipleKinects extends PApplet{
 	
 	public void setup(){
 		size(512*3, 424*2, P2D);
-		openKinect20 = new OpenKinectv2(this);
 		
-
+		openKinect20 = new OpenKinectv2(this);
 		openKinect20.printDevices();
 		
 		openKinect21 = new OpenKinectv2(this);
+		openKinect21.printDevices();
 		
 		
 		//System.out.println(num+" "+serialNumber);
@@ -35,6 +35,6 @@ public class MultipleKinects extends PApplet{
 		
 		image(openKinect21.getDepthImage(), 0, 424);
 		image(openKinect21.getIrImage(), 512, 424);
-		image(openKinect21.getColorImage(), 512*2, 0, 512, 424);
+		image(openKinect21.getColorImage(), 512*2, 424, 512, 424);
 	}
 }
