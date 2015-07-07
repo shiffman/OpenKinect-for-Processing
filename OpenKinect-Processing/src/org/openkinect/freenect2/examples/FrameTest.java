@@ -1,23 +1,25 @@
-package examples;
+package org.openkinect.freenect2.examples;
 
 
-import openKinectv2.*;
+import org.openkinect.freenect2.*;
+import org.openkinect.processing.Kinect2;
+
 import processing.core.*;
 
 public class FrameTest extends PApplet{
 	
-	OpenKinectv2 openKinect2;
+	Kinect2 openKinect2;
 
 	public static void main(String[] args) {
-		PApplet.main(new String[] { "examples.FrameTest"});
+		PApplet.main(new String[] { "org.openkinect.freenect2.examples.FrameTest"});
 	}
 
 	public void settings() {
-		size(512*3, 424, P2D);
+		size(512*3, 424);
 	}
 	
 	public void setup(){
-		openKinect2 = new OpenKinectv2(this);
+		openKinect2 = new Kinect2(this);
 		openKinect2.open();
 		
 		background(0);

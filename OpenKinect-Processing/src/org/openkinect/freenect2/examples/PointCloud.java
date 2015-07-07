@@ -1,12 +1,14 @@
-package examples;
+package org.openkinect.freenect2.examples;
 
 
-import openKinectv2.*;
+import org.openkinect.freenect2.*;
+import org.openkinect.processing.Kinect2;
+
 import processing.core.*;
 
 public class PointCloud extends PApplet{
 	
-	OpenKinectv2 openKinect2;
+	Kinect2 openKinect2;
 
 	public static void main(String[] args) {
 		PApplet.main(new String[] { "examples.PointCloud"});
@@ -18,7 +20,7 @@ public class PointCloud extends PApplet{
 	
 	
 	public void setup(){
-		openKinect2 = new OpenKinectv2(this);
+		openKinect2 = new Kinect2(this);
 		openKinect2.open();
 		
 		background(0);
