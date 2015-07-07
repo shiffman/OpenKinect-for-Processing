@@ -12,7 +12,7 @@ extern "C" {
  * Method:    initJNI
  * Signature: ()J
  */
-JNIEXPORT jlong JNICALL Java_openKinectv2_Device_initJNI
+JNIEXPORT jlong JNICALL Java_openKinectv2_Device_jniInit
   (JNIEnv *, jobject);
 
 /*
@@ -20,31 +20,48 @@ JNIEXPORT jlong JNICALL Java_openKinectv2_Device_initJNI
  * Method:    openJNI
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_openKinectv2_Device_openJNI
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniOpen
   (JNIEnv *, jobject);
-
+    
 /*
  * Class:     openKinectv2_Device
  * Method:    openJNI
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_openKinectv2_Device_openSerialJNI
-(JNIEnv *, jobject, jstring );
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniOpenM
+(JNIEnv *, jobject, jint index);
     
 /*
  * Class:     openKinectv2_Device
  * Method:    stopJNI
  * Signature: ()V
  */
-JNIEXPORT void JNICALL Java_openKinectv2_Device_stopJNI
-  (JNIEnv *, jobject);
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniStop
+(JNIEnv *, jobject);
+    
+/*
+ * Class:     openKinectv2_Device
+ * Method:    stopJNI
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniEumerateDevices
+(JNIEnv *, jobject);
+
+/*
+ * Class:     openKinectv2_Device
+ * Method:    openJNI
+ * Signature: ()V
+ */
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniOpenSerial
+(JNIEnv *, jobject, jint );
+    
     
 /*
  * Class:     openKinectv2_Device
  * Method:    etNumDevices
  * Signature: ()V
  */
-JNIEXPORT jint JNICALL Java_openKinectv2_Device_getNumDevices
+JNIEXPORT jint JNICALL Java_openKinectv2_Device_jniGetNumDevices
     (JNIEnv *, jobject);
     
     
@@ -53,8 +70,8 @@ JNIEXPORT jint JNICALL Java_openKinectv2_Device_getNumDevices
  * Method:    etNumDevices
  * Signature: ()V
  */
-JNIEXPORT jstring JNICALL Java_openKinectv2_Device_getSerialDevice
-(JNIEnv *, jobject);
+JNIEXPORT jstring JNICALL Java_openKinectv2_Device_jniGetSerialDevice
+(JNIEnv *, jobject, jint );
     
 
 /*

@@ -47,7 +47,9 @@ namespace  openKinect2{
         
         
         //open a Device from a specific Serial Number
-        void        openKinect(std::string serial = "");
+        void        openKinect(int index = 0);
+        
+        void        enumerateDevices();
         
         void        updateKinect();
         
@@ -59,9 +61,9 @@ namespace  openKinect2{
         
         bool        isKinectReady();
         
-        static int  getDeviceCount();
+        int         getDeviceCount();
         
-        std::string getSerial();
+        std::string getSerial(int index = 0);
         
         
         //get Depth Frame
@@ -119,6 +121,8 @@ namespace  openKinect2{
         
         //for multiples Kinects
         std::string     mSerialKinect;
+        
+        int             mNumDevices;
         
     
     };

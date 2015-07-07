@@ -30,23 +30,35 @@ namespace openKinect2 {
         rawDepthData   = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
         
         mSerialKinect = "";
+        mNumDevices   = 0;
         
-        mSerialKinect = freenect2.getDefaultDeviceSerialNumber();
-        std::cout<<"Serial: "<<mSerialKinect<<std::endl;
+       // std::cout<<"inv: "<<std::endl;
+        //mSerialKinect = freenect2.getDefaultDeviceSerialNumber();
+       // std::cout<<"Serial: "<<mSerialKinect<<std::endl;
+    }
+    
+    void Device::enumerateDevices()
+    {
+        libfreenect2::Freenect2  libFreenect2;
+        
+        mNumDevices = libFreenect2.enumerateDevices();
+        if(mNumDevices == 0)
+        {
+             std::cout << "No Device Connected!" << std::endl;
+        }else{
+            std::cout <<mNumDevices<<" Device Connected!" << std::endl;
+        }
+        
     }
     
     //open the kinect
-    void Device::openKinect(std::string serial)
+    void Device::openKinect(int index)
     {
-        if(freenect2.enumerateDevices() == 0)
+        if(mNumDevices == 0)
         {
-            std::cout << "No Device Connected!" << std::endl;
             initialized_device = false;
             return;
         }
-        
-        //there are 3 modes, opengl and gpu, only use opencl
-
         
         if(!pipeline){
             pipeline = new libfreenect2::OpenCLPacketPipeline();
@@ -62,10 +74,8 @@ namespace openKinect2 {
             initialized_device = true;
             
             //open the kinect with a specific Serial number
-            if(serial.compare("") == 0)
-                dev = freenect2.openDevice(mSerialKinect, pipeline);
-            else
-                dev = freenect2.openDevice(serial, pipeline);
+            std::cout<<"Devce :"<<index<<std::endl;
+            dev = freenect2.openDevice(index, pipeline);
         }
         else
         {
@@ -145,13 +155,15 @@ namespace openKinect2 {
     //get number of devices
     int Device::getDeviceCount()
     {
-        libfreenect2::Freenect2  libFreenect2;
-        return libFreenect2.enumerateDevices();
+        return mNumDevices;
     }
     
     //get the serial number from the kinect
-    std::string Device::getSerial()
+    std::string Device::getSerial(int index )
     {
+        if(mNumDevices  > 0){
+            mSerialKinect = freenect2.getDeviceSerialNumber(index);
+        }
         return mSerialKinect;
     }
     

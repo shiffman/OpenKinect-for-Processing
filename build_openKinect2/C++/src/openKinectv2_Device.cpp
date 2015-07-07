@@ -2,21 +2,8 @@
 #include "JNILibfreenect2.h"
 #include <iostream>
 
-//--------------
-//-- Help function
-void GetJStringContent(JNIEnv *AEnv, jstring AStr, std::string &ARes) {
-    if (!AStr) {
-        ARes.clear();
-        return;
-    }
-    
-    const char *s = AEnv->GetStringUTFChars(AStr,NULL);
-    ARes=s;
-    AEnv->ReleaseStringUTFChars(AStr,s);
-}
-///--------------
 
-JNIEXPORT jlong JNICALL Java_openKinectv2_Device_initJNI(JNIEnv* env, jobject obj)
+JNIEXPORT jlong JNICALL Java_openKinectv2_Device_jniInit(JNIEnv* env, jobject obj)
 {
     std::cout<<"Init openKinectv2 "<<std::endl;
     
@@ -28,30 +15,25 @@ JNIEXPORT jlong JNICALL Java_openKinectv2_Device_initJNI(JNIEnv* env, jobject ob
     return (jlong) ptr;
 }
 
-JNIEXPORT void JNICALL Java_openKinectv2_Device_openJNI(JNIEnv* env, jobject obj)
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniOpen(JNIEnv* env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
     openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
-    std::cout<<"Opening Kinect v2 "<<std::endl;
     kinect->openKinect(); //1
     env->DeleteLocalRef(cls);
 }
-JNIEXPORT void JNICALL Java_openKinectv2_Device_openSerialJNI(JNIEnv *env, jobject obj, jstring serial)
+
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniOpenM(JNIEnv* env, jobject obj, jint index)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
     openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
-    
-    std::string mSerial;
-    GetJStringContent(env, serial, mSerial);
-    
-    std::cout<<"Opening Kinect v2 with Serial: "<<mSerial<<std::endl;
-    kinect->openKinect(mSerial); //1
+    kinect->openKinect((int)index);
     env->DeleteLocalRef(cls);
 }
 
-JNIEXPORT void JNICALL Java_openKinectv2_Device_stopJNI(JNIEnv* env, jobject obj)
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniStop(JNIEnv* env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
@@ -64,22 +46,38 @@ JNIEXPORT void JNICALL Java_openKinectv2_Device_stopJNI(JNIEnv* env, jobject obj
     env->DeleteGlobalRef( obj );
 }
 
-JNIEXPORT int JNICALL Java_openKinectv2_Device_getNumDevices(JNIEnv * env, jobject obj)
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniEumerateDevices(JNIEnv* env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
     openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
-    std::cout<<"opening kinect"<<std::endl;
+    kinect->enumerateDevices();
+    env->DeleteLocalRef(cls);
+}
+
+JNIEXPORT void JNICALL Java_openKinectv2_Device_jniOpenSerial(JNIEnv *env, jobject obj, jint index)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->openKinect((int)index); //1
+    env->DeleteLocalRef(cls);
+}
+
+JNIEXPORT int JNICALL Java_openKinectv2_Device_jniGetNumDevices(JNIEnv * env, jobject obj)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
     return kinect->getDeviceCount();
 }
 
-JNIEXPORT jstring JNICALL Java_openKinectv2_Device_getSerialDevice(JNIEnv * env , jobject obj)
+JNIEXPORT jstring JNICALL Java_openKinectv2_Device_jniGetSerialDevice(JNIEnv * env , jobject obj, jint index)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
     openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
-    std::cout<<"opening kinect"<<std::endl;
-    return env->NewStringUTF(kinect->getSerial().c_str());
+    return env->NewStringUTF(kinect->getSerial(index).c_str());
 }
 
 /// ------ get Depth data
