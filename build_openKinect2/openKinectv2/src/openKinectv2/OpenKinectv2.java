@@ -43,10 +43,6 @@ public class OpenKinectv2 extends Device{
 		
 		parent.registerMethod("dispose", this);
 	}
-	
-	public void open(){
-		openDevice();
-	}
 
 	public void dispose() {
 		System.out.println("EXIT");

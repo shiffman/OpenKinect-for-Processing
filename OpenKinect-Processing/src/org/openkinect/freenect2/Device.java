@@ -1,4 +1,4 @@
-package org.openkinect.freenect2;
+package openKinectv2;
 
 import processing.core.PApplet;
 import processing.core.PVector;

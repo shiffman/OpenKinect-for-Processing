@@ -61,9 +61,8 @@ public class Device {
 	 */
     public Device(PApplet _p) {
 		parent = _p;
-		System.out.println("Starting Device");
 		
-		ptr = initJNI();
+		ptr = jniInit();
 		
 		depthImg = parent.createImage(512, 424, PImage.ALPHA);
 		irImg 	 = parent.createImage(512, 424, PImage.ALPHA);
@@ -93,16 +92,21 @@ public class Device {
     /**
      * Open and initialize the Device
      */
-    public void openDevice(){
-    	openJNI();
+    public void open(){
+    	jniOpen();
     	
     }
+    
+    public void open(int index){
+    	jniOpenM(index);
+    }
+    
     
     /**
      * Close Device
      */
     public void stopDevice(){
-    	stopJNI();
+    	jniStop();
     }    
     
     /**
@@ -162,24 +166,67 @@ public class Device {
     }
     
     /**
-     *  get the raw depth data
+     * get the raw depth data 512 x 424
      * @return array of ints from 0 - 45000
      */
     public int []  getRawDepthData(){
     	return jniGetRawDepthData();
     }
-
+    
+    /**
+     * Get the number of Devices connected to the computer
+     * @return int
+     */
+    public int  getNumKinects(){
+    	return jniGetNumDevices();
+    }
+    
+    /**
+     * Get the Serial Number 
+     * @return
+     */
+    public String getDefaulSerialNum(){
+    	if(jniGetNumDevices() > 0)
+    		return jniGetSerialDevice(0);
+    	return "123456789";
+    }
+    
+    
+    /**
+     * Get the Serial Number 
+     * @return
+     */
+    public String getSerialNum(int index){
+    	if(jniGetNumDevices() > 0 && jniGetNumDevices() < index)
+    		return jniGetSerialDevice(index);
+    	return "123456789";
+    }
+    
+    /**
+     * Print Number of Kinect v2 connected 
+     */
+    public void printDevices(){
+    	jniEumerateDevices();
+    }
     
     //JNI Functions
-    private  native long initJNI();
-    private  native void openJNI();
-    private  native void stopJNI();
-
-    private  native int [] jniGetDepthData();
-    private  native int [] jniGetRawDepthData();
+    private  native long 	jniInit();
+    private  native void 	jniOpen();
+    private  native void 	jniOpenM(int index);
+    private  native void 	jniStop();
+    private  native void 	jniEumerateDevices();
     
-    private  native int [] jniGetIrData();
-    private  native int [] jniGetColorData();
-    private  native int [] jniGetUndistorted();
-    private  native int [] jniGetRegistered();
+    //Multiple Kinect Funtions
+    private  native void    jniOpenSerial(String serialNumber);
+    private  native int	    jniGetNumDevices();
+    private  native String  jniGetSerialDevice(int index);
+    
+
+    private  native int []  jniGetDepthData();
+    private  native int []  jniGetRawDepthData();
+    
+    private  native int []  jniGetIrData();
+    private  native int []  jniGetColorData();
+    private  native int []  jniGetUndistorted();
+    private  native int []  jniGetRegistered();
 }
