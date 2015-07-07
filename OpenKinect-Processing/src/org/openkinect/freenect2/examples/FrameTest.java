@@ -1,6 +1,5 @@
 package org.openkinect.freenect2.examples;
 
-import org.openkinect.freenect2.*;
 import org.openkinect.processing.Kinect2;
 
 import processing.core.*;
