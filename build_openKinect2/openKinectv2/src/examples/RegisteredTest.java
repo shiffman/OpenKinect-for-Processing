@@ -8,8 +8,16 @@ public class RegisteredTest extends PApplet{
 	
 	OpenKinectv2 openKinect2;
 
-	public void setup(){
+	public static void main(String[] args) {
+		PApplet.main(new String[] { "examples.RegisteredTest"});
+	}
+
+	public void settings() {
 		size(512*3, 424*2);
+	}
+	
+	
+	public void setup(){
 		openKinect2 = new OpenKinectv2(this);
 		openKinect2.open();
 	}

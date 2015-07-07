@@ -7,8 +7,16 @@ public class PointCloud extends PApplet{
 	
 	OpenKinectv2 openKinect2;
 
-	public void setup(){
+	public static void main(String[] args) {
+		PApplet.main(new String[] { "examples.PointCloud"});
+	}
+
+	public void settings() {
 		size(1024, 768, P2D);
+	}
+	
+	
+	public void setup(){
 		openKinect2 = new OpenKinectv2(this);
 		openKinect2.open();
 		
