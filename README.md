@@ -24,5 +24,5 @@ For more, read this [online tutorial](http://shiffman.net/p5/kinect/) or check o
 - Minimum Mac OS X 10.9
 - Kinect v2
  
-### At the moment Kinect v2 requires the following separate install:
-- Install [Turbo Jpeg for Mac](http://sourceforge.net/projects/libjpeg-turbo/)
+#### Kinect v2 additional software
+- At the moment for kinect v2 to work you need to install [Turbo Jpeg for Mac](http://sourceforge.net/projects/libjpeg-turbo/). Ideally, this external dependency will be embedded into the library before final release.
