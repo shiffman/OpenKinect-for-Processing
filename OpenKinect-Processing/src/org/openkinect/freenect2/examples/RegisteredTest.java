@@ -21,7 +21,7 @@ public class RegisteredTest extends PApplet{
 	
 	public void setup(){
 		openKinect2 = new Kinect2(this);
-		openKinect2.open();
+		openKinect2.start();
 	}
 	
 	

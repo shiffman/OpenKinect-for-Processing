@@ -115,7 +115,7 @@ public class Device {
     /**
      * Open and initialize the a default Device
      */
-    public void open(){
+    public void start(){
     	jniOpen();
     	
     }
