@@ -12,10 +12,11 @@ public class RGBDepthTest2 extends PApplet{
 		PApplet.main(new String[] { "org.openkinect.freenect2.examples.RGBDepthTest2"});
 	}
 
-	boolean ir = false;
-
+	public void settings() {
+		size(512*2, 424*2, P2D);		
+	}
+	
 	public void setup() {
-		size(1280, 520);
 		kinect2 = new Kinect2(this);
 		// Start all data
 		kinect2.start();
@@ -24,15 +25,13 @@ public class RGBDepthTest2 extends PApplet{
 
 	public void draw() {
 		background(0);
-		image(kinect2.getVideoImage(), 0, 0);
-		image(kinect2.getDepthImage(), 640, 0);
+		//image(kinect2.getVideoImage(), 0, 0, width, height);
+		image(kinect2.getDepthImage(), 0, 0);
+		image(kinect2.getVideoImage(), kinect2.width, 0, kinect2.colorWidth*0.25f, kinect2.colorHeight*0.25f);
+		image(kinect2.getIrImage(), 0, kinect2.height);
+		image(kinect2.getRegisteredImage(), kinect2.width, kinect2.height);
 		fill(255);
-		text("Press 'd' to enable/disable depth    " + 
-				"Press 'r' to enable/disable rgb image   " + 
-				"Press 'i' to enable/disable IR image  " + 
-				"Press 'c' to enable/disable color depth image  " + 
-				"UP and DOWN to tilt camera   " + 
-				"Framerate: " + int(frameRate), 10, 515);
+		text("Framerate: " + (int)(frameRate), 10, 515);
 	}
 
 }
