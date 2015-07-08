@@ -124,7 +124,7 @@ public class Device {
      * Open and initialize a specific Device index [0, numDevices - 1]
      * @param index
      */
-    public void open(int index){
+    public void start(int index){
     	jniOpenM(index);
     }
     
