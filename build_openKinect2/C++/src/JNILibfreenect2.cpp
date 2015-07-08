@@ -97,7 +97,7 @@ namespace openKinect2 {
         
         if(initialized_device){
             
-            long flags = 0L;
+            unsigned int flags = 0;
             
             //if enable registeres, video and depth  has to be activated
             if(enableRegistered){
@@ -244,9 +244,12 @@ namespace openKinect2 {
             
             //Mappers RGB + Depth
             if(toggleRegistered && enableRegistered){
+               
                 libfreenect2::Frame undistorted(512, 424, 4), registered(512, 424, 4);
-                registration->apply(rgb, depth, &undistorted, &registered);
-            
+                if(rgb != NULL && depth != NULL){
+                    registration->apply(rgb, depth, &undistorted, &registered);
+                }
+                
                 memcpy(newUndisorted, reinterpret_cast<const float * >(undistorted.data), FRAME_BYTE_SIZE_DEPTH);
                 memcpy(registeredData, reinterpret_cast<const uint32_t * >(registered.data), FRAME_BYTE_SIZE_DEPTH);
             }

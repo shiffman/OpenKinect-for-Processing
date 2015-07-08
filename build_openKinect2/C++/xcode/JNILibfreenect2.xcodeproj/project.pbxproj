@@ -683,8 +683,7 @@
 					"$(inherited)",
 					../libs/libusb/lib/osx,
 					../libs/libTurboJpeg/lib/osx,
-					/Users/tom/Documents/Programming/openKinect/openKinect2/library,
-					"/Users/tom/Documents/Programming/openKinect/build_openKinect2/C++/libs/libTurboJpeg/lib/osx",
+					../libs/libTurboJpeg/lib/osx,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
@@ -739,8 +738,7 @@
 					"$(inherited)",
 					../libs/libusb/lib/osx,
 					../libs/libTurboJpeg/lib/osx,
-					/Users/tom/Documents/Programming/openKinect/openKinect2/library,
-					"/Users/tom/Documents/Programming/openKinect/build_openKinect2/C++/libs/libTurboJpeg/lib/osx",
+					../libs/libTurboJpeg/lib/osx,
 				);
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
