@@ -1,4 +1,4 @@
-package org.openkinect.freenect2.examples;
+package org.openkinect.tests;
 
 import org.openkinect.processing.Kinect2;
 
@@ -10,7 +10,7 @@ public class RegisteredTest extends PApplet{
 	Kinect2 openKinect2;
 
 	public static void main(String[] args) {
-		PApplet.main(new String[] { "org.openkinect.freenect2.examples.RegisteredTest"});
+		PApplet.main(new String[] { "org.openkinect.tests.RegisteredTest"});
 	}
 
 	public void settings() {

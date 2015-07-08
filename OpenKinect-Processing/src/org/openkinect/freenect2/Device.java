@@ -196,7 +196,7 @@ public class Device {
      * get the raw depth data 512 x 424
      * @return array of ints from 0 - 45000
      */
-    public int []  getRawDepthData(){
+    public int []  getRawDepth(){
     	return jniGetRawDepthData();
     }
     

@@ -1,4 +1,4 @@
-package org.openkinect.freenect2.examples;
+package org.openkinect.tests;
 
 import org.openkinect.processing.Kinect2;
 
@@ -9,7 +9,7 @@ public class RGBDepthTest2 extends PApplet{
 	Kinect2 kinect2;
 
 	public static void main(String[] args) {
-		PApplet.main(new String[] { "org.openkinect.freenect2.examples.RGBDepthTest2"});
+		PApplet.main(new String[] { "org.openkinect.tests.RGBDepthTest2"});
 	}
 
 	public void settings() {
