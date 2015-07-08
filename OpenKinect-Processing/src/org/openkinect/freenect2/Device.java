@@ -43,6 +43,12 @@ public class Device {
         System.loadLibrary("JNILibfreenect2");
     }
     
+    public int width = 512;
+    public int height = 424;
+    
+    public int colorWidth = 1920;
+    public int colorHeight = 1080;
+    
     private PApplet parent;
 	private long ptr;
 	
@@ -70,20 +76,37 @@ public class Device {
 		undistortedImg = parent.createImage(512, 424, PImage.ALPHA);
 		registeredImg  = parent.createImage(512, 424, PImage.ARGB);
 		
+		depthImg.loadPixels();
+		irImg.loadPixels();
+		colorImg.loadPixels();
+		undistortedImg.loadPixels();
+		registeredImg.loadPixels();
+		
 		for(int i = 0; i < 512; i++){
 			for(int j = 0; j < 424; j++){
-				depthImg.set(i, j, parent.color(0));
-				irImg.set(i, j, parent.color(0));
-				undistortedImg.set(i, j, parent.color(0));
-				registeredImg.set(i, j, parent.color(0));
+				int pos = i + j * width;
+				depthImg.pixels[pos] = parent.color(0);
+				irImg.pixels[pos] = parent.color(0);
+				undistortedImg.pixels[pos] = parent.color(0);
+				registeredImg.pixels[pos] = parent.color(0);
 			}
 		}
 		
-		for(int i = 0; i < 1920; i++){
-			for(int j = 0; j < 1080; j++){
-				colorImg.set(i, j, parent.color(0));
+		depthImg.updatePixels();
+		irImg.updatePixels();
+		undistortedImg.updatePixels();
+		registeredImg.updatePixels();
+
+		
+		for(int i = 0; i < colorWidth; i++){
+			for(int j = 0; j < colorHeight; j++){
+				int pos = i + j * colorWidth;
+				colorImg.pixels[pos] = parent.color(0);
 			}
 		}
+		
+		colorImg.updatePixels();
+
 		
 		//System.out.println(version());
     }
