@@ -1,3 +1,13 @@
+/*
+Thomas Sanchez Lengeling
+http://codigogenerativo.com/
+
+How to use multiple Kinects v2 in the same sketch.
+Should work up n number of Kinects connected to the USB 3.0 port.
+
+https://github.com/shiffman/OpenKinect-for-Processing
+*/
+
 import org.openkinect.processing.*;
 
 Kinect2 kinect2a;
@@ -11,8 +21,10 @@ void setup() {
 
   kinect2b = new Kinect2(this);
   kinect2b.printDevices();
-  kinect2a.start(0);
-  kinect2b.start(1);
+  
+  //Start tracking each kinect
+  kinect2a.start(0); //index 0
+  kinect2b.start(1); //index 1
 
   background(0);
 }
