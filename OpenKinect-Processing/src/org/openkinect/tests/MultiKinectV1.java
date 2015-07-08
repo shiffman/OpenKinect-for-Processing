@@ -12,7 +12,7 @@ import processing.core.*;
  */
 public class MultiKinectV1 extends PApplet{
 	
-	Kinect kinect;
+	private Kinect kinect;
 
 	public static void main(String[] args) {
 		PApplet.main(new String[] { "org.openkinect.tests.MultiKinectV1"});
