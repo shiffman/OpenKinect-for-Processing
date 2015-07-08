@@ -54,7 +54,7 @@ namespace openKinect2 {
         mNumDevices = libFreenect2.enumerateDevices();
         if(mNumDevices == 0)
         {
-             std::cout << "No Device Connected!" << std::endl;
+             std::cerr << "No Device Connected!" << std::endl;
         }else{
             std::cout <<mNumDevices<<" Device Connected!" << std::endl;
         }
@@ -66,6 +66,7 @@ namespace openKinect2 {
     {
         if(mNumDevices == 0)
         {
+            std::cerr << "Cannot Find Devices" << std::endl;
             initialized_device = false;
             return;
         }
@@ -74,7 +75,7 @@ namespace openKinect2 {
             pipeline = new libfreenect2::OpenCLPacketPipeline();
              initialized_device = true;
         }else{
-            std::cout << "OpenCL pipeline is not supported!" << std::endl;
+            std::cerr << "OpenCL pipeline is not supported!" << std::endl;
             initialized_device = false;
             return;
         }
@@ -84,46 +85,59 @@ namespace openKinect2 {
             initialized_device = true;
             
             //open the kinect with a specific Serial number
-            std::cout<<"Devce :"<<index<<std::endl;
+            std::cout<<"Devce: "<<index<<std::endl;
             dev = freenect2.openDevice(index, pipeline);
+            
+            if(dev == 0){
+                initialized_device = false;
+                std::cerr << "no device connected or failure opening the default one!" << std::endl;
+                return;
+            }
         }
         else
         {
+            std::cerr << "failed to start openCL packet pipeline" << std::endl;
             initialized_device = false;
-           // std::string serial = "0123456789";
-           // dev = freenect2.openDevice(serial);
             return;
         }
         
         if(initialized_device){
             
-            unsigned int flags = 0;
-            
             //if enable registeres, video and depth  has to be activated
             if(enableRegistered){
                 enableVideo = true;
                 enableDepth = true;
+                std::cout<<"Enable Kinect 2 Video + Depth Map"<<std::endl;
             }
             
             if(enableVideo){
-                flags |= libfreenect2::Frame::Color;
                 toggleVideo = true;
+                std::cout<<"Enable Kinect 2 Video"<<std::endl;
             }
             if(enableIR){
-                flags |= libfreenect2::Frame::Ir;
                 toggleIR = true;
+                std::cout<<"Enable Kinect 2 IR"<<std::endl;
             }
             
             if(enableDepth){
-                flags |= libfreenect2::Frame::Depth;
                 toggleDepth = true;
+                std::cout<<"Enable Kinect 2 Depth"<<std::endl;
             }
-    
+            
+            int flags = 0;
+            flags |= enableVideo ? libfreenect2::Frame::Color : 0;
+            flags |= enableIR ? libfreenect2::Frame::Ir | libfreenect2::Frame::Depth : 0;
+            
             listener = new libfreenect2::SyncMultiFrameListener(flags);
         
-
-            dev->setColorFrameListener(listener);
-            dev->setIrAndDepthFrameListener(listener);
+            if(enableVideo){
+                dev->setColorFrameListener(listener);
+            }
+            
+            if(enableIR || enableDepth){
+                dev->setIrAndDepthFrameListener(listener);
+            }
+            
             dev->start();
         
             std::cout << "Device Serial: " << dev->getSerialNumber() << std::endl;

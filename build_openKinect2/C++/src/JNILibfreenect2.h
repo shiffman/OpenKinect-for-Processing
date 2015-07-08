@@ -91,7 +91,7 @@ namespace  openKinect2{
         void        JNI_enableRegistered(bool enable = true){enableRegistered = enable;}
         
         //toggle
-        void        JNI_toggleVideo(bool enable = true){toggleDepth = enable;}
+        void        JNI_toggleVideo(bool enable = true){toggleVideo = enable;}
         void        JNI_toggleDepth(bool enable = true){toggleDepth = enable;}
         void        JNI_toggleIR(bool enable = true){toggleIR = enable;}
         void        JNI_toggleRegistered(bool enable = true){toggleRegistered = enable;}

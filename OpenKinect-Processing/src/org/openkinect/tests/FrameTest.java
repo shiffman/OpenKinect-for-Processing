@@ -18,6 +18,11 @@ public class FrameTest extends PApplet{
 	
 	public void setup(){
 		openKinect2 = new Kinect2(this);
+
+		openKinect2.startDepth();
+		openKinect2.startVideo();
+		openKinect2.startIR();
+		
 		openKinect2.start();
 		
 		background(0);

@@ -230,11 +230,57 @@ public class Device {
     }
     
     /**
-     * Print Number of Kinect v2 connected 
+     * Print Number of Kinect v2 connected and Information about the Devices
      */
     public void printDevices(){
     	jniEumerateDevices();
     }
+    
+    /**
+     * Enable the depth capture of the Kinect 2
+     */
+    public void startDepth(){
+    	jniEnableDepth(true);
+    }
+    
+    /**
+     * Enable the Video capture of the Kinect 2
+     */
+    public void startVideo(){
+    	jniEnableVideo(true);
+    }
+    
+    /**
+     * Enable the IR capture of the Kinect 2
+     */
+    public void startIR(){
+    	jniEnableIR(true);
+    }
+    
+    /**
+     * Enable the Video + Depth mapping of the Kinect 2
+     */
+    public void startRegistered(){
+    	jniEnableRegistered(true);
+    }
+    
+    
+    public void toggleDepth(){
+    	
+    }
+    
+    public void toggleVideo(){
+    	
+    }
+    
+    public void toggleIR(){
+    	
+    }
+    
+    public void toggleRegistered(){
+    	
+    }
+    
     
     //JNI Functions
     private  native long 	jniInit();
@@ -248,7 +294,7 @@ public class Device {
     private  native int	    jniGetNumDevices();
     private  native String  jniGetSerialDevice(int index);
     
-
+    //Get data functions
     private  native int []  jniGetDepthData();
     private  native int []  jniGetRawDepthData();
     
@@ -256,4 +302,17 @@ public class Device {
     private  native int []  jniGetColorData();
     private  native int []  jniGetUndistorted();
     private  native int []  jniGetRegistered();
+    
+    //Enables functions
+    private  native void jniEnableVideo(boolean enable);
+    private  native void jniEnableDepth(boolean enable);
+    private  native void jniEnableIR(boolean enable);
+    private  native void jniEnableRegistered(boolean enable);
+        
+    //toggle Function
+    private  native void jniToggleVideo(boolean toggle);
+    private  native void jniToggleDepth(boolean toggle);
+    private  native void jniToggleIR(boolean toggle);
+    private  native void jniToggleRegistered(boolean toggle);
+
 }

@@ -139,16 +139,16 @@ JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableRegistered
 (JNIEnv *, jobject, jboolean);
     
 //toggle
-JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableVideo
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniToggleVideo
 (JNIEnv *, jobject, jboolean);
 
-JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableDepth
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniToggleDepth
 (JNIEnv *, jobject, jboolean);
 
-JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableIR
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniToggleIR
 (JNIEnv *, jobject, jboolean);
 
-JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableRegistered
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniToggleRegistered
 (JNIEnv *, jobject, jboolean);
     
 
