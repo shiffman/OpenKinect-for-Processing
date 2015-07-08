@@ -43,8 +43,8 @@ public class Device {
         System.loadLibrary("JNILibfreenect2");
     }
     
-    public int width = 512;
-    public int height = 424;
+    public int depthWidth = 512;
+    public int depthHeight = 424;
     
     public int colorWidth = 1920;
     public int colorHeight = 1080;
@@ -70,11 +70,11 @@ public class Device {
 		
 		ptr = jniInit();
 		
-		depthImg = parent.createImage(512, 424, PImage.ALPHA);
-		irImg 	 = parent.createImage(512, 424, PImage.ALPHA);
-		colorImg = parent.createImage(1920, 1080, PImage.ARGB);
-		undistortedImg = parent.createImage(512, 424, PImage.ALPHA);
-		registeredImg  = parent.createImage(512, 424, PImage.ARGB);
+		depthImg = parent.createImage(depthWidth, depthHeight, PImage.ALPHA);
+		irImg 	 = parent.createImage(depthWidth, depthHeight, PImage.ALPHA);
+		colorImg = parent.createImage(colorWidth, colorHeight, PImage.ARGB);
+		undistortedImg = parent.createImage(depthWidth, depthHeight, PImage.ALPHA);
+		registeredImg  = parent.createImage(depthWidth, depthHeight, PImage.ARGB);
 		
 		depthImg.loadPixels();
 		irImg.loadPixels();
@@ -82,9 +82,9 @@ public class Device {
 		undistortedImg.loadPixels();
 		registeredImg.loadPixels();
 		
-		for(int i = 0; i < 512; i++){
-			for(int j = 0; j < 424; j++){
-				int pos = i + j * width;
+		for(int i = 0; i < depthWidth; i++){
+			for(int j = 0; j < depthHeight; j++){
+				int pos = i + j * depthWidth;
 				depthImg.pixels[pos] = parent.color(0);
 				irImg.pixels[pos] = parent.color(0);
 				undistortedImg.pixels[pos] = parent.color(0);
@@ -263,6 +263,8 @@ public class Device {
     public void startRegistered(){
     	jniEnableRegistered(true);
     }
+    
+    
     
     
     public void toggleDepth(){
