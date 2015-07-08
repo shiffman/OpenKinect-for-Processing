@@ -84,6 +84,17 @@ namespace  openKinect2{
         //get raw depth data
         uint32_t *  JNI_GetRawDepth();
         
+        //JNI enables
+        void        JNI_enableVideo(bool enable = true){enableVideo = enable;}
+        void        JNI_enableDepth(bool enable = true){enableDepth = enable;}
+        void        JNI_enableIR(bool enable = true){enableIR = enable;}
+        void        JNI_enableRegistered(bool enable = true){enableRegistered = enable;}
+        
+        //toggle
+        void        JNI_toggleVideo(bool enable = true){toggleDepth = enable;}
+        void        JNI_toggleDepth(bool enable = true){toggleDepth = enable;}
+        void        JNI_toggleIR(bool enable = true){toggleIR = enable;}
+        void        JNI_toggleRegistered(bool enable = true){toggleRegistered = enable;}
         
     private:
         
@@ -118,6 +129,20 @@ namespace  openKinect2{
         uint32_t *	 irData;
         uint32_t *   undisortedData;
         uint32_t *   registeredData;
+        
+        
+        //Enables
+        bool         enableDepth;
+        bool         enableVideo;
+        bool         enableIR;
+        bool         enableRegistered;
+        
+        //toggles
+        bool         toggleDepth;
+        bool         toggleVideo;
+        bool         toggleIR;
+        bool         toggleRegistered;
+        
         
         //for multiples Kinects
         std::string     mSerialKinect;

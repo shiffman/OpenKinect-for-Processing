@@ -124,6 +124,33 @@ JNIEXPORT jintArray JNICALL Java_org_openkinect_freenect2_Device_jniGetUndistort
  */
 JNIEXPORT jintArray JNICALL Java_org_openkinect_freenect2_Device_jniGetRegistered
 (JNIEnv *, jobject);
+    
+//enable
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableVideo
+(JNIEnv *, jobject, jboolean);
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableDepth
+(JNIEnv *, jobject, jboolean);
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableIR
+(JNIEnv *, jobject, jboolean);
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableRegistered
+(JNIEnv *, jobject, jboolean);
+    
+//toggle
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableVideo
+(JNIEnv *, jobject, jboolean);
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableDepth
+(JNIEnv *, jobject, jboolean);
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableIR
+(JNIEnv *, jobject, jboolean);
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableRegistered
+(JNIEnv *, jobject, jboolean);
+    
 
 #ifdef __cplusplus
 }

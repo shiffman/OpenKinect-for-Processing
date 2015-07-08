@@ -188,3 +188,88 @@ JNIEXPORT jintArray JNICALL Java_org_openkinect_freenect2_Device_jniGetRegistere
     
     return buffer;
 }
+
+
+//----enable
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableVideo
+(JNIEnv * env , jobject obj, jboolean enable)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->JNI_enableVideo(bool(enable));
+    env->DeleteLocalRef(cls);
+}
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableDepth
+(JNIEnv * env , jobject obj, jboolean enable)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->JNI_enableDepth(bool(enable));
+    env->DeleteLocalRef(cls);
+}
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableIR
+(JNIEnv * env , jobject obj, jboolean enable)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->JNI_enableIR(bool(enable));
+    env->DeleteLocalRef(cls);
+}
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniEnableRegistered
+(JNIEnv * env , jobject obj, jboolean enable)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->JNI_enableRegistered(bool(enable));
+    env->DeleteLocalRef(cls);
+}
+
+//-----toggle
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniToggleVideo
+(JNIEnv * env , jobject obj, jboolean toggle)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->JNI_toggleVideo(bool(toggle));
+    env->DeleteLocalRef(cls);
+}
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniToggleDepth
+(JNIEnv * env , jobject obj, jboolean toggle)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->JNI_toggleDepth(bool(toggle));
+    env->DeleteLocalRef(cls);
+}
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniToggleIR
+(JNIEnv * env , jobject obj, jboolean toggle)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->JNI_toggleIR(bool(toggle));
+    env->DeleteLocalRef(cls);
+}
+
+JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniToggleRegistered
+(JNIEnv * env , jobject obj, jboolean toggle)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    kinect->JNI_toggleRegistered(bool(toggle));
+    env->DeleteLocalRef(cls);
+}

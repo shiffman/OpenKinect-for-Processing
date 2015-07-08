@@ -32,6 +32,18 @@ namespace openKinect2 {
         mSerialKinect = "";
         mNumDevices   = 0;
         
+        //enables
+        enableDepth       = false;
+        enableVideo       = false;
+        enableIR          = false;
+        enableRegistered  = false;
+        
+        //toggles
+        toggleDepth      = false;
+        toggleVideo      = false;
+        toggleIR         = false;
+        toggleRegistered = false;
+        
         enumerateDevices();
     }
     
@@ -84,9 +96,30 @@ namespace openKinect2 {
         }
         
         if(initialized_device){
-        
-            //signal(SIGINT, &Device::sigint_handler);
-            listener = new libfreenect2::SyncMultiFrameListener(libfreenect2::Frame::Color | libfreenect2::Frame::Ir | libfreenect2::Frame::Depth);
+            
+            long flags = 0L;
+            
+            //if enable registeres, video and depth  has to be activated
+            if(enableRegistered){
+                enableVideo = true;
+                enableDepth = true;
+            }
+            
+            if(enableVideo){
+                flags |= libfreenect2::Frame::Color;
+                toggleVideo = true;
+            }
+            if(enableIR){
+                flags |= libfreenect2::Frame::Ir;
+                toggleIR = true;
+            }
+            
+            if(enableDepth){
+                flags |= libfreenect2::Frame::Depth;
+                toggleDepth = true;
+            }
+    
+            listener = new libfreenect2::SyncMultiFrameListener(flags);
         
 
             dev->setColorFrameListener(listener);
@@ -96,7 +129,10 @@ namespace openKinect2 {
             std::cout << "Device Serial: " << dev->getSerialNumber() << std::endl;
             std::cout << "Device Firmware: " << dev->getFirmwareVersion() << std::endl;
             
-            registration = new libfreenect2::Registration(dev->getIrCameraParams(), dev->getColorCameraParams());
+            if(enableRegistered){
+                registration = new libfreenect2::Registration(dev->getIrCameraParams(), dev->getColorCameraParams());
+                toggleRegistered = true;
+            }
         }
         
         if(registration != NULL){
@@ -182,57 +218,59 @@ namespace openKinect2 {
         //MAIN THREAD
         while(initialized_device){
             listener->waitForNewFrame(frames);
+            libfreenect2::Frame *  rgb;
+            libfreenect2::Frame *  depth;
+            libfreenect2::Frame *  ir;
             
-            libfreenect2::Frame * rgb   = frames[libfreenect2::Frame::Color];
-            libfreenect2::Frame * ir    = frames[libfreenect2::Frame::Ir];
-            libfreenect2::Frame * depth = frames[libfreenect2::Frame::Depth];
             
-            libfreenect2::Frame undistorted(512, 424, 4), registered(512, 424, 4);
-            
-            //COLOR DEPTH MAPPING
-            registration->apply(rgb, depth, &undistorted, &registered);
-            
-       
-            //Memory copies to the data arrays to send them to processing via JNI
-            //DEPTH
-            memcpy(newDepth, reinterpret_cast<const float * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
-            
-            //copy raw depth
-            memcpy(rawDepthData, reinterpret_cast<const float * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
+            //Video
+            if(toggleVideo && enableVideo){
+                rgb   = frames[libfreenect2::Frame::Color];
+                memcpy(colorData, reinterpret_cast<const uint32_t *>(rgb->data), 1920 * 1080 * 4);
+            }
             
             //IR
-            memcpy(newIr, reinterpret_cast<const float * >(ir->data), FRAME_BYTE_SIZE_DEPTH);
+            if(toggleIR && enableIR){
+                ir    = frames[libfreenect2::Frame::Ir];
+                memcpy(newIr, reinterpret_cast<const float * >(ir->data), FRAME_BYTE_SIZE_DEPTH);
+            }
             
-            //Color
-            memcpy(colorData, reinterpret_cast<const uint32_t *>(rgb->data), 1920 * 1080 * 4);
+            //DEPTH
+            if(toggleDepth && enableDepth){
+                depth = frames[libfreenect2::Frame::Depth];
+                memcpy(newDepth, reinterpret_cast<const float * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
+                memcpy(rawDepthData, reinterpret_cast<const float * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
+            }
             
-            //Mapers
-            //undisorted
-            memcpy(newUndisorted, reinterpret_cast<const float * >(undistorted.data), FRAME_BYTE_SIZE_DEPTH);
+            //Mappers RGB + Depth
+            if(toggleRegistered && enableRegistered){
+                libfreenect2::Frame undistorted(512, 424, 4), registered(512, 424, 4);
+                registration->apply(rgb, depth, &undistorted, &registered);
             
-            //registered
-            memcpy(registeredData, reinterpret_cast<const uint32_t * >(registered.data), FRAME_BYTE_SIZE_DEPTH);
+                memcpy(newUndisorted, reinterpret_cast<const float * >(undistorted.data), FRAME_BYTE_SIZE_DEPTH);
+                memcpy(registeredData, reinterpret_cast<const uint32_t * >(registered.data), FRAME_BYTE_SIZE_DEPTH);
+            }
             
-        
-            //convert depth, ir to processing pixels
-            int indexFD = 0;
-            int pIndexEnd = (FRAME_SIZE_DEPTH);
-            
-            while(indexFD < pIndexEnd){
+            //update the depth and ir pixels for processing color format
+            if(toggleIR || toggleDepth || toggleRegistered){
+       
+                int indexFD = 0;
+                int pIndexEnd = (FRAME_SIZE_DEPTH);
                 
-                //0.0566666f -> (value/45000)* 255
-                
-                //Depth
-                depthData[indexFD]  = colorByte2Int(uint32_t(newDepth[indexFD]*0.0566666f));
-                
-    
-                //IR
-                irData[indexFD]  = colorByte2Int((uint32_t(newIr[indexFD]*0.0566666f)>>4));
-                
-                //undisorted
-                undisortedData[indexFD]  = colorByte2Int(uint32_t(newUndisorted[indexFD]*0.0566666f));
-                
-                indexFD++;
+                while(indexFD < pIndexEnd){
+                    
+                    //Depth
+                    //0.0566666f -> (value/45000)* 255
+                    depthData[indexFD]  = colorByte2Int(uint32_t(newDepth[indexFD]*0.0566666f));
+                    
+                    //IR
+                    irData[indexFD]  = colorByte2Int((uint32_t(newIr[indexFD]*0.0566666f)>>4));
+      
+                    //undisorted
+                    undisortedData[indexFD]  = colorByte2Int(uint32_t(newUndisorted[indexFD]*0.0566666f));
+                    
+                    indexFD++;
+                }
             }
             
             
@@ -252,6 +290,7 @@ namespace openKinect2 {
         return  initialized_device;
     }
     
+    //------JNI functions
     //depth
     uint32_t * Device::JNI_GetDepth()
     {
@@ -284,6 +323,7 @@ namespace openKinect2 {
         return registeredData;
     }
     
+           
     //----HELP functions-----
     float Device::clamp(float value, float min, float max) {
         return value < min ? min : value > max ? max : value;

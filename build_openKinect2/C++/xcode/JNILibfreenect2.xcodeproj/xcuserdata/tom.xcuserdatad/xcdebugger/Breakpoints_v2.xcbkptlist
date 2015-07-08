@@ -50,7 +50,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "../src/JNILibfreenect2.cpp"
@@ -59,7 +59,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "166"
             endingLineNumber = "166"
-            landmarkName = "Device::getSerial(int index )"
+            landmarkName = "Device::closeKinect()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -75,7 +75,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "44"
             endingLineNumber = "44"
-            landmarkName = "Device::enumerateDevices()"
+            landmarkName = "Device::Device()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
