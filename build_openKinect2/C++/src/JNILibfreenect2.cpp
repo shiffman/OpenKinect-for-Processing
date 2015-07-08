@@ -82,11 +82,11 @@ namespace openKinect2 {
 
         if(pipeline)
         {
-            initialized_device = true;
-            
+           
             //open the kinect with a specific Serial number
             std::cout<<"Devce: "<<index<<std::endl;
             dev = freenect2.openDevice(index, pipeline);
+            initialized_device = true;
             
             if(dev == 0){
                 initialized_device = false;
@@ -126,8 +126,9 @@ namespace openKinect2 {
             
             int flags = 0;
             flags |= enableVideo ? libfreenect2::Frame::Color : 0;
-            flags |= enableIR ? libfreenect2::Frame::Ir | libfreenect2::Frame::Depth : 0;
-            
+            flags |= enableIR ? libfreenect2::Frame::Ir : 0;
+            flags |= enableDepth ? libfreenect2::Frame::Depth : 0;
+        
             listener = new libfreenect2::SyncMultiFrameListener(flags);
         
             if(enableVideo){
@@ -146,14 +147,12 @@ namespace openKinect2 {
             if(enableRegistered){
                 registration = new libfreenect2::Registration(dev->getIrCameraParams(), dev->getColorCameraParams());
                 toggleRegistered = true;
+                
+                if(registration == NULL){
+                    std::cerr<<"error opening registered mapping process"<<std::endl;
+                    return;
+                }
             }
-        }
-        
-        if(registration != NULL){
-            initialized_device = true;
-        }else{
-            initialized_device = false;
-            return;
         }
         
         if(initialized_device){
