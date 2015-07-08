@@ -252,7 +252,7 @@ namespace openKinect2 {
             if(toggleDepth && enableDepth){
                 depth = frames[libfreenect2::Frame::Depth];
                 memcpy(newDepth, reinterpret_cast<const float * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
-                memcpy(rawDepthData, reinterpret_cast<const float * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
+               // memcpy(rawDepthData, reinterpret_cast<const uint32_t * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
             }
             
             //Mappers RGB + Depth
@@ -277,6 +277,7 @@ namespace openKinect2 {
                     
                     //Depth
                     //0.0566666f -> (value/45000)* 255
+                    rawDepthData[indexFD] = uint32_t(newDepth[indexFD]);
                     depthData[indexFD]  = colorByte2Int(uint32_t(newDepth[indexFD]*0.0566666f));
                     
                     //IR

@@ -27,7 +27,7 @@ class KinectTracker {
     // But doing it this way for simplicity
     kinect2.start();
     // Make a blank image
-    display = createImage(kinect2.width, kinect2.height, RGB);
+    display = createImage(kinect2.depthWidth, kinect2.depthHeight, RGB);
     // Set up the vectors
     loc = new PVector(0, 0);
     lerpedLoc = new PVector(0, 0);
@@ -44,10 +44,10 @@ class KinectTracker {
     float sumY = 0;
     float count = 0;
 
-    for (int x = 0; x < kinect2.width; x++) {
-      for (int y = 0; y < kinect2.height; y++) {
+    for (int x = 0; x < kinect2.depthWidth; x++) {
+      for (int y = 0; y < kinect2.depthHeight; y++) {
         // Mirroring the image
-        int offset = kinect2.width-x-1 + y*kinect2.width;
+        int offset = kinect2.depthWidth-x-1 + y*kinect2.depthHeight;
         // Grabbing the raw depth
         int rawDepth = depth[offset];
 
@@ -86,10 +86,10 @@ class KinectTracker {
     // Going to rewrite the depth image to show which pixels are in threshold
     // A lot of this is redundant, but this is just for demonstration purposes
     display.loadPixels();
-    for (int x = 0; x < kinect2.width; x++) {
-      for (int y = 0; y < kinect2.height; y++) {
+    for (int x = 0; x < kinect2.depthWidth; x++) {
+      for (int y = 0; y < kinect2.depthHeight; y++) {
         // mirroring image
-        int offset = kinect2.width-x-1 + y*kinect2.width;
+        int offset = kinect2.depthWidth-x-1 + y*kinect2.depthHeight;
         // Raw depth
         int rawDepth = depth[offset];
         int pix = x + y*display.width;

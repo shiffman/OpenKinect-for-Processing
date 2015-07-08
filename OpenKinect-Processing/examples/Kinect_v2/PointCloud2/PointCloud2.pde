@@ -21,6 +21,7 @@ void setup() {
   // Rendering in P3D
   size(800, 600, P3D);
   kinect2 = new Kinect2(this);
+  kinect2.startDepth();
   kinect2.start();
 
   // Lookup table for all possible depth values (0 - 2047)
@@ -34,7 +35,7 @@ void draw() {
   background(0);
 
   // Get the raw depth as array of integers
-  int[] depth = kinect2.getRawDepthData();
+  int[] depth = kinect2.getRawDepth();
 
   // We're just going to calculate and draw every 4th pixel (equivalent of 160x120)
   int skip = 4;

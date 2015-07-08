@@ -16,6 +16,9 @@ void setup() {
 
   //v2
   kinect2 = new Kinect2(this);
+  kinect2.startDepth();
+  kinect2.startVideo();
+  kinect2.startIR();
   kinect2.start();
 
   //v1

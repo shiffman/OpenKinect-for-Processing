@@ -15,6 +15,7 @@ Kinect2 kinect2;
 void setup() {
   size(640, 520);
   kinect2 = new Kinect2(this);
+  kinect2.startDepth();
   tracker = new KinectTracker();
 }
 

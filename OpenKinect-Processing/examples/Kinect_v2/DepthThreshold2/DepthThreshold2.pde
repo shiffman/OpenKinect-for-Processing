@@ -16,7 +16,7 @@ PImage depthImg;
 
 // Which pixels do we care about?
 int minDepth =  0;
-int maxDepth = 1165952918;
+int maxDepth =  4500; //4.5m
 
 // What is the kinect's angle
 float angle;
@@ -25,10 +25,11 @@ void setup() {
   size(1280, 480);
 
   kinect2 = new Kinect2(this);
+  kinect2.startDepth();
   kinect2.start();
 
   // Blank image
-  depthImg = new PImage(kinect2.width, kinect2.height);
+  depthImg = new PImage(kinect2.depthWidth, kinect2.depthHeight);
 }
 
 void draw() {
@@ -50,7 +51,7 @@ void draw() {
 
   // Draw the thresholded image
   depthImg.updatePixels();
-  image(depthImg, kinect2.width, 0);
+  image(depthImg, kinect2.depthWidth, 0);
 
   fill(0);
   text("TILT: " + angle, 10, 20);
@@ -60,12 +61,12 @@ void draw() {
 // Adjust the angle and the depth threshold min and max
 void keyPressed() {
   if (key == 'a') {
-    minDepth = constrain(minDepth+10000, 0, maxDepth);
+    minDepth = constrain(minDepth+100, 0, maxDepth);
   } else if (key == 's') {
-    minDepth = constrain(minDepth-10000, 0, maxDepth);
+    minDepth = constrain(minDepth-100, 0, maxDepth);
   } else if (key == 'z') {
-    maxDepth = constrain(maxDepth+10000, minDepth, 1165952918);
+    maxDepth = constrain(maxDepth+100, minDepth, 1165952918);
   } else if (key =='x') {
-    maxDepth = constrain(maxDepth-10000, minDepth, 1165952918);
+    maxDepth = constrain(maxDepth-100, minDepth, 1165952918);
   }
 }

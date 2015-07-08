@@ -14,13 +14,17 @@ Kinect2 kinect2a;
 Kinect2 kinect2b;
 
 void setup() {
-  size(512*3, 424*2, P2D);
+  size(1536, 848, P2D);
 
   kinect2a = new Kinect2(this);
-  kinect2a.printDevices();
-
+  kinect2a.startDepth();
+  kinect2a.startVideo();
+  kinect2a.startIR();
+  
   kinect2b = new Kinect2(this);
-  kinect2b.printDevices();
+  kinect2b.startDepth();
+  kinect2b.startVideo();
+  kinect2b.startIR();
   
   //Start tracking each kinect
   kinect2a.start(0); //index 0
@@ -34,9 +38,9 @@ void draw() {
 
   image(kinect2a.getDepthImage(), 0, 0);
   image(kinect2a.getIrImage(), 512, 0);
-  image(kinect2a.getColorImage(), 512*2, 0, 512, 424);
+  image(kinect2a.getVideoImage(), 512*2, 0, 512, 424);
 
   image(kinect2b.getDepthImage(), 0, 424);
   image(kinect2b.getIrImage(), 512, 424);
-  image(kinect2b.getColorImage(), 512*2, 424, 512, 424);
+  image(kinect2b.getVideoImage(), 512*2, 424, 512, 424);
 }
