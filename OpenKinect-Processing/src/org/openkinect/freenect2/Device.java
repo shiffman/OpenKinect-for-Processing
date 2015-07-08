@@ -163,7 +163,7 @@ public class Device {
      *  Process Color Image (1920 x 1080)
      * @return PImage
      */
-    public PImage getColorImage(){
+    public PImage getVideoImage(){
     	int[] colorRawData = jniGetColorData();
     	PApplet.arrayCopy(colorRawData, 0, colorImg.pixels, 0, colorImg.width * colorImg.height);
     	colorImg.updatePixels();

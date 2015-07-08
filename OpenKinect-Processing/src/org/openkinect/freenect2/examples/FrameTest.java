@@ -33,7 +33,7 @@ public class FrameTest extends PApplet{
 		PImage ir = openKinect2.getIrImage();
 		image(ir, 512, 0);
 		
-		PImage color = openKinect2.getColorImage();
+		PImage color = openKinect2.getVideoImage();
 		image(color, 512*2, 0, 512, 424);
 	}
 	

@@ -34,7 +34,7 @@ public class RegisteredTest extends PApplet{
 		PImage ir = openKinect2.getIrImage();
 		image(ir, 512, 0);
 		
-		PImage rgb = openKinect2.getColorImage();
+		PImage rgb = openKinect2.getVideoImage();
 		image(rgb, 512*2, 0, 512, 424);
 		
 		PImage unregistered = openKinect2.getUndistoredImage();
