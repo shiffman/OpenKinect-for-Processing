@@ -109,6 +109,15 @@ public class Kinect {
 		}
 		//start(0);
 	}
+	
+	/**
+	 * Static method to only obtain the number of currently connected Kinect devices
+	 * @return
+	 */
+	public static int countDevices(){
+		Context tmpContext = Freenect.createContext();
+		return tmpContext.numDevices();
+	}
 
 	/**
 	 * Returns the number of Kinect devices detected
