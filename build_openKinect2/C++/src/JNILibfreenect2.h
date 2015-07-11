@@ -107,6 +107,10 @@ namespace  openKinect2{
         uint32_t colorByte2Int(uint8_t r, uint8_t g, uint8_t b, uint8_t  a);
         uint32_t colorByte2Int(uint8_t r, uint8_t g, uint8_t b);
         
+        //converssion based on
+        // https://github.com/OpenKinect/libfreenect2/issues/41
+        //return float pointer with x, y, and z values
+        float  *     depthToCameraSpace(float & x, float & y, float & depth);
         
         
     private:
@@ -132,7 +136,7 @@ namespace  openKinect2{
         uint32_t *   undisortedData;
         uint32_t *   registeredData;
         
-      //  uint32_t *
+        uint32_t *   depthCameraData;
         
         
         //Enables

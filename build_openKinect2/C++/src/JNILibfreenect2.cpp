@@ -22,12 +22,15 @@ namespace openKinect2 {
         initialized_device = false;
         
         //load memory
-        depthData      = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
-        irData         = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
-        colorData      = (uint32_t *)malloc(FRAME_SIZE_COLOR * sizeof(uint32_t));
-        undisortedData = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
-        registeredData = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
-        rawDepthData   = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
+        depthData       = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
+        irData          = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
+        colorData       = (uint32_t *)malloc(FRAME_SIZE_COLOR * sizeof(uint32_t));
+        undisortedData  = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
+        registeredData  = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
+        rawDepthData    = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
+        
+        //XYZ data, depth size times 3
+        depthCameraData = (uint32_t *)malloc(FRAME_SIZE_DEPTH * 3 * sizeof(uint32_t));
         
         mSerialKinect = "";
         mNumDevices   = 0;
@@ -345,11 +348,23 @@ namespace openKinect2 {
     
            
     //----HELP functions-----
-    float Device::clamp(float value, float min, float max) {
+    //return float pointer with x, y, and z values
+    float  *   Device::depthToCameraSpace(float & x, float & y, float & depth)
+    {
+        float * point  = new float[3];
+        point[2] = (depth); // z, convert from mm to meters
+        point[0] = (x - dev->getIrCameraParams().cx) * point[2] / dev->getIrCameraParams().fx; //x
+        point[1] = (y - dev->getIrCameraParams().cy) * point[2] / dev->getIrCameraParams().fy; //y
+        return point;
+    }
+    
+    float Device::clamp(float value, float min, float max)
+    {
         return value < min ? min : value > max ? max : value;
     }
     
-    float Device::lmap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp) {
+    float Device::lmap(float value, float inputMin, float inputMax, float outputMin, float outputMax, bool clamp)
+    {
         
         if (fabs(inputMin - inputMax) < FLT_EPSILON){
             return outputMin;
