@@ -111,7 +111,7 @@ public class Kinect {
 	}
 	
 	/**
-	 * Static method to only obtain the number of currently connected Kinect devices
+	 * Static method to only obtain the number of connected Kinect devices
 	 * @return
 	 */
 	public static int countDevices(){

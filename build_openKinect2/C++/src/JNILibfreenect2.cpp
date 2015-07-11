@@ -286,6 +286,9 @@ namespace openKinect2 {
                     //undisorted
                     undisortedData[indexFD]  = colorByte2Int(uint32_t(newUndisorted[indexFD]*0.0566666f));
                     
+                    
+                  ///  dev->getIrCameraParams().cx;
+                    
                     indexFD++;
                 }
             }
