@@ -276,12 +276,15 @@ namespace openKinect2 {
                 int indexFD = 0;
                 int pIndexEnd = (FRAME_SIZE_DEPTH);
                 
+                int indexX = 0;
+                int indexY = 0;
+                int cameraXYZ = 0;
                 while(indexFD < pIndexEnd){
                     
                     //Depth
                     //0.0566666f -> (value/45000)* 255
                     rawDepthData[indexFD] = uint32_t(newDepth[indexFD]);
-                    depthData[indexFD]  = colorByte2Int(uint32_t(newDepth[indexFD]*0.0566666f));
+                   
                     
                     //IR
                     irData[indexFD]  = colorByte2Int((uint32_t(newIr[indexFD]*0.0566666f)>>4));
@@ -290,8 +293,19 @@ namespace openKinect2 {
                     undisortedData[indexFD]  = colorByte2Int(uint32_t(newUndisorted[indexFD]*0.0566666f));
                     
                     
-                  ///  dev->getIrCameraParams().cx;
+                    float depthValue = (newDepth[indexFD]*0.0566666f);
+                    depthData[indexFD]  = colorByte2Int(uint32_t(depthValue));
                     
+                    //evaluates the depth XYZ position
+                    float * posXYZ = depthToCameraSpace(indexX, indexY, depthValue);
+                    depthCameraData[cameraXYZ++] = posXYZ[0];
+                    depthCameraData[cameraXYZ++] = posXYZ[0];
+                    depthCameraData[cameraXYZ++] = posXYZ[0];
+                    
+                    indexX++;
+                    if(indexX > 524){ indexY++; indexX=0;}
+                    
+
                     indexFD++;
                 }
             }
@@ -349,7 +363,7 @@ namespace openKinect2 {
            
     //----HELP functions-----
     //return float pointer with x, y, and z values
-    float  *   Device::depthToCameraSpace(float & x, float & y, float & depth)
+    float  *   Device::depthToCameraSpace(int & x, int & y, float & depth)
     {
         float * point  = new float[3];
         point[2] = (depth); // z, convert from mm to meters

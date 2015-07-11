@@ -110,7 +110,7 @@ namespace  openKinect2{
         //converssion based on
         // https://github.com/OpenKinect/libfreenect2/issues/41
         //return float pointer with x, y, and z values
-        float  *     depthToCameraSpace(float & x, float & y, float & depth);
+        float  *     depthToCameraSpace(int & x, int & y, float & depth);
         
         
     private:
