@@ -115,6 +115,14 @@ JNIEXPORT jintArray JNICALL Java_org_openkinect_freenect2_Device_jniGetColorData
  */
 JNIEXPORT jintArray JNICALL Java_org_openkinect_freenect2_Device_jniGetUndistorted
 (JNIEnv *, jobject);
+    
+/*
+ * Class:     org_openkinect_freenect2_Device
+ * Method:    jniGetDepthData
+ * Signature: ()[I
+ */
+JNIEXPORT jfloatArray JNICALL Java_org_openkinect_freenect2_Device_jniGetDepthCameraPositions
+(JNIEnv *, jobject);
 
 
 /*

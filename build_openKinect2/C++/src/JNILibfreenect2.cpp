@@ -30,7 +30,7 @@ namespace openKinect2 {
         rawDepthData    = (uint32_t *)malloc(FRAME_SIZE_DEPTH * sizeof(uint32_t));
         
         //XYZ data, depth size times 3
-        depthCameraData = (uint32_t *)malloc(FRAME_SIZE_DEPTH * 3 * sizeof(uint32_t));
+        depthCameraData = (float *)malloc(FRAME_SIZE_DEPTH * 3 * sizeof(float));
         
         mSerialKinect = "";
         mNumDevices   = 0;
@@ -202,6 +202,10 @@ namespace openKinect2 {
         if(registeredData != NULL){
             delete registeredData;
         }
+        
+        if(depthCameraData != NULL){
+            delete depthCameraData;
+        }
     }
     
     //get number of devices
@@ -297,17 +301,18 @@ namespace openKinect2 {
                     depthData[indexFD]  = colorByte2Int(uint32_t(depthValue));
                     
                     //evaluates the depth XYZ position
-                    float * posXYZ = depthToCameraSpace(indexX, indexY, depthValue);
-                    depthCameraData[cameraXYZ++] = posXYZ[0];
-                    depthCameraData[cameraXYZ++] = posXYZ[0];
-                    depthCameraData[cameraXYZ++] = posXYZ[0];
+                    float * posXYZ = depthToCameraSpace(indexX, indexY, newDepth[indexFD]);
+                    depthCameraData[cameraXYZ++] = posXYZ[0];//x
+                    depthCameraData[cameraXYZ++] = posXYZ[1];//y
+                    depthCameraData[cameraXYZ++] = posXYZ[2];//z
                     
-                    indexX++;
-                    if(indexX > 524){ indexY++; indexX=0;}
+                   // indexX++;
+                   // if(indexX >= 512){ indexX=0; indexY++;}
                     
 
                     indexFD++;
                 }
+                std::cout<<indexX<<" "<<indexY<<std::endl;
             }
             
             
@@ -358,6 +363,11 @@ namespace openKinect2 {
     uint32_t *  Device::JNI_GetRegistered()
     {
         return registeredData;
+    }
+    
+    float * Device::JNI_GetDepthCameraPositions()
+    {
+        return depthCameraData;
     }
     
            

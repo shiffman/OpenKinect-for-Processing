@@ -5,6 +5,9 @@ import processing.core.PVector;
 import processing.core.PImage;
 import processing.opengl.PShader;
 
+import java.nio.FloatBuffer;
+
+import com.jogamp.common.nio.Buffers;
 /*
 openKinect2 library for Processing
 Copyright (c) 2014 Thomas Sanchez Lengeling
@@ -61,6 +64,8 @@ public class Device {
 	PImage undistortedImg;
 	PImage registeredImg;
 	
+	FloatBuffer depthPositions;
+	
 	/**
 	 * Constructor for openKinect 2
 	 * @param _p PApplet parent
@@ -75,6 +80,8 @@ public class Device {
 		colorImg = parent.createImage(colorWidth, colorHeight, PImage.ARGB);
 		undistortedImg = parent.createImage(depthWidth, depthHeight, PImage.ALPHA);
 		registeredImg  = parent.createImage(depthWidth, depthHeight, PImage.ARGB);
+		
+		depthPositions = Buffers.newDirectFloatBuffer(depthWidth * depthHeight * 3);
 		
 		depthImg.loadPixels();
 		irImg.loadPixels();
@@ -192,6 +199,18 @@ public class Device {
     	return registeredImg;
     }
     
+    public float []  getDepthToCameraPositions(){
+    	return jniGetDepthCameraPositions();
+    }
+    
+    public FloatBuffer  getDepthBufferPositions(){
+		float[] pcRawData = jniGetDepthCameraPositions();
+		depthPositions.put(pcRawData, 0, depthWidth * depthHeight * 3);
+		depthPositions.rewind();
+
+		return depthPositions; 
+    }
+    
     /**
      * get the raw depth data 512 x 424
      * @return array of ints from 0 - 45000
@@ -304,6 +323,8 @@ public class Device {
     private  native int []  jniGetColorData();
     private  native int []  jniGetUndistorted();
     private  native int []  jniGetRegistered();
+    private  native float []  jniGetDepthCameraPositions();
+    
     
     //Enables functions
     private  native void jniEnableVideo(boolean enable);

@@ -12,10 +12,7 @@ import org.openkinect.processing.*;
 Kinect2 kinect2;
 
 // Angle for rotation
-float a = 0;
-
-// We'll use a lookup table so that we don't have to repeat the math over and over
-float[] depthLookUp = new float[2048];
+float a = 3.1;
 
 void setup() {
   // Rendering in P3D
@@ -24,10 +21,6 @@ void setup() {
   kinect2.startDepth();
   kinect2.start();
 
-  // Lookup table for all possible depth values (0 - 2047)
-  for (int i = 0; i < depthLookUp.length; i++) {
-    depthLookUp[i] = rawDepthToMeters(i);
-  }
 }
 
 void draw() {
@@ -41,14 +34,14 @@ void draw() {
   int skip = 1;
 
   // Translate and rotate
-  translate(width/2, height/2, -50);
+  translate(width/2, height/2, 50);
   rotateY(a);
 
   fill(255);
   stroke(255);
-  for (int x = 0; x < kinect2.depthWidth; x+=5) {
-    for (int y = 0; y < kinect2.depthHeight; y+=5) {
-      int offset = x + y * kinect2.depthHeight;
+  for (int x = 0; x < kinect2.depthWidth; x++) {
+    for (int y = 0; y < kinect2.depthHeight; y++) {
+      int offset = x + y * kinect2.depthWidth;
       
       pushMatrix();
       PVector point = depthToPointCloudPos(x, y,  depth[offset]);
@@ -61,20 +54,12 @@ void draw() {
   }
 
   // Rotate
-  a += 0.015f;
+  //a += 0.0015f;
 }
-
-// These functions come from: http://graphics.stanford.edu/~mdfisher/Kinect.html
-float rawDepthToMeters(int depthValue) { //<>//
-  if (depthValue < 2047) {
-    return (float)(1.0 / ((double)(depthValue) * -0.0030711016 + 3.3309495161));
-  }
-  return 0.0f;
-}
-
+ //<>//
 PVector depthToPointCloudPos(int x, int y, float depthValue) {
   PVector point = new PVector();
-  point.z = (depthValue) / (1000.0f); // Convert from mm to meters
+  point.z = (depthValue);// / (1.0f); // Convert from mm to meters
   point.x = (x - CameraParams.cx) * point.z / CameraParams.fx;
   point.y = (y - CameraParams.cy) * point.z / CameraParams.fy;
   return point;

@@ -84,6 +84,10 @@ namespace  openKinect2{
         //get raw depth data
         uint32_t *  JNI_GetRawDepth();
         
+        float    *  JNI_GetDepthCameraPositions();
+        
+        void        JNI_printCameraValues();
+        
         //JNI enables
         void        JNI_enableVideo(bool enable = true){enableVideo = enable;}
         void        JNI_enableDepth(bool enable = true){enableDepth = enable;}
@@ -136,7 +140,7 @@ namespace  openKinect2{
         uint32_t *   undisortedData;
         uint32_t *   registeredData;
         
-        uint32_t *   depthCameraData;
+        float    *   depthCameraData;
         
         
         //Enables

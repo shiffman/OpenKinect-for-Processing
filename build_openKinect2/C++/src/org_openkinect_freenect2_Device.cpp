@@ -189,6 +189,24 @@ JNIEXPORT jintArray JNICALL Java_org_openkinect_freenect2_Device_jniGetRegistere
     return buffer;
 }
 
+JNIEXPORT jfloatArray JNICALL Java_org_openkinect_freenect2_Device_jniGetDepthCameraPositions
+(JNIEnv * env, jobject obj)
+{
+    jclass cls = env->GetObjectClass(obj);
+    jfieldID fid = env->GetFieldID(cls, "ptr", "J");
+    
+    openKinect2::Device * kinect = (openKinect2::Device *) env->GetLongField(obj, fid);
+    jfloatArray buffer = env->NewFloatArray((jsize)FRAME_SIZE_DEPTH * 3);
+    
+    const jfloat * pFloat;
+    if(kinect->isKinectReady()){
+        pFloat = (const jfloat * )kinect->JNI_GetDepthCameraPositions();
+        env->SetFloatArrayRegion(buffer, 0, (jsize)FRAME_SIZE_DEPTH * 3, (const jfloat *)(pFloat));
+    }
+    
+    return buffer;
+}
+
 
 //----enable
 
