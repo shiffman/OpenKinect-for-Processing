@@ -4,12 +4,6 @@ import org.openkinect.processing.*;
 
 import processing.core.*;
 
-/**
- * broken getting
- * dlopen(libfreenect.dylib, 9): image not found
- * @author tom
- *
- */
 public class MultiKinectV1 extends PApplet{
 	
 	private Kinect kinect;

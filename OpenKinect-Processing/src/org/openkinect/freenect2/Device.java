@@ -204,16 +204,16 @@ public class Device {
     }
     
     public FloatBuffer  getDepthBufferPositions(){
-		float[] pcRawData = jniGetDepthCameraPositions();
-		depthPositions.put(pcRawData, 0, depthWidth * depthHeight * 3);
-		depthPositions.rewind();
+        float[] pcRawData = jniGetDepthCameraPositions();
+	depthPositions.put(pcRawData, 0, depthWidth * depthHeight * 3);
+	depthPositions.rewind();
 
-		return depthPositions; 
+	return depthPositions; 
     }
     
     /**
      * get the raw depth data 512 x 424
-     * @return array of ints from 0 - 45000
+     * @return array of ints from 0 - 4500
      */
     public int []  getRawDepth(){
     	return jniGetRawDepthData();
