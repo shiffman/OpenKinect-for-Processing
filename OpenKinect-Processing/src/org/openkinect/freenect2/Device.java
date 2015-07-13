@@ -6,6 +6,7 @@ import processing.core.PImage;
 import processing.opengl.PShader;
 
 import java.nio.FloatBuffer;
+import java.nio.IntBuffer;
 
 import com.jogamp.common.nio.Buffers;
 /*
@@ -65,6 +66,10 @@ public class Device {
 	PImage registeredImg;
 	
 	FloatBuffer depthPositions;
+        
+        IntBuffer   depthColorBuffer;
+        IntBuffer   irColorBuffer;
+        IntBuffer   registeredColorBuffer;
 	
 	/**
 	 * Constructor for openKinect 2
@@ -81,7 +86,13 @@ public class Device {
 		undistortedImg = parent.createImage(depthWidth, depthHeight, PImage.ALPHA);
 		registeredImg  = parent.createImage(depthWidth, depthHeight, PImage.ARGB);
 		
-		depthPositions = Buffers.newDirectFloatBuffer(depthWidth * depthHeight * 3);
+                //Buffers for openGL calls
+		depthPositions  = Buffers.newDirectFloatBuffer(depthWidth * depthHeight * 3);
+                
+                //colors
+                depthColorBuffer       = Buffers.newDirectIntBuffer(depthWidth * depthHeight);
+                irColorBuffer          = Buffers.newDirectIntBuffer(depthWidth * depthHeight);
+                registeredColorBuffer  = Buffers.newDirectIntBuffer(depthWidth * depthHeight);
 		
 		depthImg.loadPixels();
 		irImg.loadPixels();
@@ -150,8 +161,10 @@ public class Device {
     public PImage getDepthImage(){
     	int[] depthRawData = jniGetDepthData();
     	PApplet.arrayCopy(depthRawData, 0, depthImg.pixels, 0, depthImg.width * depthImg.height);
+        depthColorBuffer.put(depthRawData, 0, depthWidth * depthHeight);
+        depthColorBuffer.rewind();
     	depthImg.updatePixels();
-		return depthImg;
+	return depthImg;
     }
     
     /**
@@ -161,8 +174,10 @@ public class Device {
     public PImage getIrImage(){
     	int[] irRawData = jniGetIrData();
     	PApplet.arrayCopy(irRawData, 0, irImg.pixels, 0, irImg.width * irImg.height);
+        irColorBuffer.put(irRawData, 0, depthWidth * depthHeight);
+        irColorBuffer.rewind();
     	irImg.updatePixels();
-		return irImg;
+        return irImg;
     }
     
     
@@ -173,8 +188,7 @@ public class Device {
     public PImage getVideoImage(){
     	int[] colorRawData = jniGetColorData();
     	PApplet.arrayCopy(colorRawData, 0, colorImg.pixels, 0, colorImg.width * colorImg.height);
-    	colorImg.updatePixels();
-		return colorImg;
+        return colorImg;
     }
     
     /**
@@ -183,7 +197,7 @@ public class Device {
      */
     public PImage getUndistoredImage(){
     	int[] undistoredData = jniGetUndistorted();
-    	PApplet.arrayCopy(undistoredData, 0, undistortedImg.pixels, 0, undistortedImg.width* undistortedImg.height);;
+    	PApplet.arrayCopy(undistoredData, 0, undistortedImg.pixels, 0, undistortedImg.width* undistortedImg.height);
     	undistortedImg.updatePixels();
     	return undistortedImg;
     }
@@ -195,6 +209,8 @@ public class Device {
     public PImage getRegisteredImage(){
     	int[] registeredData = jniGetRegistered();
     	PApplet.arrayCopy(registeredData, 0, registeredImg.pixels, 0, registeredImg.width* registeredImg.height);
+        registeredColorBuffer.put(registeredImg.pixels, 0, depthWidth * depthHeight);
+        registeredColorBuffer.rewind();
     	registeredImg.updatePixels();
     	return registeredImg;
     }
@@ -209,6 +225,30 @@ public class Device {
 	depthPositions.rewind();
 
 	return depthPositions; 
+    }
+    
+    /**
+     * get the IR color data as an Int Buffer data structure 
+     * @return IntBuffer Ir color Data
+     */
+    public IntBuffer getIrColorBuffer(){
+        return irColorBuffer;
+    }
+    
+    /**
+     * get the color map to depth data as an Int Buffer data structure
+     * @return IntBuffer registered color data
+     */
+    public IntBuffer getRegisteredColorBuffer(){
+        return registeredColorBuffer;
+    }
+    
+    /**
+     * get the depth color data as an Int Buffer data structure
+     * @return IntBuffer depth color data
+     */
+    public IntBuffer getDepthColorBuffer(){
+        return depthColorBuffer;
     }
     
     /**
