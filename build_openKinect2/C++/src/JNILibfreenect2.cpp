@@ -306,13 +306,12 @@ namespace openKinect2 {
                     depthCameraData[cameraXYZ++] = posXYZ[1];//y
                     depthCameraData[cameraXYZ++] = posXYZ[2];//z
                     
-                   // indexX++;
-                   // if(indexX >= 512){ indexX=0; indexY++;}
+                    indexX++;
+                    if(indexX >= 512){ indexX=0; indexY++;}
                     
 
                     indexFD++;
                 }
-                std::cout<<indexX<<" "<<indexY<<std::endl;
             }
             
             

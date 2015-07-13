@@ -1,15 +1,24 @@
 package org.openkinect.tests;
 
+import java.nio.FloatBuffer;
+
 import org.openkinect.processing.Kinect2;
 
 import processing.core.*;
+import processing.opengl.PGL;
+import processing.opengl.PShader;
 
-public class PointCloudTest extends PApplet{
+public class PointCloudOGL2 extends PApplet{
 
 	Kinect2 kinect2;
+	
+	PGL pgl;
+	PShader sh;
+
+	int  vertLoc;
 
 	public static void main(String[] args) {
-		PApplet.main(new String[] { "org.openkinect.tests.PointCloudTest"});
+		PApplet.main(new String[] { "org.openkinect.tests.PointCloudOGL2"});
 	}
 
 	public void settings() {
@@ -22,6 +31,10 @@ public class PointCloudTest extends PApplet{
 		kinect2.startDepth();
 		kinect2.startIR();
 		kinect2.start();
+		
+		//System.out.println("Working Directory = " + System.getProperty("user.dir"));
+		String dir = System.getProperty("user.dir")+"/src/org/openkinect/tests/data/";
+		sh = loadShader( dir+"frag.glsl", dir+"vert.glsl");
 	}
 
 
@@ -32,25 +45,30 @@ public class PointCloudTest extends PApplet{
 		image(kinect2.getIrImage(), 0, 320, 320, 240);
 		fill(255);
 		
-		float [] positions = kinect2.getDepthToCameraPositions();
+		FloatBuffer depthPositions = kinect2.getDepthBufferPositions();
+		 
+		pgl = beginPGL();
+	    sh.bind();
+
+		vertLoc = pgl.getAttribLocation(sh.glProgram, "vertex");
+		  
+		  //color for each POINT of the point cloud
+		sh.set("fragColor", 1.0f, 1.0f, 1.0f, 1.0f);
+		 
+		pgl.enableVertexAttribArray(vertLoc);
+
+		  //data size
+		int vertData = kinect2.depthWidth * kinect2.depthHeight;
+
+		  //pgl.vertexAttribPointer(vertLoc, 3, PGL.FLOAT, false, 3 * (Float.SIZE/8), pointCloudBuffer);
+		pgl.vertexAttribPointer(vertLoc, 3, PGL.FLOAT, false, 0, depthPositions);
+		pgl.drawArrays(PGL.POINTS, 0, vertData);
+
+		pgl.disableVertexAttribArray(vertLoc);
+
+		sh.unbind(); 
+		endPGL();
 		
-		pushMatrix();
-		translate(width/2, height/2, 50);
-		rotateY(3.1f);
-		stroke(255);
-		fill(255);
-		beginShape(POINTS);
-		for(int i = 0; i < 424; i++){
-			for(int j = 0; j < 512; j++){
-				int index =  j + i*512;
-				float x = positions[index*3 + 0];
-				float y = positions[index*3 + 1];
-				float z = positions[index*3 + 2];
-				vertex(x, y, z);
-			}
-		}
-		endShape();
-		popMatrix();
 
 		text("Framerate: " + (int)(frameRate), 10, 515);
 	}

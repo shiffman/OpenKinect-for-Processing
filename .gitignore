@@ -55,6 +55,8 @@ build_openKinect2/openKinectv2/bin/java.policy.applet
 *.lock
 
 
-build_openKinect2/openKinectv2/lib/libJNILibfreenect2.dylib.dSYM/Contents/Resources/DWARF/libJNILibfreenect2.dylib
+build_openKinect2/openKinectv2/lib/libJNILibfreenect2.dylib.dSYM
 
 *.log
+/OpenKinect-Processing/nbproject/private/
+/OpenKinect-Processing/build/
