@@ -1,22 +1,27 @@
- //<>//
+// Thomas Sanchez Lengeling //<>//
+// Kinect 3d Point Cloud example with different color types.
+
+// https://github.com/shiffman/OpenKinect-for-Processing
+
 import java.nio.*;
 import org.openkinect.processing.Kinect2;
 
 
 Kinect2 kinect2;
 
-PGL pgl;
-PShader sh;
-
-int  vertLoc;
-int  colorLoc;
-
-
 float angle = 3.141594;
 float scaleValue = 50;
 
 //change color of the point cloud
 int drawState = 1;
+
+
+//openGL
+PGL pgl;
+PShader sh;
+
+int  vertLoc;
+int  colorLoc;
 
 
 void setup() {
@@ -30,8 +35,7 @@ void setup() {
   kinect2.startRegistered();
   kinect2.start();
 
-  println(Integer.SIZE);
-
+  //start shader
   sh = loadShader("frag.glsl", "vert.glsl");
   smooth(16);
 }
@@ -39,7 +43,8 @@ void setup() {
 
 void draw() {
   background(0);
-  //image(kinect2.getVideoImage(), 0, 0, width, height);
+  
+  //draw all the Kinect v2 frames
   image(kinect2.getDepthImage(), 0, 0, 320, 240);
   image(kinect2.getIrImage(), 320, 0, 320, 240);
   image(kinect2.getVideoImage(), 320*2, 0, 320, 240);
@@ -47,6 +52,7 @@ void draw() {
   fill(255);
 
 
+  //rotate the scene
   pushMatrix();
   translate(width/2, height/2, scaleValue);
   rotateY(angle);
@@ -54,8 +60,10 @@ void draw() {
 
   int vertData = kinect2.depthWidth * kinect2.depthHeight;
 
+  //obtain the XYZ camera positions based on the depth data
   FloatBuffer depthPositions = kinect2.getDepthBufferPositions();
 
+  //obtain the color information as IntBuffers
   IntBuffer irData = kinect2.getIrColorBuffer();
   IntBuffer registeredData = kinect2.getRegisteredColorBuffer();
   IntBuffer depthData      = kinect2.getDepthColorBuffer();
@@ -67,15 +75,12 @@ void draw() {
   vertLoc  = pgl.getAttribLocation(sh.glProgram, "vertex");
   colorLoc = pgl.getAttribLocation(sh.glProgram, "color");
 
-  //color for each POINT of the point cloud
-  //sh.set("fragColor", 1.0f, 1.0f, 1.0f, 1.0f);
-
   pgl.enableVertexAttribArray(vertLoc);
   pgl.enableVertexAttribArray(colorLoc);
-
-
-  //pgl.vertexAttribPointer(vertLoc, 3, PGL.FLOAT, false, 3 * (Float.SIZE/8), pointCloudBuffer);
+  
   pgl.vertexAttribPointer(vertLoc, 3, PGL.FLOAT, false, 0, depthPositions);
+  
+  //change color of the point cloud depending on the depth, ir and color+depth information.
   switch(drawState){
    case 0:
     pgl.vertexAttribPointer(colorLoc, 4, PGL.UNSIGNED_BYTE, true, 0, depthData);
@@ -88,10 +93,10 @@ void draw() {
    break;
   }
 
-
-
+  //draw the XYZ depth camera points
   pgl.drawArrays(PGL.POINTS, 0, vertData);
 
+  //clean up the vertex buffers
   pgl.disableVertexAttribArray(vertLoc);
   pgl.disableVertexAttribArray(colorLoc);
 
