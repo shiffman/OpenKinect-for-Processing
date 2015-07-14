@@ -15,11 +15,15 @@ void setup() {
 
   kinect2 = new Kinect2(this);
   // Start all data
+  kinect2.startVideo();
   kinect2.startDepth();
   kinect2.startIR();
+  kinect2.startRegistered();
+  
   kinect2.start();
 
   sh = loadShader("frag.glsl", "vert.glsl");
+  smooth(16);
 }
 
 
@@ -30,7 +34,14 @@ void draw() {
   image(kinect2.getIrImage(), 0, 320, 320, 240);
   fill(255);
 
+
+  pushMatrix();
+  translate(width/2, height/2, 50);
+  rotateY(3.1f);
+  stroke(255);
+
   FloatBuffer depthPositions = kinect2.getDepthBufferPositions();
+
 
   pgl = beginPGL();
   sh.bind();
@@ -54,6 +65,7 @@ void draw() {
   sh.unbind(); 
   endPGL();
 
+  popMatrix();
 
   text("Framerate: " + (int)(frameRate), 10, 515);
 }

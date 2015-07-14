@@ -1,91 +1,139 @@
-// Daniel Shiffman
-// Kinect Point Cloud example
+ //<>//
+import java.nio.*;
+import org.openkinect.processing.Kinect2;
 
-// https://github.com/shiffman/OpenKinect-for-Processing
-// http://shiffman.net/p5/kinect/
 
-// Broken!
-
-import org.openkinect.processing.*;
-
-// Kinect Library object
 Kinect2 kinect2;
 
-// Angle for rotation
-float a = 0;
+PGL pgl;
+PShader sh;
 
-// We'll use a lookup table so that we don't have to repeat the math over and over
-float[] depthLookUp = new float[2048];
+int  vertLoc;
+int  colorLoc;
+
+
+float angle = 3.141594;
+float scaleValue = 50;
+
+//change color of the point cloud
+int drawState = 1;
+
 
 void setup() {
-  // Rendering in P3D
-  size(800, 600, P3D);
+  size(1280, 1020, P3D); 
+
   kinect2 = new Kinect2(this);
+  // Start all data
   kinect2.startDepth();
+  kinect2.startIR();
+  kinect2.startVideo();
+  kinect2.startRegistered();
   kinect2.start();
 
-  // Lookup table for all possible depth values (0 - 2047)
-  for (int i = 0; i < depthLookUp.length; i++) {
-    depthLookUp[i] = rawDepthToMeters(i);
-  }
+  println(Integer.SIZE);
+
+  sh = loadShader("frag.glsl", "vert.glsl");
+  smooth(16);
 }
+
 
 void draw() {
-
   background(0);
+  //image(kinect2.getVideoImage(), 0, 0, width, height);
+  image(kinect2.getDepthImage(), 0, 0, 320, 240);
+  image(kinect2.getIrImage(), 320, 0, 320, 240);
+  image(kinect2.getVideoImage(), 320*2, 0, 320, 240);
+  image(kinect2.getRegisteredImage(), 320*3, 0, 320, 240);
+  fill(255);
 
-  // Get the raw depth as array of integers
-  int[] depth = kinect2.getRawDepth();
 
-  // We're just going to calculate and draw every 4th pixel (equivalent of 160x120)
-  int skip = 4;
+  pushMatrix();
+  translate(width/2, height/2, scaleValue);
+  rotateY(angle);
+  stroke(255);
 
-  // Translate and rotate
-  translate(width/2, height/2, -50);
-  rotateY(a);
+  int vertData = kinect2.depthWidth * kinect2.depthHeight;
 
-  for (int x = 0; x < kinect2.width; x += skip) {
-    for (int y = 0; y < kinect2.height; y += skip) {
-      int offset = x + y * kinect2.width;
+  FloatBuffer depthPositions = kinect2.getDepthBufferPositions();
 
-      // Convert kinect data to world xyz coordinate
-      int rawDepth = depth[offset];
-      PVector v = depthToWorld(x, y, rawDepth);
+  IntBuffer irData = kinect2.getIrColorBuffer();
+  IntBuffer registeredData = kinect2.getRegisteredColorBuffer();
+  IntBuffer depthData      = kinect2.getDepthColorBuffer();
 
-      stroke(255);
-      pushMatrix();
-      // Scale up by 200
-      float factor = 200;
-      translate(v.x*factor, v.y*factor, factor-v.z*factor);
-      // Draw a point
-      point(0, 0);
-      popMatrix();
-    }
+
+  pgl = beginPGL();
+  sh.bind();
+
+  vertLoc  = pgl.getAttribLocation(sh.glProgram, "vertex");
+  colorLoc = pgl.getAttribLocation(sh.glProgram, "color");
+
+  //color for each POINT of the point cloud
+  //sh.set("fragColor", 1.0f, 1.0f, 1.0f, 1.0f);
+
+  pgl.enableVertexAttribArray(vertLoc);
+  pgl.enableVertexAttribArray(colorLoc);
+
+
+  //pgl.vertexAttribPointer(vertLoc, 3, PGL.FLOAT, false, 3 * (Float.SIZE/8), pointCloudBuffer);
+  pgl.vertexAttribPointer(vertLoc, 3, PGL.FLOAT, false, 0, depthPositions);
+  switch(drawState){
+   case 0:
+    pgl.vertexAttribPointer(colorLoc, 4, PGL.UNSIGNED_BYTE, true, 0, depthData);
+   break;
+   case 1:
+    pgl.vertexAttribPointer(colorLoc, 4, PGL.UNSIGNED_BYTE, true, 0, irData);
+   break;
+   case 2:
+    pgl.vertexAttribPointer(colorLoc, 4, PGL.UNSIGNED_BYTE, true, 0, registeredData);
+   break;
   }
 
-  // Rotate
-  a += 0.015f;
+
+
+  pgl.drawArrays(PGL.POINTS, 0, vertData);
+
+  pgl.disableVertexAttribArray(vertLoc);
+  pgl.disableVertexAttribArray(colorLoc);
+
+  sh.unbind(); 
+  endPGL();
+
+  popMatrix();
+
+  text("Framerate: " + (int)(frameRate), 10, 515);
 }
 
-// These functions come from: http://graphics.stanford.edu/~mdfisher/Kinect.html
-float rawDepthToMeters(int depthValue) {
-  if (depthValue < 2047) {
-    return (float)(1.0 / ((double)(depthValue) * -0.0030711016 + 3.3309495161));
+void keyPressed() {
+
+  if(key == '1'){
+   drawState = 0; 
   }
-  return 0.0f;
-}
+  
+  if(key == '2'){
+    drawState = 1;
+  }
+  if(key == '3'){
+    drawState = 2;
+  }
+  
+  if (key == 'a') {
+    angle += 0.1;
+    println("angle "+angle);
+  }
 
-PVector depthToWorld(int x, int y, int depthValue) {
+  if (key == 's') {
+    angle -= 0.1;
+    println("angle "+angle);
+  }
 
-  final double fx_d = 1.0 / 5.9421434211923247e+02;
-  final double fy_d = 1.0 / 5.9104053696870778e+02;
-  final double cx_d = 3.3930780975300314e+02;
-  final double cy_d = 2.4273913761751615e+02;
+  if (key == 'z') {
+    scaleValue +=5;
+    println("scaleValue "+scaleValue);
+  }
 
-  PVector result = new PVector();
-  double depth =  depthLookUp[depthValue];//rawDepthToMeters(depthValue);
-  result.x = (float)((x - cx_d) * depth * fx_d);
-  result.y = (float)((y - cy_d) * depth * fy_d);
-  result.z = (float)(depth);
-  return result;
+
+  if (key == 'x') {
+    scaleValue -=5;
+    println("scaleValue "+scaleValue);
+  }
 }
