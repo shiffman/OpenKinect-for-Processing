@@ -1,3 +1,4 @@
+//camera information based on the Kinect v2 hardware
 static class CameraParams {
   static float cx = 254.878f;
   static float cy = 205.395f;

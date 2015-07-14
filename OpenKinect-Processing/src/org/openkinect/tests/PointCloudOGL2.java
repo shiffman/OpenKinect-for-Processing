@@ -48,7 +48,7 @@ public class PointCloudOGL2 extends PApplet{
 		FloatBuffer depthPositions = kinect2.getDepthBufferPositions();
 		 
 		pgl = beginPGL();
-	    sh.bind();
+	        sh.bind();
 
 		vertLoc = pgl.getAttribLocation(sh.glProgram, "vertex");
 		  
