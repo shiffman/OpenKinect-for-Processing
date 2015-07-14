@@ -234,48 +234,46 @@ namespace openKinect2 {
         float * newIr    = new float[FRAME_SIZE_DEPTH];
         float * newUndisorted =  new float[FRAME_SIZE_DEPTH];
         
-        
+        libfreenect2::Frame undistorted(512, 424, 4), registered(512, 424, 4);
+                                                                 
         //MAIN THREAD
         while(initialized_device){
             listener->waitForNewFrame(frames);
-            libfreenect2::Frame *  rgb;
-            libfreenect2::Frame *  depth;
-            libfreenect2::Frame *  ir;
             
-            
-            //Video
-            if(toggleVideo && enableVideo){
-                rgb   = frames[libfreenect2::Frame::Color];
-                memcpy(colorData, reinterpret_cast<const uint32_t *>(rgb->data), 1920 * 1080 * 4);
-            }
-            
-            //IR
-            if(toggleIR && enableIR){
-                ir    = frames[libfreenect2::Frame::Ir];
-                memcpy(newIr, reinterpret_cast<const float * >(ir->data), FRAME_BYTE_SIZE_DEPTH);
-            }
-            
-            //DEPTH
-            if(toggleDepth && enableDepth){
-                depth = frames[libfreenect2::Frame::Depth];
-                memcpy(newDepth, reinterpret_cast<const float * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
-               // memcpy(rawDepthData, reinterpret_cast<const uint32_t * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
-            }
-            
-            //Mappers RGB + Depth
-            if(toggleRegistered && enableRegistered){
-               
-                libfreenect2::Frame undistorted(512, 424, 4), registered(512, 424, 4);
-                if(rgb != NULL && depth != NULL){
-                    registration->apply(rgb, depth, &undistorted, &registered);
-                }
+            if(enableRegistered){
                 
+                libfreenect2::Frame *  rgb   = frames[libfreenect2::Frame::Color];
+                memcpy(colorData, reinterpret_cast<const uint32_t *>(rgb->data), 1920 * 1080 * 4);
+                
+                libfreenect2::Frame *  depth = frames[libfreenect2::Frame::Depth];
+                memcpy(newDepth, reinterpret_cast<const float * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
+                
+                 //Mappers RGB + Depth
+                registration->apply(rgb, depth, &undistorted, &registered);
                 memcpy(newUndisorted, reinterpret_cast<const float * >(undistorted.data), FRAME_BYTE_SIZE_DEPTH);
                 memcpy(registeredData, reinterpret_cast<const uint32_t * >(registered.data), FRAME_BYTE_SIZE_DEPTH);
+            }else if(enableVideo && !enableDepth){
+                
+                libfreenect2::Frame *  rgb   = frames[libfreenect2::Frame::Color];
+                memcpy(colorData, reinterpret_cast<const uint32_t *>(rgb->data), 1920 * 1080 * 4);
+            }else if( !enableVideo && enableDepth ){
+                
+                libfreenect2::Frame *  depth = frames[libfreenect2::Frame::Depth];
+                memcpy(newDepth, reinterpret_cast<const float * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
+            }else if(enableVideo && enableDepth && !enableRegistered){
+                
+                libfreenect2::Frame *  rgb   = frames[libfreenect2::Frame::Color];
+                memcpy(colorData, reinterpret_cast<const uint32_t *>(rgb->data), 1920 * 1080 * 4);
+                
+                libfreenect2::Frame *  depth = frames[libfreenect2::Frame::Depth];
+                memcpy(newDepth, reinterpret_cast<const float * >(depth->data), FRAME_BYTE_SIZE_DEPTH);
             }
-            
-            //update the depth and ir pixels for processing color format
-            if(toggleIR || toggleDepth || toggleRegistered){
+        
+
+            if(enableIR){
+                libfreenect2::Frame *  ir    = frames[libfreenect2::Frame::Ir];
+                memcpy(newIr, reinterpret_cast<const float * >(ir->data), FRAME_BYTE_SIZE_DEPTH);
+            }
        
                 int indexFD = 0;
                 int pIndexEnd = (FRAME_SIZE_DEPTH);
@@ -284,34 +282,32 @@ namespace openKinect2 {
                 int indexY = 0;
                 int cameraXYZ = 0;
                 while(indexFD < pIndexEnd){
+                    float depth = newDepth[indexFD];
                     
                     //Depth
                     //0.0566666f -> (value/45000)* 255
-                    rawDepthData[indexFD] = uint32_t(newDepth[indexFD]);
+                    rawDepthData[indexFD] = uint32_t(depth);
                    
-                    
                     //IR
-                    irData[indexFD]  = colorByte2Int((uint32_t(newIr[indexFD]*0.0566666f)>>4));
+                    irData[indexFD]  = colorByte2Int((uint32_t(newIr[indexFD]*0.0566666f)));
       
                     //undisorted
                     undisortedData[indexFD]  = colorByte2Int(uint32_t(newUndisorted[indexFD]*0.0566666f));
                     
                     
-                    float depthValue = (newDepth[indexFD]*0.0566666f);
-                    depthData[indexFD]  = colorByte2Int(uint32_t(depthValue));
+                    depthData[indexFD]  = colorByte2Int(uint32_t(depth*0.0566666f));
                     
-                    //evaluates the depth XYZ position
-                    float * posXYZ = depthToCameraSpace(indexX, indexY, newDepth[indexFD]);
-                    depthCameraData[cameraXYZ++] = posXYZ[0];//x
-                    depthCameraData[cameraXYZ++] = posXYZ[1];//y
-                    depthCameraData[cameraXYZ++] = posXYZ[2];//z
+                    //evaluates the depth XYZ position;
+                   
+                    depthCameraData[cameraXYZ++] = (indexX - dev->getIrCameraParams().cx) * depth / dev->getIrCameraParams().fx;//x
+                    depthCameraData[cameraXYZ++] = (indexY - dev->getIrCameraParams().cy) * depth / dev->getIrCameraParams().fy; //y
+                    depthCameraData[cameraXYZ++] = depth; //z
                     
                     indexX++;
                     if(indexX >= 512){ indexX=0; indexY++;}
-                    
 
                     indexFD++;
-                }
+              //  }
             }
             
             

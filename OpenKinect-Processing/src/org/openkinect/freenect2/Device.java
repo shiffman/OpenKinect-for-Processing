@@ -188,6 +188,7 @@ public class Device {
     public PImage getVideoImage(){
     	int[] colorRawData = jniGetColorData();
     	PApplet.arrayCopy(colorRawData, 0, colorImg.pixels, 0, colorImg.width * colorImg.height);
+        colorImg.updatePixels();
         return colorImg;
     }
     
@@ -215,10 +216,18 @@ public class Device {
     	return registeredImg;
     }
     
+    /**
+     * Get depth camera positions based on the Kinect v2 hardware
+     * @return float array of 512 x 424 x 3 elements
+     */
     public float []  getDepthToCameraPositions(){
     	return jniGetDepthCameraPositions();
     }
     
+    /**
+     * Get depth camera positions as a float buffer data structure 
+     * @return FloatBuffer 512 x 424 x 3 floats
+     */
     public FloatBuffer  getDepthBufferPositions(){
         float[] pcRawData = jniGetDepthCameraPositions();
 	depthPositions.put(pcRawData, 0, depthWidth * depthHeight * 3);
@@ -322,27 +331,7 @@ public class Device {
     public void startRegistered(){
     	jniEnableRegistered(true);
     }
-    
-    
-    
-    
-    public void toggleDepth(){
-    	
-    }
-    
-    public void toggleVideo(){
-    	
-    }
-    
-    public void toggleIR(){
-    	
-    }
-    
-    public void toggleRegistered(){
-    	
-    }
-    
-    
+     
     //JNI Functions
     private  native long 	jniInit();
     private  native void 	jniOpen();
@@ -371,11 +360,5 @@ public class Device {
     private  native void jniEnableDepth(boolean enable);
     private  native void jniEnableIR(boolean enable);
     private  native void jniEnableRegistered(boolean enable);
-        
-    //toggle Function
-    private  native void jniToggleVideo(boolean toggle);
-    private  native void jniToggleDepth(boolean toggle);
-    private  native void jniToggleIR(boolean toggle);
-    private  native void jniToggleRegistered(boolean toggle);
 
 }
