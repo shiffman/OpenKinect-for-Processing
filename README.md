@@ -25,4 +25,4 @@ For more, read this [online tutorial](http://shiffman.net/p5/kinect/) or check o
 - Kinect v2
  
 #### Kinect v2 additional software
-- No longer needed, external instal [Turbo Jpeg for Mac](http://sourceforge.net/projects/libjpeg-turbo/). 
+- No longer need to external install  [Turbo Jpeg for Mac](http://sourceforge.net/projects/libjpeg-turbo/). 
