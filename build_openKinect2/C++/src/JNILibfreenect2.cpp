@@ -289,7 +289,7 @@ namespace openKinect2 {
                     rawDepthData[indexFD] = uint32_t(depth);
                    
                     //IR
-                    irData[indexFD]  = colorByte2Int((uint32_t(newIr[indexFD]*0.0566666f)));
+                    irData[indexFD]  = colorByte2Int((uint32_t(newIr[indexFD]*0.0566666f)>>2));
       
                     //undisorted
                     undisortedData[indexFD]  = colorByte2Int(uint32_t(newUndisorted[indexFD]*0.0566666f));
