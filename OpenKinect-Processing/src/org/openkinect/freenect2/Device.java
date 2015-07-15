@@ -49,8 +49,9 @@ public class Device {
 		
 		if(osName.indexOf("win") >= 0) {
 			System.out.println(arch + " windows");
-			System.loadLibrary("turbojpeg");
-			System.loadLibrary("libJNILibfreenect2");
+			System.loadLibrary("msvc/turbojpeg");
+			System.loadLibrary("msvc/libusb-1.0");
+			System.loadLibrary("msvc/libJNILibfreenect2");
 		}else if(osName.indexOf("mac") >= 0){
 			System.out.println(arch + " mac");
 			System.loadLibrary("turbojpeg");
