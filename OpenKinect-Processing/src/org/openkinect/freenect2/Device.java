@@ -43,8 +43,21 @@ along with openKinect2  for Processing.  If not, see
 public class Device {
 	
     static {
-    	System.loadLibrary("turbojpeg");
-        System.loadLibrary("JNILibfreenect2");
+    	//load OS an arch difference 
+		int arch = Integer.parseInt(System.getProperty("sun.arch.data.model"));
+		String osName = System.getProperty("os.name").toLowerCase();
+		
+		if(osName.indexOf("win") >= 0) {
+			System.out.println(arch + " windows");
+			System.loadLibrary("turbojpeg");
+			System.loadLibrary("libJNILibfreenect2");
+		}else if(osName.indexOf("mac") >= 0){
+			System.out.println(arch + " mac");
+			System.loadLibrary("turbojpeg");
+			System.loadLibrary("JNILibfreenect2");
+		}else{
+			System.out.println("not compatible with 32bits");
+		}
     }
     
     public int depthWidth = 512;

@@ -8,12 +8,14 @@
 
 build_openKinect2/Java/lib/JNILibfreenect2.build
 
+build_openKinect2/openKinectv2/lib/libJNILibfreenect2.dylib.dSYM
+
 *.dSYM
 
 *.dylib.dSYM
 
 
-#Eclipse
+#ECLIPSE
 
 *.metadata
 
@@ -26,8 +28,6 @@ build_openKinect2/.recommenders
 build_openKinect2/openKinectv2/.settings
 
 build_openKinect2/openKinectv2/bin/java.policy.applet
-
-#processing
 
 *.lock
 
@@ -58,19 +58,36 @@ build_openKinect2/openKinectv2/bin/java.policy.applet
 *.lock
 
 
-build_openKinect2/openKinectv2/lib/libJNILibfreenect2.dylib.dSYM
+#NETBEANS
+
+/OpenKinect-Processing/nbproject/private/
+
+/OpenKinect-Processing/build/
+
+/OpenKinect-Processing/dist/
+
+
+#VISUAL STUDIO
+
 
 *.log
-/OpenKinect-Processing/nbproject/private/
-/OpenKinect-Processing/build/
-/OpenKinect-Processing/dist/
+
 *.tlog
+
 *.obj
+
 *.pdb
+
 *.ipch
+
 *.opensdf
+
 *.sdf
+
 *.ilk
+
 *.pch
+
 *.idb
+
 *.suo
