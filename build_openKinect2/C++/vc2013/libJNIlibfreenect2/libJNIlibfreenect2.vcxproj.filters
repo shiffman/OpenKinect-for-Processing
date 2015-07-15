@@ -1,0 +1,237 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files\freenect2">
+      <UniqueIdentifier>{116e75f3-64ca-4da4-8364-bf3dd051eaf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\freenect2">
+      <UniqueIdentifier>{95372b5a-7f22-4b1a-bc42-eae67170940b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\JNI">
+      <UniqueIdentifier>{96adfd3d-3dc8-4a9a-b44c-5e58eac4092f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\JNI">
+      <UniqueIdentifier>{e44dde77-cf90-45a0-9578-d0ffa085b2e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\org_openkinect_freenect2_Device.h">
+      <Filter>Header Files\JNI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\JNILibfreenect2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libfreenect2\include\libfreenect2.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libTurboJpeg\include\turbojpeg.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\hotplug.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\libusb.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\libusbi.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\os\darwin_usb.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\os\linux_usbfs.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\os\poll_posix.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\os\poll_windows.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\os\threads_posix.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\os\threads_windows.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\os\wince_usb.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\os\windows_common.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\os\windows_usb.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\version.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\libusb\include\libusb\version_nano.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\async_packet_processor.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\config.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\data_callback.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\depth_packet_processor.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\depth_packet_stream_parser.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\double_buffer.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\frame_listener.hpp">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\frame_listener_impl.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\libfreenect2.hpp">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\packet_pipeline.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\packet_processor.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\protocol\command.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\protocol\command_transaction.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\protocol\response.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\protocol\usb_control.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\registration.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\resource.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\rgb_packet_processor.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\rgb_packet_stream_parser.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\threading.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\usb\event_loop.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\include\libfreenect2\usb\transfer_pool.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\src\resources.inc.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\libs\protonect\src\tinythread\tinythread.h">
+      <Filter>Header Files\freenect2</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="libJNIlibfreenect2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\org_openkinect_freenect2_Device.cpp">
+      <Filter>Source Files\JNI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\JNILibfreenect2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\double_buffer.cpp">
+      <Filter>Header Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\event_loop.cpp">
+      <Filter>Header Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\registration.cpp">
+      <Filter>Header Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\resource.cpp">
+      <Filter>Header Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\turbo_jpeg_rgb_packet_processor.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\rgb_packet_stream_parser.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\rgb_packet_processor.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\transfer_pool.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\opencl_depth_packet_processor.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\packet_pipeline.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\depth_packet_stream_parser.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\generate_resources.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\depth_packet_processor.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\command_transaction.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\libfreenect2.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\frame_listener_impl.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\usb_control.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\libs\protonect\src\tinythread\tinythread.cpp">
+      <Filter>Source Files\freenect2</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

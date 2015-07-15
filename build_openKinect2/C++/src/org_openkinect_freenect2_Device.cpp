@@ -64,7 +64,7 @@ JNIEXPORT void JNICALL Java_org_openkinect_freenect2_Device_jniOpenSerial(JNIEnv
     env->DeleteLocalRef(cls);
 }
 
-JNIEXPORT int JNICALL Java_org_openkinect_freenect2_Device_jniGetNumDevices(JNIEnv * env, jobject obj)
+JNIEXPORT jint JNICALL Java_org_openkinect_freenect2_Device_jniGetNumDevices(JNIEnv * env, jobject obj)
 {
     jclass cls = env->GetObjectClass(obj);
     jfieldID fid = env->GetFieldID(cls, "ptr", "J");
