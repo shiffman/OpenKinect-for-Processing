@@ -22,7 +22,10 @@ For more, read this [online tutorial](http://shiffman.net/p5/kinect/) or check o
 
 - USB 3.0 Host Controller (NEC Corporation USB 3.0, Intel Chipset)
 - Minimum Mac OS X 10.9
+- Windows 8 64 bit support
 - Kinect v2
  
 #### Kinect v2 additional software
+- For Windows 8, Follow the the [installation of the libusk driver.](https://github.com/OpenKinect/libfreenect2#libusbk-driver)
+  - First install the Kinect v2 Windows SDK then change the USB 3.0 drivers properties to libusbK using Zadig.
 - No longer need to external install  [Turbo Jpeg for Mac](http://sourceforge.net/projects/libjpeg-turbo/). 
