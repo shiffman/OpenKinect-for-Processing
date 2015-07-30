@@ -321,30 +321,41 @@ public class Device {
     /**
      * Enable the depth capture of the Kinect 2
      */
-    public void startDepth(){
+    public void initDepth(){
     	jniEnableDepth(true);
     }
     
     /**
      * Enable the Video capture of the Kinect 2
      */
-    public void startVideo(){
+    public void initVideo(){
     	jniEnableVideo(true);
     }
     
     /**
      * Enable the IR capture of the Kinect 2
      */
-    public void startIR(){
+    public void initIR(){
     	jniEnableIR(true);
     }
-    
     /**
      * Enable the Video + Depth mapping of the Kinect 2
      */
-    public void startRegistered(){
+    public void initRegistered(){
     	jniEnableRegistered(true);
     }
+    
+    
+    /**
+     * Enable all the capture frames of the kinect 2
+     */
+    public void init(){
+    	initDepth();
+    	initVideo();
+    	initIR();
+    	initRegistered();
+    }
+    
      
     //JNI Functions
     private  native long 	jniInit();

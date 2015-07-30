@@ -19,10 +19,10 @@ public class RGBDepthTest2 extends PApplet{
 	public void setup() {
 		kinect2 = new Kinect2(this);
 		// Start all data
-		kinect2.startVideo();
-		kinect2.startDepth();
-		kinect2.startIR();
-		kinect2.startRegistered();
+		kinect2.initVideo();
+		kinect2.initDepth();
+		kinect2.initIR();
+		kinect2.initRegistered();
 		kinect2.start();
 	}
 

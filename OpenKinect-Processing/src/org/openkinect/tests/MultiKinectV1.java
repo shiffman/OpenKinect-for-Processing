@@ -19,8 +19,8 @@ public class MultiKinectV1 extends PApplet{
 	
 	public void setup(){
 		kinect = new Kinect(this);
-		kinect.startVideo();
-		kinect.startDepth();
+		kinect.initVideo();
+		kinect.initDepth();
 	}
 	
 	

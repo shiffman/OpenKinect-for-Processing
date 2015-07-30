@@ -186,7 +186,7 @@ public class Kinect {
 	 */
 	public void toggleDepth() {
 		if (!depthEnabled) {
-			startDepth();
+			initDepth();
 		} else {
 			stopDepth();
 		}
@@ -199,7 +199,7 @@ public class Kinect {
 	 */
 	public void toggleVideo() {
 		if (!videoEnabled) {
-			startVideo();
+			initVideo();
 		} else {
 			stopVideo();
 		}
@@ -209,7 +209,7 @@ public class Kinect {
 	 * Start getting depth from Kinect (available as raw array or mapped to image)
 	 * 
 	 */
-	public void startDepth() {
+	public void initDepth() {
 
 		if (!started) {
 			start();
@@ -240,7 +240,7 @@ public class Kinect {
 	 * Start getting RGB video from Kinect.
 	 * 
 	 */
-	public void startVideo() {
+	public void initVideo() {
 		if (!started) {
 			start();
 		}
@@ -273,7 +273,7 @@ public class Kinect {
 	 * 
 	 * @param deg the angle (in degrees, range 0-30).
 	 */
-	public void tilt(float deg) {
+	public void setTilt(float deg) {
 		if (device != null) {
 			device.setTiltAngle(deg);
 		}
@@ -297,7 +297,7 @@ public class Kinect {
 	 * 
 	 * @param b true to turn it on, false to turn it off
 	 */
-	public void setIR(boolean b) {
+	public void enableIR(boolean b) {
 		// If nothing has changed let's not do anything
 		if (irMode == b) {
 			return;
@@ -312,7 +312,7 @@ public class Kinect {
 			device.setVideoFormat(VideoFormat.RGB);
 		}
 		if  (!videoEnabled) {
-			startVideo();
+			initVideo();
 		}
 	}
 
@@ -321,7 +321,7 @@ public class Kinect {
 	 * 
 	 * @param b true to turn it on, false to turn it off
 	 */	
-	public void setColorDepth(boolean b) {
+	public void enableColorDepth(boolean b) {
 		colorDepthMode = b;
 	}
 

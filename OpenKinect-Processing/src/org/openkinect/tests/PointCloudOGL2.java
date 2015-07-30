@@ -28,8 +28,8 @@ public class PointCloudOGL2 extends PApplet{
 	public void setup() {
 		kinect2 = new Kinect2(this);
 		// Start all data
-		kinect2.startDepth();
-		kinect2.startIR();
+		kinect2.initDepth();
+		kinect2.initIR();
 		kinect2.start();
 		
 		//System.out.println("Working Directory = " + System.getProperty("user.dir"));
