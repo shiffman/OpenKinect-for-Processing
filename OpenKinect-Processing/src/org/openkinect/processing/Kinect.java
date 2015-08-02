@@ -31,6 +31,7 @@ package org.openkinect.processing;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
+import java.nio.IntBuffer;
 
 import org.openkinect.freenect.Context;
 import org.openkinect.freenect.DepthFormat;
@@ -102,6 +103,8 @@ public class Kinect {
 
 		depthImage = p5parent.createImage(width, height, PConstants.RGB);
 		videoImage = p5parent.createImage(width, height, PConstants.RGB);
+		
+		rawDepth = new int[width*height];
 
 		context = Freenect.createContext();
 		if(numDevices() < 1) {
@@ -151,15 +154,6 @@ public class Kinect {
 	 * @return the raw depth values (range: 0 - 2047) as int array
 	 */
 	public int[] getRawDepth() {
-		if (rawDepth == null) {
-			rawDepth = new int[width*height];
-		}
-		// This is inefficent, but I think it's easier for Processing users to have an int array?
-		if (rawDepthBuffer != null) {
-			for (int i = 0; i < rawDepth.length; i++) {
-				rawDepth[i] = rawDepthBuffer.get(i);
-			}
-		}
 		return rawDepth;
 	}
 
@@ -223,7 +217,7 @@ public class Kinect {
 			device.startDepth(new DepthHandler() {
 				public void onFrameReceived(FrameMode mode, ByteBuffer frame, int timestamp) {
 					rawDepthBuffer = frame.asShortBuffer();
-					DepthImage.data(rawDepthBuffer, depthImage, colorDepthMode);
+					DepthImage.data(rawDepthBuffer, depthImage, rawDepth, colorDepthMode);
 					if (depthEventMethod != null) {
 						try {
 							depthEventMethod.invoke(p5parent,  new Object[] { ref } );
