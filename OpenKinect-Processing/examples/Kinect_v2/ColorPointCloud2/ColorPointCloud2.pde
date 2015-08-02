@@ -36,6 +36,7 @@ void setup() {
   kinect2.initDevice();
 
   //start shader
+  //shader usefull to add post-render effects to the point cloud
   sh = loadShader("frag.glsl", "vert.glsl");
   smooth(16);
 }
@@ -62,6 +63,13 @@ void draw() {
 
   //obtain the XYZ camera positions based on the depth data
   FloatBuffer depthPositions = kinect2.getDepthBufferPositions();
+  
+  /*obtain individual positions use depthPositions.get(i)
+  
+  for(int i = 0; i < u < 512 * 424; i++){
+     float val = depthPositions.get(i);
+  }
+  */
 
   //obtain the color information as IntBuffers
   IntBuffer irData = kinect2.getIrColorBuffer();
