@@ -1,4 +1,4 @@
-// Daniel Shiffman
+// Daniel Shiffman and Thomas Sanchez Lengeling
 // Tracking the average location beyond a given depth threshold
 // Thanks to Dan O'Sullivan
 
@@ -9,15 +9,13 @@ import org.openkinect.processing.*;
 
 // The kinect stuff is happening in another class
 KinectTracker tracker;
-Kinect2 kinect2;
+
 
 
 void setup() {
   size(640, 520);
-  kinect2 = new Kinect2(this);
-  kinect2.initDepth();
-  kinect2.initDevice();
-  tracker = new KinectTracker();
+
+  tracker = new KinectTracker(this);
 }
 
 void draw() {
@@ -52,10 +50,10 @@ void keyPressed() {
   int t = tracker.getThreshold();
   if (key == CODED) {
     if (keyCode == UP) {
-      t+=5;
+      t +=5;
       tracker.setThreshold(t);
     } else if (keyCode == DOWN) {
-      t-=5;
+      t -=5;
       tracker.setThreshold(t);
     }
   }

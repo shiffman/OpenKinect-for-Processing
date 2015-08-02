@@ -21,13 +21,20 @@ class KinectTracker {
 
   // What we'll show the user
   PImage display;
-
-  KinectTracker() {
-    // This is an awkard use of a global variable here
-    // But doing it this way for simplicity
-    kinect2.start();
+  
+  //Kinect2 class
+  Kinect2 kinect2;
+  
+  KinectTracker(PApplet pa) {
+    
+    //enable Kinect2
+    kinect2 = new Kinect2(pa);
+    kinect2.initDepth();
+    kinect2.initDevice();
+    
     // Make a blank image
     display = createImage(kinect2.depthWidth, kinect2.depthHeight, RGB);
+    
     // Set up the vectors
     loc = new PVector(0, 0);
     lerpedLoc = new PVector(0, 0);
@@ -47,12 +54,12 @@ class KinectTracker {
     for (int x = 0; x < kinect2.depthWidth; x++) {
       for (int y = 0; y < kinect2.depthHeight; y++) {
         // Mirroring the image
-        int offset = kinect2.depthWidth-x-1 + y*kinect2.depthHeight;
+        int offset = kinect2.depthWidth - x - 1 + y * kinect2.depthWidth;
         // Grabbing the raw depth
         int rawDepth = depth[offset];
 
         // Testing against threshold
-        if (rawDepth < threshold) {
+        if (rawDepth > 0 && rawDepth < threshold) {
           sumX += x;
           sumY += y;
           count++;
@@ -89,11 +96,11 @@ class KinectTracker {
     for (int x = 0; x < kinect2.depthWidth; x++) {
       for (int y = 0; y < kinect2.depthHeight; y++) {
         // mirroring image
-        int offset = kinect2.depthWidth-x-1 + y*kinect2.depthHeight;
+        int offset = (kinect2.depthWidth - x - 1) + y * kinect2.depthWidth;
         // Raw depth
         int rawDepth = depth[offset];
         int pix = x + y*display.width;
-        if (rawDepth < threshold) {
+        if (rawDepth > 0 && rawDepth < threshold) {
           // A red color instead
           display.pixels[pix] = color(150, 50, 50);
         } else {
