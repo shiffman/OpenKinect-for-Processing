@@ -133,8 +133,9 @@ public class Kinect {
 	 * Set the active device
 	 * 
 	 * @param n index of which device to select
+	 * startDevice -> activateDevice
 	 */
-	public void setDevice(int n) {
+	public void activateDevice(int n) {
 		currentDeviceIndex = n;
 	}
  

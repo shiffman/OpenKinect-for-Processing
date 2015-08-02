@@ -1,5 +1,5 @@
 // Thomas Sanchez Lengeling //<>// //<>//
-// Multi Kinect with all features 
+// Multi Kinect with all features
 // Example connecting multiple Kinects v1 on a single Mac
 
 // https://github.com/shiffman/OpenKinect-for-Processing
@@ -35,13 +35,13 @@ void setup() {
   for (int i  = 0; i < numDevices; i++) {
     Kinect tmpKinect = new Kinect(this);
     tmpKinect.setDevice(i);
-    tmpKinect.startDepth();
-    tmpKinect.startVideo();
+    tmpKinect.initDepth();
+    tmpKinect.initVideo();
     tmpKinect.setColorDepth(colorDepth);
 
     multiKinect.add(tmpKinect);
   }
-  
+
 }
 
 
@@ -62,10 +62,10 @@ void draw() {
   text("Device Count: " +numDevices + "  \n" +
     "Current Index: "+deviceIndex, 660, 50, 150, 50);
 
-  text("Press 'd' to enable/disable depth    \n" + 
-    "Press 'r' to enable/disable rgb image   \n" + 
-    "Press 'i' to enable/disable IR image  \n" + 
-    "Press 'c' to enable/disable color depth image \n" + 
+  text("Press 'd' to enable/disable depth    \n" +
+    "Press 'r' to enable/disable rgb image   \n" +
+    "Press 'i' to enable/disable IR image  \n" +
+    "Press 'c' to enable/disable color depth image \n" +
     "UP and DOWN to tilt camera :"+deg+"  \n" +
     "Framerate: " + int(frameRate), 660, 100, 280, 250);
 }

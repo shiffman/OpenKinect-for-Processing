@@ -23,7 +23,7 @@ public class RGBDepthTest2 extends PApplet{
 		kinect2.initDepth();
 		kinect2.initIR();
 		kinect2.initRegistered();
-		kinect2.start();
+		kinect2.initDevice();
 	}
 
 

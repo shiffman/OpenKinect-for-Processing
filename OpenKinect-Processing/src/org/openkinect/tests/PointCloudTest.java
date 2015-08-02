@@ -21,7 +21,7 @@ public class PointCloudTest extends PApplet{
 		// Start all data
 		kinect2.initDepth();
 		kinect2.initIR();
-		kinect2.start();
+		kinect2.initDevice();
 	}
 
 

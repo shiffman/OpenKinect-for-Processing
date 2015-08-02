@@ -23,7 +23,7 @@ public class FrameTest extends PApplet{
 		openKinect2.initVideo();
 		openKinect2.initIR();
 		
-		openKinect2.start();
+		openKinect2.initDevice();
 		
 		background(0);
 	}

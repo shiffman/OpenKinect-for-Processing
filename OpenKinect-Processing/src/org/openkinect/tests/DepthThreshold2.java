@@ -39,7 +39,7 @@ public class DepthThreshold2 extends PApplet{
 	 
 	  kinect2 = new Kinect2(this);
 	  kinect2.initDepth();
-	  kinect2.start();
+	  kinect2.initDevice();
 	
 	  // Blank image
 	  depthImg = new PImage(kinect2.depthWidth, kinect2.depthHeight);

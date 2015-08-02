@@ -26,7 +26,7 @@ void setup() {
   size(1280, 480);
 
   kinect = new Kinect(this);
-  kinect.startDepth();
+  kinect.initDepth();
   angle = kinect.getTilt();
 
   // Blank image

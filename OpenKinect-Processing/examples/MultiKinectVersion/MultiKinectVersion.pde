@@ -16,15 +16,15 @@ void setup() {
 
   //v2
   kinect2 = new Kinect2(this);
-  kinect2.startDepth();
-  kinect2.startVideo();
-  kinect2.startIR();
-  kinect2.start();
+  kinect2.initDepth();
+  kinect2.initVideo();
+  kinect2.initIR();
+  kinect2.initDevice();
 
   //v1
   kinect = new Kinect(this);
-  kinect.startDepth();
-  kinect.startVideo();
+  kinect.initDepth();
+  kinect.initVideo();
   kinect.setColorDepth(false);
 }
 

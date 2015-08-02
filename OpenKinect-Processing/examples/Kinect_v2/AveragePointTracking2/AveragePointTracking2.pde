@@ -15,7 +15,8 @@ Kinect2 kinect2;
 void setup() {
   size(640, 520);
   kinect2 = new Kinect2(this);
-  kinect2.startDepth();
+  kinect2.initDepth();
+  kinect2.initDevice();
   tracker = new KinectTracker();
 }
 
@@ -42,7 +43,7 @@ void draw() {
   // Display some info
   int t = tracker.getThreshold();
   fill(0);
-  text("threshold: " + t + "    " +  "framerate: " + int(frameRate) + "    " + 
+  text("threshold: " + t + "    " +  "framerate: " + int(frameRate) + "    " +
     "UP increase threshold, DOWN decrease threshold", 10, 500);
 }
 

@@ -29,10 +29,10 @@ void setup() {
   size(800, 600, P3D);
 
   kinect2 = new Kinect2(this);
-  kinect2.startDepth();
-  kinect2.start();
-  
-  
+  kinect2.initDepth();
+  kinect2.initDevice();
+
+
 
   //load shaders
   sh = loadShader("frag.glsl", "vert.glsl");
@@ -93,7 +93,7 @@ void draw() {
 
     pgl.disableVertexAttribArray(vertLoc);
 
-    sh.unbind(); 
+    sh.unbind();
     endPGL();
   }
   popMatrix();

@@ -147,7 +147,7 @@ public class Device {
     /**
      * Open and initialize the a default Device
      */
-    public void start(){
+    public void initDevice(){
     	jniOpen();
     	
     }
@@ -156,7 +156,7 @@ public class Device {
      * Open and initialize a specific Device index [0, numDevices - 1]
      * @param index
      */
-    public void start(int index){
+    public void initDevice(int index){
     	jniOpenM(index);
     }
     

@@ -20,7 +20,7 @@ void setup() {
   // Rendering in P3D
   size(800, 600, P3D);
   kinect = new Kinect(this);
-  kinect.startDepth();
+  kinect.initDepth();
 
   // Lookup table for all possible depth values (0 - 2047)
   for (int i = 0; i < depthLookUp.length; i++) {

@@ -17,18 +17,18 @@ void setup() {
   size(1536, 848, P2D);
 
   kinect2a = new Kinect2(this);
-  kinect2a.startDepth();
-  kinect2a.startVideo();
-  kinect2a.startIR();
-  
+  kinect2a.initDepth();
+  kinect2a.initVideo();
+  kinect2a.initIR();
+
   kinect2b = new Kinect2(this);
-  kinect2b.startDepth();
-  kinect2b.startVideo();
-  kinect2b.startIR();
-  
+  kinect2b.initDepth();
+  kinect2b.initVideo();
+  kinect2b.initIR();
+
   //Start tracking each kinect
-  kinect2a.start(0); //index 0
-  kinect2b.start(1); //index 1
+  kinect2a.initDevice(0); //index 0
+  kinect2b.initDevice(1); //index 1
 
   background(0);
 }

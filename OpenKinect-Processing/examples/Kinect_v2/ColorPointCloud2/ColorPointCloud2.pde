@@ -25,15 +25,15 @@ int  colorLoc;
 
 
 void setup() {
-  size(1280, 1020, P3D); 
+  size(1280, 1020, P3D);
 
   kinect2 = new Kinect2(this);
   // Start all data
-  kinect2.startDepth();
-  kinect2.startIR();
-  kinect2.startVideo();
-  kinect2.startRegistered();
-  kinect2.start();
+  kinect2.initDepth();
+  kinect2.initIR();
+  kinect2.initVideo();
+  kinect2.initRegistered();
+  kinect2.initDevice();
 
   //start shader
   sh = loadShader("frag.glsl", "vert.glsl");
@@ -43,7 +43,7 @@ void setup() {
 
 void draw() {
   background(0);
-  
+
   //draw all the Kinect v2 frames
   image(kinect2.getDepthImage(), 0, 0, 320, 240);
   image(kinect2.getIrImage(), 320, 0, 320, 240);
@@ -77,9 +77,9 @@ void draw() {
 
   pgl.enableVertexAttribArray(vertLoc);
   pgl.enableVertexAttribArray(colorLoc);
-  
+
   pgl.vertexAttribPointer(vertLoc, 3, PGL.FLOAT, false, 0, depthPositions);
-  
+
   //change color of the point cloud depending on the depth, ir and color+depth information.
   switch(drawState){
    case 0:
@@ -100,7 +100,7 @@ void draw() {
   pgl.disableVertexAttribArray(vertLoc);
   pgl.disableVertexAttribArray(colorLoc);
 
-  sh.unbind(); 
+  sh.unbind();
   endPGL();
 
   popMatrix();
@@ -111,16 +111,16 @@ void draw() {
 void keyPressed() {
 
   if(key == '1'){
-   drawState = 0; 
+   drawState = 0;
   }
-  
+
   if(key == '2'){
     drawState = 1;
   }
   if(key == '3'){
     drawState = 2;
   }
-  
+
   if (key == 'a') {
     angle += 0.1;
     println("angle "+angle);
