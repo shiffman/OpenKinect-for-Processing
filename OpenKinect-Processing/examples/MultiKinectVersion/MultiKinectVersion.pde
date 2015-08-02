@@ -1,15 +1,18 @@
 /*
 Thomas Sanchez Lengeling
-http://codigogenerativo.com/
-
-How to use multiple Kinect versions in the same sketch.
-https://github.com/shiffman/OpenKinect-for-Processing
-*/
+ http://codigogenerativo.com/
+ 
+ How to use multiple Kinect versions in the same sketch.
+ https://github.com/shiffman/OpenKinect-for-Processing
+ */
 
 import org.openkinect.processing.*;
 
 Kinect kinect;
 Kinect2 kinect2;
+
+float deg;
+
 
 void setup() {
   size(1536, 848);
@@ -25,7 +28,8 @@ void setup() {
   kinect = new Kinect(this);
   kinect.initDepth();
   kinect.initVideo();
-  kinect.setColorDepth(false);
+  kinect.enableColorDepth(false);
+  deg = kinect.getTilt();
 }
 
 
@@ -45,4 +49,21 @@ void draw() {
   //v1 getDepthImage
   image(kinect.getDepthImage(), 0, 424, 512, 424);
   image(kinect.getVideoImage(), 512*2, 424, 512, 424);
+}
+
+
+//with key UP or DOWM tilt the Kinect v1
+void keyPressed() {
+  if (key == CODED) {
+    if (keyCode == UP) {
+      deg++;
+      deg = constrain(deg, 0, 30);
+      kinect.setTilt(deg);
+    } else if (keyCode == DOWN) {
+      deg--;
+      deg = constrain(deg, 0, 30);
+      kinect.setTilt(deg);
+    }
+  }
+  
 }

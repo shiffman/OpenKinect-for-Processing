@@ -34,10 +34,10 @@ void setup() {
   //iterate though all the devices and activate them
   for (int i  = 0; i < numDevices; i++) {
     Kinect tmpKinect = new Kinect(this);
-    tmpKinect.setDevice(i);
+    tmpKinect.activateDevice(i);
     tmpKinect.initDepth();
     tmpKinect.initVideo();
-    tmpKinect.setColorDepth(colorDepth);
+    tmpKinect.enableColorDepth(colorDepth);
 
     multiKinect.add(tmpKinect);
   }

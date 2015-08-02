@@ -65,7 +65,7 @@ void keyPressed() {
       angle--;
     }
     angle = constrain(angle, 0, 30);
-    kinect.tilt(angle);
+    kinect.setTilt(angle);
   } else if (key == 'a') {
     minDepth = constrain(minDepth+10, 0, maxDepth);
   } else if (key == 's') {

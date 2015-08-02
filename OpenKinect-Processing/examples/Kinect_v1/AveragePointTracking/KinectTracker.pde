@@ -25,7 +25,7 @@ class KinectTracker {
   KinectTracker() {
     // This is an awkard use of a global variable here
     // But doing it this way for simplicity
-    kinect.startDepth();
+    kinect.initDepth();
     // Make a blank image
     display = createImage(kinect.width, kinect.height, RGB);
     // Set up the vectors

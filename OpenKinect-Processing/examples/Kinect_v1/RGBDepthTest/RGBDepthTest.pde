@@ -20,7 +20,7 @@ void setup() {
   kinect.initDepth();
   kinect.initVideo();
   //kinect.setIR(ir);
-  kinect.setColorDepth(colorDepth);
+  kinect.enableColorDepth(colorDepth);
 
   deg = kinect.getTilt();
   // kinect.tilt(deg);
@@ -47,10 +47,10 @@ void keyPressed() {
     kinect.toggleVideo();
   } else if (key == 'i') {
     ir = !ir;
-    kinect.setIR(ir);
+    kinect.enableIR(ir);
   } else if (key == 'c') {
     colorDepth = !colorDepth;
-    kinect.setColorDepth(colorDepth);
+    kinect.enableColorDepth(colorDepth);
   } else if (key == CODED) {
     if (keyCode == UP) {
       deg++;
@@ -58,6 +58,6 @@ void keyPressed() {
       deg--;
     }
     deg = constrain(deg, 0, 30);
-    kinect.tilt(deg);
+    kinect.setTilt(deg);
   }
 }
