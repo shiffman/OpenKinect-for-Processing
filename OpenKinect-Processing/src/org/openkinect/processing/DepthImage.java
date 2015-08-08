@@ -22,6 +22,8 @@ class DepthImage {
 					short depth = data.get(offset);
 					img.pixels[offset] = depth2rgb(depth);
 					rawDepth[offset] = depth;
+					
+					//depth to world 
 					PVector depthWorld = depthToWorld(x, y, depthLookUp, depth);
 					depthToWorld[offset*3] =  depthWorld.x;
 					depthToWorld[offset*3 + 1] =  depthWorld.y;
@@ -35,6 +37,12 @@ class DepthImage {
 					short depth = data.get(offset);
 					img.pixels[offset] = depth2intensity(depth);//(int) (depth == 0 || depth > 2047 ? 0 : 255 - (((float)depth / 2047.0f) * 255.0f));}
 					rawDepth[offset] = depth;
+					
+					//depth to world 
+					PVector depthWorld = depthToWorld(x, y, depthLookUp, depth);
+					depthToWorld[offset*3] =  depthWorld.x;
+					depthToWorld[offset*3 + 1] =  depthWorld.y;
+					depthToWorld[offset*3 + 2] =  depthWorld.z;
 				}
 			}
 		}

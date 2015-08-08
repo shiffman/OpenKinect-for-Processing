@@ -244,10 +244,10 @@ public class Device {
      */
     public FloatBuffer  getDepthBufferPositions(){
         float[] pcRawData = jniGetDepthCameraPositions();
-	depthPositions.put(pcRawData, 0, depthWidth * depthHeight * 3);
-	depthPositions.rewind();
+        depthPositions.put(pcRawData, 0, depthWidth * depthHeight * 3);
+        depthPositions.rewind();
 
-	return depthPositions; 
+        return depthPositions; 
     }
     
     /**
