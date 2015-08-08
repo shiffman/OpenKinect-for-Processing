@@ -2,10 +2,17 @@ package org.openkinect.processing;
 
 import java.nio.ShortBuffer;
 import processing.core.PImage;
+import processing.core.PVector;
 
 class DepthImage {
 
-	static void data(ShortBuffer data, PImage img, int [] rawDepth, boolean colorDepth) {
+	//Camera params
+	static double fx_d = 1.0 / 5.9421434211923247e+02;
+	static double fy_d = 1.0 / 5.9104053696870778e+02;
+	static double cx_d = 3.3930780975300314e+02;
+	static double cy_d = 2.4273913761751615e+02;
+	
+	static void data(ShortBuffer data, PImage img, int [] rawDepth, float [] depthLookUp, float [] depthToWorld, boolean colorDepth) {
 		
 		img.loadPixels();
 		if(colorDepth){
@@ -15,6 +22,10 @@ class DepthImage {
 					short depth = data.get(offset);
 					img.pixels[offset] = depth2rgb(depth);
 					rawDepth[offset] = depth;
+					PVector depthWorld = depthToWorld(x, y, depthLookUp, depth);
+					depthToWorld[offset*3] =  depthWorld.x;
+					depthToWorld[offset*3 + 1] =  depthWorld.y;
+					depthToWorld[offset*3 + 2] =  depthWorld.z;
 				}
 			}
 		}else{
@@ -30,6 +41,8 @@ class DepthImage {
 
 		img.updatePixels();
 	}
+	
+	
 
 	static int depth2rgb(short depth) {
 		int r,g,b;
@@ -94,6 +107,15 @@ class DepthImage {
 				| (d & 0xFF) << 0;
 
 		return pixel;
+	}
+	
+	static PVector depthToWorld(int x, int y, float [] depthLookUp, int depthValue) {
+		PVector result = new PVector();
+		double depth =  depthLookUp[depthValue];
+		result.x = (float)((x - cx_d) * depth * fx_d);
+		result.y = (float)((y - cy_d) * depth * fy_d);
+		result.z = (float)(depth);
+		return result;
 	}
 
 }

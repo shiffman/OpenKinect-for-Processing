@@ -31,6 +31,7 @@ package org.openkinect.processing;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
+import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 import org.openkinect.freenect.Context;
@@ -42,9 +43,12 @@ import org.openkinect.freenect.Freenect;
 import org.openkinect.freenect.VideoFormat;
 import org.openkinect.freenect.VideoHandler;
 
+import com.jogamp.common.nio.Buffers;
+
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
+import processing.core.PVector;
 
 public class Kinect {
 
@@ -57,8 +61,12 @@ public class Kinect {
 
 	PImage depthImage;
 	PImage videoImage;
+	
 	ShortBuffer rawDepthBuffer;
-	int[] rawDepth;
+	FloatBuffer rawDepthToWorldBuffer;
+	
+	int [] 		rawDepth;
+	float []  	rawDepthToWorld;
 
 	Context context;
 	Device device;
@@ -68,13 +76,15 @@ public class Kinect {
 
 	boolean irMode = false;
 	boolean colorDepthMode = false;
-
-	boolean depthEnabled = false;
-	boolean videoEnabled = false;
-
+	
 	int currentDeviceIndex = 0;
 
 	boolean started = false;
+	
+	// We'll use a lookup table so that we don't have to repeat the math over and over
+	float[] depthLookUp = new float[2048];
+
+
 
 	
 	/**
@@ -104,8 +114,19 @@ public class Kinect {
 		depthImage = p5parent.createImage(width, height, PConstants.RGB);
 		videoImage = p5parent.createImage(width, height, PConstants.RGB);
 		
-		rawDepth = new int[width*height];
+		rawDepth   = new int[width * height];
+		
+		rawDepthToWorld = new float[width * height * 3];
+		rawDepthToWorldBuffer  = Buffers.newDirectFloatBuffer(width * height * 3);
+        
+	       
 
+		
+		// Lookup table for all possible depth values (0 - 2047)
+		for (int i = 0; i < depthLookUp.length; i++) {
+			depthLookUp[i] = rawDepthToMeters(i);
+		}
+		  
 		context = Freenect.createContext();
 		if(numDevices() < 1) {
 			System.err.println("No Kinect devices found.");
@@ -156,6 +177,14 @@ public class Kinect {
 	public int[] getRawDepth() {
 		return rawDepth;
 	}
+	
+	public FloatBuffer getDephToWorldPositions(){
+		
+		rawDepthToWorldBuffer.put(rawDepthToWorld, 0, width * height * 3);
+		rawDepthToWorldBuffer.rewind();
+    	
+		return rawDepthToWorldBuffer;
+	}
 
 	/**
 	 * Stop getting depth from Kinect.
@@ -190,7 +219,7 @@ public class Kinect {
 			device.startDepth(new DepthHandler() {
 				public void onFrameReceived(FrameMode mode, ByteBuffer frame, int timestamp) {
 					rawDepthBuffer = frame.asShortBuffer();
-					DepthImage.data(rawDepthBuffer, depthImage, rawDepth, colorDepthMode);
+					DepthImage.data(rawDepthBuffer, depthImage, rawDepth, depthLookUp, rawDepthToWorld, colorDepthMode);
 					if (depthEventMethod != null) {
 						try {
 							depthEventMethod.invoke(p5parent,  new Object[] { ref } );
@@ -305,4 +334,15 @@ public class Kinect {
 	public PImage getVideoImage() {
 		return videoImage;
 	}
+	
+	
+	// These functions come from: http://graphics.stanford.edu/~mdfisher/Kinect.html
+	private float rawDepthToMeters(int depthValue) {
+	  if (depthValue < 2047) {
+	    return (float)(1.0 / ((double)(depthValue) * -0.0030711016 + 3.3309495161));
+	  }
+	  return 0.0f;
+	}
+	
+
 }
