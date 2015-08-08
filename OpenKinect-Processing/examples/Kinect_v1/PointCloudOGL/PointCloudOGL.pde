@@ -1,8 +1,9 @@
-// Daniel Shiffman
-// Kinect Point Cloud example
+// Thomas Sanchez Lengeling
+// openGL Point Cloud Example.
 
 // https://github.com/shiffman/OpenKinect-for-Processing
-// http://shiffman.net/p5/kinect/
+
+
 import java.nio.*;
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;

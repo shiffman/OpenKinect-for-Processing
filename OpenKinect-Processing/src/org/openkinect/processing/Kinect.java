@@ -58,6 +58,7 @@ public class Kinect {
 	Method videoEventMethod;
 
 	boolean irEnabled = false;
+	boolean videoEnabled = false;
 
 	PImage depthImage;
 	PImage videoImage;
@@ -119,8 +120,6 @@ public class Kinect {
 		rawDepthToWorld = new float[width * height * 3];
 		rawDepthToWorldBuffer  = Buffers.newDirectFloatBuffer(width * height * 3);
         
-	       
-
 		
 		// Lookup table for all possible depth values (0 - 2047)
 		for (int i = 0; i < depthLookUp.length; i++) {
@@ -166,7 +165,7 @@ public class Kinect {
 	// Called internally
 	private void start() {
 		started = true;
-		device = context.openDevice(currentDeviceIndex);		
+		device = context.openDevice(currentDeviceIndex);
 	}
 
 	/**
@@ -200,6 +199,7 @@ public class Kinect {
 	 */
 	public void stopVideo() {
 		device.stopVideo();
+		videoEnabled = false;
 	}
 
 
@@ -241,14 +241,14 @@ public class Kinect {
 		if (!started) {
 			start();
 		}
-		if (device != null) {
+		if (device != null && !videoEnabled) {
+			videoEnabled = true;
 			final Kinect ref = this;
 			if (irMode) {
 				device.setVideoFormat(VideoFormat.IR_8BIT);
 			} else {
 				device.setVideoFormat(VideoFormat.RGB);
 			}
-
 			device.startVideo(new VideoHandler() {
 				public void onFrameReceived(FrameMode mode, ByteBuffer frame, int timestamp) {
 					RGBImage.data(frame, videoImage, irMode);
@@ -298,13 +298,23 @@ public class Kinect {
 		if (irMode == b) {
 			return;
 		}
+		
 		irMode = b;
+		
+		if (videoEnabled) {
+			stopVideo();
+		}
+		
 		
 		if (irMode) {
 			device.setVideoFormat(VideoFormat.IR_8BIT);
 		} else {
 			device.setVideoFormat(VideoFormat.RGB);
 		}
+		if  (!videoEnabled) {
+			initVideo();
+		}
+		
 		
 	}
 

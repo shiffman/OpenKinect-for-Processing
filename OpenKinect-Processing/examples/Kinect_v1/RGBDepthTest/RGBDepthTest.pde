@@ -19,7 +19,7 @@ void setup() {
   kinect = new Kinect(this);
   kinect.initDepth();
   kinect.initVideo();
-  //kinect.setIR(ir);
+  //kinect.enableIR(ir);
   kinect.enableColorDepth(colorDepth);
 
   deg = kinect.getTilt();
@@ -32,20 +32,15 @@ void draw() {
   image(kinect.getVideoImage(), 0, 0);
   image(kinect.getDepthImage(), 640, 0);
   fill(255);
-  text("Press 'd' to enable/disable depth    " +
-    "Press 'r' to enable/disable rgb image   " +
-    "Press 'i' to enable/disable IR image  " +
-    "Press 'c' to enable/disable color depth image  " +
+  text(
+    "Press 'i' to enable/disable between video image and IR image  " +
+    "Press 'c' to enable/disable between color depth and gray scale depth  " +
     "UP and DOWN to tilt camera   " +
     "Framerate: " + int(frameRate), 10, 515);
 }
 
 void keyPressed() {
-  if (key == 'd') {
-    kinect.toggleDepth();
-  } else if (key == 'r') {
-    kinect.toggleVideo();
-  } else if (key == 'i') {
+  if (key == 'i') {
     ir = !ir;
     kinect.enableIR(ir);
   } else if (key == 'c') {

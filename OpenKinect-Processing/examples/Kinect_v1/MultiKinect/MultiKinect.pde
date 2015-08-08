@@ -62,11 +62,10 @@ void draw() {
   text("Device Count: " +numDevices + "  \n" +
     "Current Index: "+deviceIndex, 660, 50, 150, 50);
 
-  text("Press 'd' to enable/disable depth    \n" +
-    "Press 'r' to enable/disable rgb image   \n" +
-    "Press 'i' to enable/disable IR image  \n" +
-    "Press 'c' to enable/disable color depth image \n" +
-    "UP and DOWN to tilt camera :"+deg+"  \n" +
+  text(
+    "Press 'i' to enable/disable between video image and IR image  \n" +
+    "Press 'c' to enable/disable between color depth and gray scale depth \n" +
+    "UP and DOWN to tilt camera : "+deg+"  \n" +
     "Framerate: " + int(frameRate), 660, 100, 280, 250);
 }
 
@@ -86,16 +85,12 @@ void keyPressed() {
   }
 
 
-  if (key == 'd') {
-    multiKinect.get(deviceIndex).toggleDepth();
-  } else if (key == 'r') {
-    multiKinect.get(deviceIndex).toggleVideo();
-  } else if (key == 'i') {
+  if (key == 'i') {
     ir = !ir;
-    multiKinect.get(deviceIndex).setIR(ir);
+    multiKinect.get(deviceIndex).enableIR(ir);
   } else if (key == 'c') {
     colorDepth = !colorDepth;
-      multiKinect.get(deviceIndex).setColorDepth(colorDepth);
+      multiKinect.get(deviceIndex).enableColorDepth(colorDepth);
   } else if (key == CODED) {
     if (keyCode == UP) {
       deg++;
@@ -103,6 +98,6 @@ void keyPressed() {
       deg--;
     }
     deg = constrain(deg, 0, 30);
-    multiKinect.get(deviceIndex).tilt(deg);
+    multiKinect.get(deviceIndex).setTilt(deg);
   }
 }
