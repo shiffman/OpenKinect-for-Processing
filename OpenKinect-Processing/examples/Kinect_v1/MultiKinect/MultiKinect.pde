@@ -3,6 +3,7 @@
 // Example connecting multiple Kinects v1 on a single Mac
 
 // https://github.com/shiffman/OpenKinect-for-Processing
+// http://shiffman.net/p5/kinect/
 
 import org.openkinect.freenect.*;
 import org.openkinect.processing.*;

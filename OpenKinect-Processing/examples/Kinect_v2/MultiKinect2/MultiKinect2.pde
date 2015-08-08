@@ -3,9 +3,10 @@ Thomas Sanchez Lengeling
 http://codigogenerativo.com/
 
 How to use multiple Kinects v2 in the same sketch.
-Should work up n number of Kinects connected to the USB 3.0 port.
+Should work up n number of Kinects v2 connected to the USB 3.0 port.
 
 https://github.com/shiffman/OpenKinect-for-Processing
+http://shiffman.net/p5/kinect/
 */
 
 import org.openkinect.processing.*;

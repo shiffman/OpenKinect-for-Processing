@@ -2,6 +2,7 @@
 // Kinect 3d Point Cloud example with different color types.
 
 // https://github.com/shiffman/OpenKinect-for-Processing
+// http://shiffman.net/p5/kinect/
 
 import java.nio.*;
 import org.openkinect.processing.Kinect2;

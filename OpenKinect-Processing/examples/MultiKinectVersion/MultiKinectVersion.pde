@@ -1,10 +1,10 @@
-/*
-Thomas Sanchez Lengeling
- http://codigogenerativo.com/
- 
- How to use multiple Kinect versions in the same sketch.
- https://github.com/shiffman/OpenKinect-for-Processing
- */
+
+//Thomas Sanchez Lengeling
+//http://codigogenerativo.com/
+
+//Multiple Kinect versions on a single sketch.
+//https://github.com/shiffman/OpenKinect-for-Processing
+//http://shiffman.net/p5/kinect/
 
 import org.openkinect.processing.*;
 
