@@ -6,21 +6,28 @@ import processing.core.PImage;
 class DepthImage {
 
 	static void data(ShortBuffer data, PImage img, int [] rawDepth, boolean colorDepth) {
+		
 		img.loadPixels();
-		for(int y = 0; y < img.height; y++) {
-			for(int x = 0; x < img.width; x++) {
-				int offset = x+y*img.width;
-				short depth = data.get(offset);
-				// Maybe should be improved?
-				if (colorDepth) {
+		if(colorDepth){
+			for(int y = 0; y < img.height; y++) {
+				for(int x = 0; x < img.width; x++) {
+					int offset = x + y*img.width;
+					short depth = data.get(offset);
 					img.pixels[offset] = depth2rgb(depth);
 					rawDepth[offset] = depth;
-				} else {
+				}
+			}
+		}else{
+			for(int y = 0; y < img.height; y++) {
+				for(int x = 0; x < img.width; x++) {
+					int offset = x + y*img.width;
+					short depth = data.get(offset);
 					img.pixels[offset] = depth2intensity(depth);//(int) (depth == 0 || depth > 2047 ? 0 : 255 - (((float)depth / 2047.0f) * 255.0f));}
 					rawDepth[offset] = depth;
 				}
 			}
 		}
+
 		img.updatePixels();
 	}
 
