@@ -143,7 +143,7 @@ public class Kinect {
 	}
  
 	// Called internally
-	void start() {
+	private void start() {
 		started = true;
 		device = context.openDevice(currentDeviceIndex);		
 	}
@@ -163,7 +163,6 @@ public class Kinect {
 	 */
 	public void stopDepth() {
 		device.stopDepth();
-		depthEnabled = false;
 	}
 
 	/**
@@ -172,7 +171,6 @@ public class Kinect {
 	 */
 	public void stopVideo() {
 		device.stopVideo();
-		videoEnabled = false;
 	}
 
 
@@ -186,8 +184,7 @@ public class Kinect {
 			start();
 		}
 
-		if (device != null  && !depthEnabled) {
-			depthEnabled = true;
+		if (device != null) {
 			device.setDepthFormat(DepthFormat.D11BIT);
 			final Kinect ref = this;
 			device.startDepth(new DepthHandler() {
@@ -215,8 +212,7 @@ public class Kinect {
 		if (!started) {
 			start();
 		}
-		if (device != null && !videoEnabled) {
-			videoEnabled = true;
+		if (device != null) {
 			final Kinect ref = this;
 			if (irMode) {
 				device.setVideoFormat(VideoFormat.IR_8BIT);
@@ -274,17 +270,13 @@ public class Kinect {
 			return;
 		}
 		irMode = b;
-		if (videoEnabled) {
-			stopVideo();
-		}
+		
 		if (irMode) {
 			device.setVideoFormat(VideoFormat.IR_8BIT);
 		} else {
 			device.setVideoFormat(VideoFormat.RGB);
 		}
-		if  (!videoEnabled) {
-			initVideo();
-		}
+		
 	}
 
 	/**
