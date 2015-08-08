@@ -175,30 +175,6 @@ public class Kinect {
 		videoEnabled = false;
 	}
 
-	/**
-	 * Toggle depth (start or stop depending on whether it's active or not.)
-	 * 
-	 */
-	public void toggleDepth() {
-		if (!depthEnabled) {
-			initDepth();
-		} else {
-			stopDepth();
-		}
-	}
-
-
-	/**
-	 * Toggle RGB video (start or stop depending on whether it's active or not.)
-	 * 
-	 */
-	public void toggleVideo() {
-		if (!videoEnabled) {
-			initVideo();
-		} else {
-			stopVideo();
-		}
-	}
 
 	/**
 	 * Start getting depth from Kinect (available as raw array or mapped to image)
