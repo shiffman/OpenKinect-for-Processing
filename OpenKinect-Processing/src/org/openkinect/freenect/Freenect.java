@@ -43,22 +43,38 @@ public class Freenect implements Library {
 	static int FREENECT_DEVICE_CAMERA = 0x02;
 	
 	static {
-		try {
+		
+		int arch = Integer.parseInt(System.getProperty("sun.arch.data.model"));
+		String osName = System.getProperty("os.name").toLowerCase();
+		
+		if(osName.indexOf("win") >= 0) {
+			System.out.println(arch + " windows");
+			System.loadLibrary("v1/msvc/pthreadVC2");
+			System.loadLibrary("v1/msvc/libusb-1.0");
+			System.loadLibrary("v1/msvc/freenect");
 			
-			// Added by Daniel Shiffman
-			// For loading libfreenect.dylib
-			LibraryPath libPath = new LibraryPath();
-		    String path = libPath.get();  
-		    // When testing from Eclipse
-		    // path = "lib";
-		    // System.out.println("Found path: " + path);
-		    
-			NativeLibrary.addSearchPath("freenect", path);
 			NativeLibrary instance = NativeLibrary.getInstance("freenect");
-			System.err.println("Loaded " + instance.getName() + " from " + instance.getFile().getCanonicalPath());
+			//System.err.println("Loaded " + instance.getName() + " from " + instance.getFile().getCanonicalPath());
 			Native.register(instance);
-		} catch (IOException e) {
-			throw new AssertionError(e);
+		}
+		if(osName.indexOf("mac") >= 0){
+			try {
+				
+				// Added by Daniel Shiffman
+				// For loading libfreenect.dylib
+				LibraryPath libPath = new LibraryPath();
+			    String path = libPath.get();  
+			    // When testing from Eclipse
+			    // path = "lib";
+			    // System.out.println("Found path: " + path);
+			    
+				NativeLibrary.addSearchPath("v1/mac/freenect", path);
+				NativeLibrary instance = NativeLibrary.getInstance("freenect");
+				System.err.println("Loaded " + instance.getName() + " from " + instance.getFile().getCanonicalPath());
+				Native.register(instance);
+			} catch (IOException e) {
+				throw new AssertionError(e);
+			}
 		}
 	}
 
