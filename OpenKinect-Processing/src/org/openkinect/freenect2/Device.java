@@ -8,6 +8,8 @@ import processing.opengl.PShader;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
+import org.openkinect.processing.LibraryPath;
+
 import com.jogamp.common.nio.Buffers;
 /*
 openKinect2 library for Processing
@@ -54,8 +56,17 @@ public class Device {
 			System.loadLibrary("v2/msvc/libJNILibfreenect2");
 		}else if(osName.indexOf("mac") >= 0){
 			System.out.println(arch + " mac");
-			System.loadLibrary("v2/mac/turbojpeg");
-			System.loadLibrary("v2/mac/JNILibfreenect2");
+			System.setProperty("java.library.path", System.getProperty("java.library.path")+"/v2/mac" );
+			System.out.println(System.getProperty("java.library.path"));
+			
+			LibraryPath libPath = new LibraryPath();
+		    String path = libPath.get()+"v2/mac/"; //System.getProperty("java.library.path")+
+		    // When testing from Eclipse
+		    // path = "lib";
+		    System.out.println("Found path: " + path);
+			
+			System.load(path+"libturbojpeg.dylib");
+			System.load(path+"libJNILibfreenect2.dylib");
 		}else{
 			System.err.println("not compatible with the current OS or is a 32 bit system");
 		}

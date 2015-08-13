@@ -59,16 +59,17 @@ public class Freenect implements Library {
 		}
 		else if(osName.indexOf("mac") >= 0){
 			try {
-				
 				// Added by Daniel Shiffman
 				// For loading libfreenect.dylib
 				LibraryPath libPath = new LibraryPath();
-			    String path = libPath.get();  
+			    String path = libPath.get()+"v1/mac/";
 			    // When testing from Eclipse
 			    // path = "lib";
-			    // System.out.println("Found path: " + path);
+			    System.out.println("Found path: " + path);
 			    
-				NativeLibrary.addSearchPath("v1/mac/freenect", path);
+				NativeLibrary.addSearchPath("freenect", path);
+				
+			    System.load(path+"libusb-1.0.0.dylib");
 				NativeLibrary instance = NativeLibrary.getInstance("freenect");
 				System.err.println("Loaded " + instance.getName() + " from " + instance.getFile().getCanonicalPath());
 				Native.register(instance);
