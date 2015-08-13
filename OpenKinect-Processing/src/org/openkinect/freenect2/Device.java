@@ -49,15 +49,15 @@ public class Device {
 		
 		if(osName.indexOf("win") >= 0) {
 			System.out.println(arch + " windows");
-			System.loadLibrary("msvc/turbojpeg");
-			System.loadLibrary("msvc/libusb-1.0");
-			System.loadLibrary("msvc/libJNILibfreenect2");
+			System.loadLibrary("v2/msvc/turbojpeg");
+			System.loadLibrary("v2/msvc/libusb-1.0");
+			System.loadLibrary("v2/msvc/libJNILibfreenect2");
 		}else if(osName.indexOf("mac") >= 0){
 			System.out.println(arch + " mac");
-			System.loadLibrary("turbojpeg");
-			System.loadLibrary("JNILibfreenect2");
+			System.loadLibrary("v2/mac/turbojpeg");
+			System.loadLibrary("v2/mac/JNILibfreenect2");
 		}else{
-			System.out.println("not compatible with 32bits");
+			System.err.println("not compatible with the current OS or is a 32 bit system");
 		}
     }
     

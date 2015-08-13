@@ -57,7 +57,7 @@ public class Freenect implements Library {
 			//System.err.println("Loaded " + instance.getName() + " from " + instance.getFile().getCanonicalPath());
 			Native.register(instance);
 		}
-		if(osName.indexOf("mac") >= 0){
+		else if(osName.indexOf("mac") >= 0){
 			try {
 				
 				// Added by Daniel Shiffman
@@ -75,6 +75,8 @@ public class Freenect implements Library {
 			} catch (IOException e) {
 				throw new AssertionError(e);
 			}
+		}else{
+			System.err.println("not compatible with the current OS or is a 32 bit system");
 		}
 	}
 
