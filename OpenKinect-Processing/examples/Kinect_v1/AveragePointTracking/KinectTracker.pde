@@ -26,6 +26,7 @@ class KinectTracker {
     // This is an awkard use of a global variable here
     // But doing it this way for simplicity
     kinect.initDepth();
+    kinect.enableMirror(true);
     // Make a blank image
     display = createImage(kinect.width, kinect.height, RGB);
     // Set up the vectors
@@ -46,8 +47,8 @@ class KinectTracker {
 
     for (int x = 0; x < kinect.width; x++) {
       for (int y = 0; y < kinect.height; y++) {
-        // Mirroring the image
-        int offset = kinect.width-x-1 + y*kinect.width;
+        
+        int offset =  x + y*kinect.width;
         // Grabbing the raw depth
         int rawDepth = depth[offset];
 
@@ -88,11 +89,11 @@ class KinectTracker {
     display.loadPixels();
     for (int x = 0; x < kinect.width; x++) {
       for (int y = 0; y < kinect.height; y++) {
-        // mirroring image
-        int offset = kinect.width-x-1 + y*kinect.width;
+
+        int offset = x + y * kinect.width;
         // Raw depth
         int rawDepth = depth[offset];
-        int pix = x + y*display.width;
+        int pix = x + y * display.width;
         if (rawDepth < threshold) {
           // A red color instead
           display.pixels[pix] = color(150, 50, 50);
