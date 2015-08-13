@@ -59,6 +59,8 @@ public class Kinect {
 
 	boolean irEnabled = false;
 	boolean videoEnabled = false;
+	
+	boolean mirrorMode  = false;
 
 	PImage depthImage;
 	PImage videoImage;
@@ -219,7 +221,7 @@ public class Kinect {
 			device.startDepth(new DepthHandler() {
 				public void onFrameReceived(FrameMode mode, ByteBuffer frame, int timestamp) {
 					rawDepthBuffer = frame.asShortBuffer();
-					DepthImage.data(rawDepthBuffer, depthImage, rawDepth, depthLookUp, rawDepthToWorld, colorDepthMode);
+					DepthImage.data(rawDepthBuffer, depthImage, rawDepth, depthLookUp, rawDepthToWorld, colorDepthMode, mirrorMode);
 					if (depthEventMethod != null) {
 						try {
 							depthEventMethod.invoke(p5parent,  new Object[] { ref } );
@@ -251,7 +253,7 @@ public class Kinect {
 			}
 			device.startVideo(new VideoHandler() {
 				public void onFrameReceived(FrameMode mode, ByteBuffer frame, int timestamp) {
-					RGBImage.data(frame, videoImage, irMode);
+					RGBImage.data(frame, videoImage, irMode, mirrorMode);
 					if (videoEventMethod != null) {
 						try {
 							videoEventMethod.invoke(p5parent,  new Object[] { ref } );
@@ -286,6 +288,14 @@ public class Kinect {
 		} else {
 			return 0;
 		}
+	}
+	
+	/**
+	 * Enable mirror mode for all frames
+	 * @param boolean mirror
+	 */
+	public void enableMirror(boolean mirror){
+		mirrorMode = mirror;
 	}
 
 	/**

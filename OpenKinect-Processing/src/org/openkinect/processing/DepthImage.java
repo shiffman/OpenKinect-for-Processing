@@ -12,37 +12,73 @@ class DepthImage {
 	static double cx_d = 3.3930780975300314e+02;
 	static double cy_d = 2.4273913761751615e+02;
 	
-	static void data(ShortBuffer data, PImage img, int [] rawDepth, float [] depthLookUp, float [] depthToWorld, boolean colorDepth) {
+	static void data(ShortBuffer data, PImage img, int [] rawDepth, float [] depthLookUp, float [] depthToWorld, boolean colorDepth, boolean mirrorMode) {
 		
 		img.loadPixels();
-		if(colorDepth){
-			for(int y = 0; y < img.height; y++) {
-				for(int x = 0; x < img.width; x++) {
-					int offset = x + y*img.width;
-					short depth = data.get(offset);
-					img.pixels[offset] = depth2rgb(depth);
-					rawDepth[offset] = depth;
-					
-					//depth to world 
-					PVector depthWorld = depthToWorld(x, y, depthLookUp, depth);
-					depthToWorld[offset*3] =  depthWorld.x;
-					depthToWorld[offset*3 + 1] =  depthWorld.y;
-					depthToWorld[offset*3 + 2] =  depthWorld.z;
+		if(mirrorMode){ //mirror mode enable
+			if(colorDepth){
+				for(int y = 0; y < img.height; y++) {
+					for(int x = 0; x < img.width; x++) {
+						int offsetMirror = img.width - x - 1 + y * img.width;
+						int offset = x + y*img.width;
+						short depth = data.get(offsetMirror);
+						img.pixels[offset] = depth2rgb(depth);
+						rawDepth[offset] = depth;
+						
+						//depth to world 
+						PVector depthWorld = depthToWorld(x, y, depthLookUp, depth);
+						depthToWorld[offset*3] =  depthWorld.x;
+						depthToWorld[offset*3 + 1] =  depthWorld.y;
+						depthToWorld[offset*3 + 2] =  depthWorld.z;
+					}
+				}
+			}else{
+				for(int y = 0; y < img.height; y++) {
+					for(int x = 0; x < img.width; x++) {
+						int offsetMirror = img.width - x - 1 + y * img.width;
+						int offset = x + y*img.width;
+						short depth = data.get(offsetMirror);
+						img.pixels[offset] = depth2intensity(depth);//(int) (depth == 0 || depth > 2047 ? 0 : 255 - (((float)depth / 2047.0f) * 255.0f));}
+						rawDepth[offset] = depth;
+						
+						//depth to world 
+						PVector depthWorld = depthToWorld(x, y, depthLookUp, depth);
+						depthToWorld[offset*3] =  depthWorld.x;
+						depthToWorld[offset*3 + 1] =  depthWorld.y;
+						depthToWorld[offset*3 + 2] =  depthWorld.z;
+					}
 				}
 			}
-		}else{
-			for(int y = 0; y < img.height; y++) {
-				for(int x = 0; x < img.width; x++) {
-					int offset = x + y*img.width;
-					short depth = data.get(offset);
-					img.pixels[offset] = depth2intensity(depth);//(int) (depth == 0 || depth > 2047 ? 0 : 255 - (((float)depth / 2047.0f) * 255.0f));}
-					rawDepth[offset] = depth;
-					
-					//depth to world 
-					PVector depthWorld = depthToWorld(x, y, depthLookUp, depth);
-					depthToWorld[offset*3] =  depthWorld.x;
-					depthToWorld[offset*3 + 1] =  depthWorld.y;
-					depthToWorld[offset*3 + 2] =  depthWorld.z;
+		}else{ //no mirror mode
+			if(colorDepth){
+				for(int y = 0; y < img.height; y++) {
+					for(int x = 0; x < img.width; x++) {
+						int offset = x + y*img.width;
+						short depth = data.get(offset);
+						img.pixels[offset] = depth2rgb(depth);
+						rawDepth[offset] = depth;
+						
+						//depth to world 
+						PVector depthWorld = depthToWorld(x, y, depthLookUp, depth);
+						depthToWorld[offset*3] =  depthWorld.x;
+						depthToWorld[offset*3 + 1] =  depthWorld.y;
+						depthToWorld[offset*3 + 2] =  depthWorld.z;
+					}
+				}
+			}else{
+				for(int y = 0; y < img.height; y++) {
+					for(int x = 0; x < img.width; x++) {
+						int offset = x + y*img.width;
+						short depth = data.get(offset);
+						img.pixels[offset] = depth2intensity(depth);//(int) (depth == 0 || depth > 2047 ? 0 : 255 - (((float)depth / 2047.0f) * 255.0f));}
+						rawDepth[offset] = depth;
+						
+						//depth to world 
+						PVector depthWorld = depthToWorld(x, y, depthLookUp, depth);
+						depthToWorld[offset*3] =  depthWorld.x;
+						depthToWorld[offset*3 + 1] =  depthWorld.y;
+						depthToWorld[offset*3 + 2] =  depthWorld.z;
+					}
 				}
 			}
 		}

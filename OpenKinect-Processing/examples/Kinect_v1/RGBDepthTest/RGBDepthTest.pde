@@ -13,6 +13,7 @@ float deg;
 
 boolean ir = false;
 boolean colorDepth = false;
+boolean mirror = false;
 
 void setup() {
   size(1280, 520);
@@ -33,8 +34,9 @@ void draw() {
   image(kinect.getDepthImage(), 640, 0);
   fill(255);
   text(
-    "Press 'i' to enable/disable between video image and IR image  " +
-    "Press 'c' to enable/disable between color depth and gray scale depth  " +
+    "Press 'i' to enable/disable between video image and IR image,  " +
+    "Press 'c' to enable/disable between color depth and gray scale depth,  " +
+    "Press 'm' to enable/diable mirror mode, "+
     "UP and DOWN to tilt camera   " +
     "Framerate: " + int(frameRate), 10, 515);
 }
@@ -46,6 +48,9 @@ void keyPressed() {
   } else if (key == 'c') {
     colorDepth = !colorDepth;
     kinect.enableColorDepth(colorDepth);
+  }else if(key == 'm'){
+    mirror = !mirror;
+    kinect.enableMirror(mirror);
   } else if (key == CODED) {
     if (keyCode == UP) {
       deg++;
