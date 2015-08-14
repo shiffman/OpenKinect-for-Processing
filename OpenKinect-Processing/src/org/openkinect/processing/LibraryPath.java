@@ -23,7 +23,10 @@
 
 package org.openkinect.processing;
 
+import java.io.File;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.CodeSource;
 
 import com.sun.jna.Platform;
 
@@ -32,6 +35,7 @@ public class LibraryPath {
   // is located.
   public String get() {
     URL url = this.getClass().getResource("LibraryPath.class");
+        
     if (url != null) {
       // Convert URL to string, taking care of spaces represented by the "%20"
       // string.
@@ -41,7 +45,7 @@ public class LibraryPath {
       int n1 = -1;
 
       if (Platform.isLinux()) {
-        return "";
+       return "";
       } else {
         n1 = path.indexOf("openkinect_processing.jar");
         if (Platform.isWindows()) {
@@ -59,4 +63,18 @@ public class LibraryPath {
     }
     return "";
   }
+  
+  public String getDir(){
+	    CodeSource codeSource = LibraryPath.class.getProtectionDomain().getCodeSource();
+	     String jarDir = "";
+		try {
+			File jarFile = new File(codeSource.getLocation().toURI().getPath());
+			jarDir = jarFile.getParentFile().getPath();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return jarDir;
+  }
+  
 }
