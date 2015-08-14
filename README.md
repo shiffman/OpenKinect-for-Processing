@@ -17,7 +17,7 @@ For more, read this [online tutorial](http://shiffman.net/p5/kinect/) or check o
 ## Kinect v1 Requirements
 - Kinect v1 (supported versions??)
 - Kinect v1 power adapter
-- 
+
 ####  Linux
 
 Requirements?
