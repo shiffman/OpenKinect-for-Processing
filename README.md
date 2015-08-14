@@ -18,12 +18,12 @@ For more, read this [online tutorial](http://shiffman.net/p5/kinect/) or check o
 - Kinect v1 (supported versions??)
 - Kinect v1 power adapter
 - 
-#### Kinect v1 for Linux
+####  Linux
 
 Requirements?
-sudo apt-get libusb-1.0-0 libusb-1.0-0-dev
+```sudo apt-get libusb-1.0-0 libusb-1.0-0-dev```
 
-#### Kinect v1 for windows.
+#### Windows.
 
  - Use [Zadig](http://zadig.akeo.ie/) to install the libusbK driver for each device you wish to use. This includes installing the libusbK for all the kinect v1 drivers listed on Zadig GUI.
 
