@@ -17,6 +17,11 @@ For more, read this [online tutorial](http://shiffman.net/p5/kinect/) or check o
 ## Kinect v1 Requirements
 - Kinect v1 (supported versions??)
 - Kinect v1 power adapter
+- 
+#### Kinect v1 for Linux
+
+Requirements?
+sudo apt-get libusb-1.0-0 libusb-1.0-0-dev
 
 #### Kinect v1 for windows.
 
