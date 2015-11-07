@@ -82,6 +82,10 @@ public class Freenect implements Library {
 				LibraryPath libPath = new LibraryPath();
 
 			    String dirPath = libPath.getDir()+"/v1/linux/";
+                            // GH: added for compatibility with ARM systems
+                            if ("arm".equals(System.getProperty("os.arch"))) {
+                                dirPath = libPath.getDir()+"/v1/linux-armv6hf/";
+                            }
 			    System.out.println("Found path: " + dirPath);
 			    
 				NativeLibrary.addSearchPath("freenect", dirPath);
