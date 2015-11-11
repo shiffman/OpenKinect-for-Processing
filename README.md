@@ -15,7 +15,7 @@ For more, read this [online tutorial](http://shiffman.net/p5/kinect/) or check o
 ####  Linux
 
 Requirements?
-```sudo apt-get libusb-1.0-0 libusb-1.0-0-dev```
+```sudo apt-get install libusb-1.0-0 libusb-1.0-0-dev```
 
 #### Windows.
 
