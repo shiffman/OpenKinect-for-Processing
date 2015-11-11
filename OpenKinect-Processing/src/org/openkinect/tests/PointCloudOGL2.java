@@ -61,7 +61,9 @@ public class PointCloudOGL2 extends PApplet{
 		int vertData = kinect2.depthWidth * kinect2.depthHeight;
 
 		  //pgl.vertexAttribPointer(vertLoc, 3, PGL.FLOAT, false, 3 * (Float.SIZE/8), pointCloudBuffer);
-		pgl.vertexAttribPointer(vertLoc, 3, PGL.FLOAT, false, 0, depthPositions);
+		// FIXME: Processing 3 switched to using an offset as the last parameter
+		// "error: incompatible types: FloatBuffer cannot be converted to int"
+		//pgl.vertexAttribPointer(vertLoc, 3, PGL.FLOAT, false, 0, depthPositions);
 		pgl.drawArrays(PGL.POINTS, 0, vertData);
 
 		pgl.disableVertexAttribArray(vertLoc);
