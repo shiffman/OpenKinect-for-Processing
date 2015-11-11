@@ -6,6 +6,6 @@ attribute vec4 color;
 varying vec4 vertColor;
 
 void main() {
-  gl_Position = transform * vertex;    
+  gl_Position = transform * vertex;
   vertColor = color;
 }
