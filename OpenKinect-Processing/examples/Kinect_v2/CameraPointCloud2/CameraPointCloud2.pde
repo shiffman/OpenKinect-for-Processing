@@ -65,7 +65,7 @@ void draw() {
   //rotationRads += 0.0015f;
 }
 
-//dra camera Frustum
+//draw camera frustum
 void drawFrustum(){
 
 }

@@ -5,11 +5,7 @@ precision mediump int;
 
 varying vec4 vertColor;
 
-//input color
-uniform vec4 fragColor;
-
 void main() {
-
-  //outputColor
-  gl_FragColor = fragColor;
+  //color image int BGRA Color format
+  gl_FragColor = vec4(1, 1, 1, 1);
 }
