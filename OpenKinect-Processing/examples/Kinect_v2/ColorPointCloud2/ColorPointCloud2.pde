@@ -118,26 +118,26 @@ void draw() {
   case 0:
     pgl.bindBuffer(PGL.ARRAY_BUFFER, colorVboId);
     // fill VBO with data
-    pgl.bufferData(PGL.ARRAY_BUFFER, Integer.BYTES * vertData * 3, depthData, PGL.DYNAMIC_DRAW);
+    pgl.bufferData(PGL.ARRAY_BUFFER,  Integer.BYTES * vertData, depthData, PGL.DYNAMIC_DRAW);
     // associate currently bound VBO with shader attribute
-    pgl.vertexAttribPointer(colorLoc, 4, PGL.UNSIGNED_BYTE, false, Byte.SIZE, 0);
+    pgl.vertexAttribPointer(colorLoc, 4, PGL.UNSIGNED_BYTE, false, Byte.BYTES, 0);
     break;
   case 1:
     pgl.bindBuffer(PGL.ARRAY_BUFFER, colorVboId);
     // fill VBO with data
-    pgl.bufferData(PGL.ARRAY_BUFFER,  Integer.SIZE * vertData, irData, PGL.DYNAMIC_DRAW);
+    pgl.bufferData(PGL.ARRAY_BUFFER,  Integer.BYTES * vertData, irData, PGL.DYNAMIC_DRAW);
     // associate currently bound VBO with shader attribute
-    pgl.vertexAttribPointer(colorLoc, 4, PGL.UNSIGNED_BYTE, false, Byte.SIZE, 0);
+    pgl.vertexAttribPointer(colorLoc, 4, PGL.UNSIGNED_BYTE, false, Byte.BYTES, 0);
     break;
   case 2:
     pgl.bindBuffer(PGL.ARRAY_BUFFER, colorVboId);
     // fill VBO with data
-    pgl.bufferData(PGL.ARRAY_BUFFER, Integer.SIZE * vertData, registeredData, PGL.DYNAMIC_DRAW);
+    pgl.bufferData(PGL.ARRAY_BUFFER, Integer.BYTES * vertData, registeredData, PGL.DYNAMIC_DRAW);
     // associate currently bound VBO with shader attribute
-    pgl.vertexAttribPointer(colorLoc, 4, PGL.UNSIGNED_BYTE, false, 0, 0);//Byte.SIZE, 0);
+    pgl.vertexAttribPointer(colorLoc, 4, PGL.UNSIGNED_BYTE, false, Byte.BYTES, 0);//Byte.SIZE, 0);
     break;
   }
- 
+  
   // unbind VBOs
   pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
 

@@ -41,6 +41,8 @@ You should have received a copy of the GNU General Public License
 along with openKinect2  for Processing.  If not, see
 <http://www.gnu.org/licenses/>.
 */
+import com.sun.jna.Native;
+import com.sun.jna.NativeLibrary;
 
 public class Device {
 	
@@ -56,17 +58,14 @@ public class Device {
 			System.loadLibrary("v2/msvc/libJNILibfreenect2");
 		}else if(osName.indexOf("mac") >= 0){
 			System.out.println(arch + " mac");
-			System.setProperty("java.library.path", System.getProperty("java.library.path")+"/v2/mac" );
-			System.out.println(System.getProperty("java.library.path"));
 			
 			LibraryPath libPath = new LibraryPath();
-		    String path = libPath.get()+"v2/mac/"; //System.getProperty("java.library.path")+
-		    // When testing from Eclipse
-		    // path = "lib";
-		    System.out.println("Found path: " + path);
-			
-			System.load(path+"libturbojpeg.dylib");
-			System.load(path+"libJNILibfreenect2.dylib");
+		    String path = libPath.getDir()+"/v2/mac/";
+		   // System.out.println(System.getProperty("java.library.path"));
+		    System.out.println("Found path v2: " + path);
+		   	
+		    System.load(path+"libturbojpeg.dylib");
+		    System.load(path+"libJNILibfreenect2.dylib");
 		}else{
 			System.err.println("not compatible with the current OS or is a 32 bit system");
 		}
