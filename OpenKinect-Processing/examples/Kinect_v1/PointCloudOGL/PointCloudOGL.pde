@@ -47,6 +47,7 @@ void draw() {
 
   image(kinect.getDepthImage(), 0, 0, 320, 240);
 
+  // Set up origin at middle of display, scale, and translate
   pushMatrix();
   translate(width/2, height/2, 50);
   scale(150);
@@ -97,5 +98,6 @@ void draw() {
   text(frameRate, 50, 50);
 
   // Rotate
+  // Uncomment for rotation
   // a += 0.015f;
 }

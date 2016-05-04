@@ -40,8 +40,11 @@ void draw() {
 
   // Translate and rotate
   translate(width/2, height/2, -50);
-  rotateY(a);
-
+  //rotateY(a);
+  
+  // Nested for loop that initializes x and y pixels and, for those less than the
+  // maximum threshold and at every skiping point, the offset is caculated to map
+  // them on a plane instead of just a line
   for (int x = 0; x < kinect.width; x += skip) {
     for (int y = 0; y < kinect.height; y += skip) {
       int offset = x + y*kinect.width;
@@ -73,6 +76,7 @@ float rawDepthToMeters(int depthValue) {
   return 0.0f;
 }
 
+// Only needed to make sense of the ouput depth values from the kinect
 PVector depthToWorld(int x, int y, int depthValue) {
 
   final double fx_d = 1.0 / 5.9421434211923247e+02;
@@ -80,6 +84,7 @@ PVector depthToWorld(int x, int y, int depthValue) {
   final double cx_d = 3.3930780975300314e+02;
   final double cy_d = 2.4273913761751615e+02;
 
+// Drawing the result vector to give each point its three-dimensional space
   PVector result = new PVector();
   double depth =  depthLookUp[depthValue];//rawDepthToMeters(depthValue);
   result.x = (float)((x - cx_d) * depth * fx_d);

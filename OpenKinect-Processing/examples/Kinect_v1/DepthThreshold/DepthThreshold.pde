@@ -16,8 +16,9 @@ Kinect kinect;
 PImage depthImg;
 
 // Which pixels do we care about?
-int minDepth =  60;
-int maxDepth = 860;
+// These thresholds can also be found with a variaty of methods
+float minDepth =  996;
+float maxDepth = 2493;
 
 // What is the kinect's angle
 float angle;
@@ -37,6 +38,10 @@ void draw() {
   // Draw the raw image
   image(kinect.getDepthImage(), 0, 0);
 
+  // Calibration
+   //minDepth = map(mouseX,0,width, 0, 4500);
+  //maxDepth = map(mouseY,0,height, 0, 4500);
+
   // Threshold the depth image
   int[] rawDepth = kinect.getRawDepth();
   for (int i=0; i < rawDepth.length; i++) {
@@ -50,10 +55,16 @@ void draw() {
   // Draw the thresholded image
   depthImg.updatePixels();
   image(depthImg, kinect.width, 0);
-
+  
+  //Comment for Calibration
   fill(0);
   text("TILT: " + angle, 10, 20);
   text("THRESHOLD: [" + minDepth + ", " + maxDepth + "]", 10, 36);
+  
+  //Calibration Text
+  //fill(255);
+  //textSize(32);
+  //text(minDepth + " " + maxDepth, 10, 64);
 }
 
 // Adjust the angle and the depth threshold min and max
