@@ -25,8 +25,8 @@ void setup() {
   size(1280, 480);
 
   kinect2 = new Kinect2(this);
-  kinect2.startDepth();
-  kinect2.start();
+  kinect2.initDepth();
+  kinect2.initDevice();
 
   // Blank image
   depthImg = new PImage(kinect2.depthWidth, kinect2.depthHeight);
