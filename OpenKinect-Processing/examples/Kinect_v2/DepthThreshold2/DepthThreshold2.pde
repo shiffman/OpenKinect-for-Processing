@@ -25,8 +25,8 @@ void setup() {
   size(1280, 480);
 
   kinect2 = new Kinect2(this);
-  kinect2.startDepth();
-  kinect2.start();
+  kinect2.initDepth();
+  kinect2.initDevice();
 
   // Blank image
   depthImg = new PImage(kinect2.depthWidth, kinect2.depthHeight);
@@ -42,7 +42,8 @@ void draw() {
   
   for (int i=0; i < rawDepth.length; i++) {
     if (rawDepth[i] >= minDepth && rawDepth[i] <= maxDepth) {
-      depthImg.pixels[i] = color(255);
+      float ratio = (maxDepth - minDepth)/255.0;
+      depthImg.pixels[i] = color((rawDepth[i] - minDepth)/ratio);
     } else {
       depthImg.pixels[i] = color(0);
     }

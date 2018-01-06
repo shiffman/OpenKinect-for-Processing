@@ -5,6 +5,7 @@ import processing.core.PVector;
 import processing.core.PImage;
 import processing.opengl.PShader;
 
+import java.io.IOException;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
@@ -66,6 +67,15 @@ public class Device {
 		   	
 		    System.load(path+"libturbojpeg.dylib");
 		    System.load(path+"libJNILibfreenect2.dylib");
+		}else if(osName.indexOf("linux") >= 0){
+				System.out.println(arch + " linux");
+				LibraryPath libPath = new LibraryPath();
+			    String path = libPath.getDir()+"/v2/linux/";
+			   // System.out.println(System.getProperty("java.library.path"));
+			    System.out.println("Found path v2: " + path);
+			   	
+			    System.load(path+"libfreenect2.so");
+			    System.load(path+"libturbojpeg.so.0");
 		}else{
 			System.err.println("not compatible with the current OS or is a 32 bit system");
 		}
