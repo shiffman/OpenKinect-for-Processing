@@ -1,12 +1,12 @@
-// Daniel Shiffman //<>//
+// Daniel Shiffman
 // Thomas Sanchez Lengeling
 // Kinect Point Cloud example
 
 // https://github.com/shiffman/OpenKinect-for-Processing
 // http://shiffman.net/p5/kinect/
 
-import java.nio.*;
 import org.openkinect.processing.*;
+import java.nio.*;
 
 // Kinect Library object
 Kinect2 kinect2;
@@ -15,15 +15,14 @@ Kinect2 kinect2;
 float a = 3.1;
 
 //change render mode between openGL and CPU
-int renderMode = 1;
+int renderMode = 2;
 
-//openGL object and shader
-PGL     pgl;
+//for openGL render
+PGL pgl;
 PShader sh;
-
-//VBO buffer location in the GPU
+int  vertLoc;
 int vertexVboId;
-
+int colorVboId;
 
 void setup() {
 
@@ -39,17 +38,17 @@ void setup() {
   //load shaders
   sh = loadShader("frag.glsl", "vert.glsl");
 
-  PGL pgl = beginPGL();
-
-  IntBuffer intBuffer = IntBuffer.allocate(1);
-  pgl.genBuffers(1, intBuffer);
-
-  //memory location of the VBO
-  vertexVboId = intBuffer.get(0);
-
-  endPGL();
-
   smooth(16);
+  pgl = beginPGL();
+  
+    //allocate buffer big enough to get all VBO ids back
+    IntBuffer intBuffer = IntBuffer.allocate(2);
+    pgl.genBuffers(2, intBuffer);
+  
+    //memory location of the VBO
+    vertexVboId = intBuffer.get(0);
+  
+    endPGL();
 }
 
 
@@ -84,41 +83,28 @@ void draw() {
     }
     endShape();
   } else if ( renderMode == 2) {
-
-    //data size times 3 for each XYZ coordinate
-    int vertData = kinect2.depthWidth * kinect2.depthHeight;
-
-    //get the depth data as a FloatBuffer
-    FloatBuffer depthPositions = kinect2.getDepthBufferPositions();
-
-    pgl = beginPGL();
-    sh.bind();
-    //obtain the vertex location in the shaders.
-    //useful to know what shader to use when drawing the vertex positions
-    vertexVboId = pgl.getAttribLocation(sh.glProgram, "vertex");
-
-    pgl.enableVertexAttribArray(vertexVboId);
-
-    //bind vertex positions to the VBO
-    {
-      pgl.bindBuffer(PGL.ARRAY_BUFFER, vertexVboId);
-      // fill VBO with data
-      pgl.bufferData(PGL.ARRAY_BUFFER, Float.BYTES * vertData * 3, depthPositions, PGL.DYNAMIC_DRAW);
-      // associate currently bound VBO with shader attribute
-      pgl.vertexAttribPointer(vertexVboId, 3, PGL.FLOAT, false, Float.BYTES * 3, 0 );
-    }
-
-    // unbind VBOs
-    pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
-
-    //draw the point buffer as a set of POINTS
-    pgl.drawArrays(PGL.POINTS, 0, vertData);
-
-    //disable the vertex positions
-    pgl.disableVertexAttribArray(vertexVboId);
-
-    sh.unbind();
-    endPGL();
+  //get the depth data as a FloatBuffer
+  FloatBuffer depthPositions = kinect2.getDepthBufferPositions();
+  sh.bind();
+  sh.set("fragColor", 1.0f, 1.0f, 1.0f, 1.0f);
+  vertLoc = pgl.getAttribLocation(sh.glProgram, "vertex");
+  pgl.enableVertexAttribArray(vertLoc);
+  
+  pgl.bindBuffer(PGL.ARRAY_BUFFER, vertexVboId);
+   // fill VBO with data
+   int vertData = kinect2.depthWidth * kinect2.depthHeight;
+   pgl.bufferData(PGL.ARRAY_BUFFER, Float.BYTES * vertData * 3, depthPositions, PGL.DYNAMIC_DRAW);
+   // associate currently bound VBO with shader attribute
+   pgl.vertexAttribPointer(vertLoc, 3, PGL.FLOAT, false, Float.BYTES * 3, 0);
+  
+  // unbind VBO
+  pgl.bindBuffer(PGL.ARRAY_BUFFER, 0);
+  
+  pgl.drawArrays(PGL.POINTS, 0, vertData);
+  pgl.disableVertexAttribArray(vertLoc);
+  sh.unbind();
+  
+  endPGL();
   }
   
   popMatrix();
