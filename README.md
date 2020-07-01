@@ -20,7 +20,7 @@ Requirements?
 #### Windows.
 
  - Use [Zadig](http://zadig.akeo.ie/) to install the libusbK driver for each device you wish to use. This includes installing the libusbK for all the kinect v1 drivers listed on Zadig GUI.
- - If you got the error message 'Isochronous transfer error: 1', you should try downgrade the libusbK using [Older Zadig Version](http://zadig.akeo.ie/downloads/zadig_2.0.1.exe)
+ - If you got the error message 'Isochronous transfer error: 1', you should try downgrade the libusbK using [Older Zadig Version](https://github.com/pbatard/libwdi/releases/download/w162/zadig-2.0.1.exe)
 
 ## Kinect v2 Requirements
 
